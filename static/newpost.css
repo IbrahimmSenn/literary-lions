@@ -1,0 +1,108 @@
+
+.form-container {
+  width: clamp(340px, 85vw, 560px); 
+  height: clamp(400px, 85vw, 600px); 
+  margin: 0 auto; 
+  margin-top: clamp(25px, 5vh, 100px); /* Responsive top margin */
+  margin-bottom: 30px;
+  background-image: url('/media/blob3.png');
+  background-size: clamp(30px, 20vw, 160px);
+  background-position: top;
+  background-repeat: no-repeat;
+  padding: clamp(25px, 5vw, 50px); 
+  padding-bottom: (15px, 3vw, 25px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  font-family: 'Hepta Slab', serif;
+}
+
+.title {
+  color: #561509;
+  text-align: center;
+  font-weight: normal;
+  font-size: clamp(2rem, 5vw, 2.9rem);
+  line-height: 1.2; /* Relative to font-size */
+}
+
+.form {
+  /*margin-top: 3rem;;*/
+  margin-top: clamp(1rem, 4vw, 3rem); /* Responsive spacing */
+}
+
+.input-group {
+  margin-top: 0.25rem;
+  font-size: 1rem;
+  line-height: 1.25rem;
+}
+
+.input-group label {
+  display: block;
+  color: #561509;
+  margin-bottom: 4px;
+  margin-top: 15px;
+}
+
+.input-group input, .content-textarea {
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid #561509;
+  outline: 0;
+  background-color: #FBF2E7;
+  padding: 0.65rem 0.85rem;
+  color: #561509;
+}
+
+.content-textarea {
+    height: clamp(160px, 20vh, 260px);
+    resize: none;
+    }
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #C4B408;
+  text-align: center;
+  color: #561509;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+}
+
+.button-cancel {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #FBF2E7;
+  text-align: center;
+  color: #561509;
+  border: 1px solid #561509;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+
+}
+
+.button:hover, .button-cancel:hover {
+    background: #EEE045;
+    transform: translateY(-1px);
+}
+
+

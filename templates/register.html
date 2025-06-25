@@ -1,0 +1,46 @@
+{{define "register.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookies Book Forum</title>
+        <link rel="stylesheet" href="/static/reset.css">
+        <link rel="stylesheet" href="/static/header.css">
+        <link rel="stylesheet" href="/static/register.css">
+        <link rel="stylesheet" href="/static/mainstyle.css">
+        <link rel="stylesheet" href="/static/footer.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
+</head>
+</head>
+<body>
+    {{ template "header.html" . }}
+    <div class="container-main">
+        <div class="form-container">
+            <p class="title">Become</p>
+            <p class="title">a</p>
+            <p class="title">Bookie</p>
+            <form class="form">
+                <div class="input-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="username" id="username" placeholder="">
+                </div>
+                <div class="input-group">
+                    <label for="password">Email</label>
+                    <input type="email" name="email" id="email" placeholder="">
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" placeholder="">
+                </div>
+                <button class="sign">Register</button>
+            </form>
+        </div>
+    </div>
+    {{ template "footer.html" . }} 
+</body>
+</html>
+{{end}}

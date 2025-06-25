@@ -1,0 +1,119 @@
+{{define "forum.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookies Book Forum</title>
+    <link rel="stylesheet" href="/static/reset.css">
+    <link rel="stylesheet" href="/static/header.css">
+    <link rel="stylesheet" href="/static/forum.css">
+    <link rel="stylesheet" href="/static/mainstyle.css">
+    <link rel="stylesheet" href="/static/footer.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+    {{ template "header.html" . }}
+    
+    <div class="container-main">
+        <!------------------------------ Search bar ------------------------------>
+        <div class="search-container-main">
+            <form action="#" method="get">
+                <div class="input-container-main">
+                    <input type="text" id="search" placeholder="Search ..." required="">
+                    <button type="submit" class="search-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div> 
+
+        <!------------------------------ Filter ------------------------------>
+        <div class="filter-bar">
+            <div class="filter-dropdown">
+                <button class="filter-button">Book title<span class="dropdown-arrow">▼</span></button>
+                <div class="dropdown-content">
+                    <a href="#">Plum</a>
+                    <a href="#">Red</a>
+                </div>
+            </div>
+            
+            <div class="filter-dropdown">
+                <button class="filter-button">Author<span class="dropdown-arrow">▼</span></button>
+                <div class="dropdown-content">
+                    <a href="#">emil</a>
+                    <a href="#">kevin</a>
+                    <a href="#">tom</a>
+                </div>
+            </div>
+        <!------------------------------ Sorting ------------------------------>
+        <div class="filter-dropdown">
+          <button class="filter-button">
+            Sort: <span class="dropdown-arrow">▼</span>
+          </button>
+          <div class="dropdown-content">
+            <a href="/" class="selected">Most popular</a>
+            <a href="">Most disliked</a>
+            <a href="/">Recent</a>
+          </div>
+        </div>
+       
+        <div class="filter-clear">
+            <a href="/" class="clear-checkbox-label">
+                <span class="checkbox-box"></span>
+                <span class="clear-text">Clear All</span>
+            </a>
+        </div>
+     </div>
+        
+        <!------------------------------ Forum posts ------------------------------>
+        <div class="forum-posts">
+            <div class="post-bar">
+                <div class="post-date">Jun 25</div>
+                <div class="post-category">
+                    <span class="category-tag general">Category</span>
+                </div>
+                <div class="post-title">Some post title goes here bla</div>
+                <div class="post-stats">
+                    <div class="stat-item like-count">
+                        <img src="/media/blob2.png" alt="like" class="icon">
+                        <span>42</span>
+                    </div>
+                    <div class="stat-item dislike-count">
+                        <img src="/media/blob7.png" alt="like" class="icon">
+                        <span>2</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-bar">
+                <div class="post-date">Jun 25</div>
+                <div class="post-category">
+                    <span class="category-tag general">Category</span>
+                </div>
+                <div class="post-title">Some post title goes here bla</div>
+                <div class="post-stats">
+                    <div class="stat-item like-count">
+                        <img src="/media/blob2.png" alt="like" class="icon">
+                        <span>42</span>
+                    </div>
+                    <div class="stat-item dislike-count">
+                        <img src="/media/blob7.png" alt="like" class="icon">
+                        <span>2</span>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    {{ template "footer.html" . }} 
+</body>
+</html>
+{{end}}

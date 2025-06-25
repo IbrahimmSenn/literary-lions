@@ -1,0 +1,51 @@
+{{define "newpost.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookies Book Forum</title>
+        <link rel="stylesheet" href="/static/reset.css">
+        <link rel="stylesheet" href="/static/header.css">
+        <link rel="stylesheet" href="/static/newpost.css">
+        <link rel="stylesheet" href="/static/mainstyle.css">
+        <link rel="stylesheet" href="/static/footer.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
+</head>
+</head>
+<body>
+    {{ template "header.html" . }}
+    <div class="container-main">
+        <div class="form-container">
+            <p class="title">Create</p>
+            <p class="title">a</p>
+            <p class="title">New Post</p>
+            <form class="form">
+                <div class="input-group">
+                    <label for="username">Title</label>
+                    <input type="title" name="title" id="title" placeholder="">
+                </div>
+                <div class="input-group">
+                    <label for="newpost">Post</label>
+                    <textarea 
+                        id="post-content" 
+                        name="content" 
+                        class="form-textarea content-textarea"
+                        placeholder=""
+                        required
+                    ></textarea>
+                </div>
+                <div class="form-actions">
+                     <button class="button">Post</button> 
+                     <button class="button-cancel">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    {{ template "footer.html" . }} 
+</body>
+</html>
+{{end}}

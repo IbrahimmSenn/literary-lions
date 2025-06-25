@@ -1,0 +1,114 @@
+
+.form-container {
+  width: clamp(320px, 85vw, 400px); /* Min 300px, ideal 80% viewport, max 400px */
+  height: clamp(400px, 85vw, 400px); /* Keep it roughly square */
+  /*width: 400px;*/
+  /*height: 400px;*/
+
+  margin: 0 auto; 
+
+  /*margin-top: 100px;*/
+  margin-top: clamp(20px, 8vh, 100px); /* Responsive top margin */
+  background-image: url('/media/blob.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  /*padding: 40px;*/
+
+  padding: clamp(25px, 5vw, 50px); /* Responsive padding */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  font-family: 'Hepta Slab', serif;
+}
+
+.title {
+  color: #561509;
+  text-align: center;
+  /*font-size: 2.9rem;*/
+  /*line-height: 3rem;*/
+  font-weight: normal;
+  font-size: clamp(2rem, 5vw, 2.9rem);
+  line-height: 1.2; /* Relative to font-size */
+}
+
+.form {
+  /*margin-top: 3rem;;*/
+  margin-top: clamp(1rem, 4vw, 3rem); /* Responsive spacing */
+}
+
+.input-group {
+  margin-top: 0.25rem;
+  font-size: 1rem;
+  line-height: 1.25rem;
+}
+
+.input-group label {
+  display: block;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.input-group input {
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid #FBF2E7;
+  outline: 0;
+  background-color: #FBF2E7;
+  padding: 0.65rem 0.85rem;
+  color: #561509;
+}
+
+
+.forgot {   
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1rem;
+  line-height: 1rem;
+  color: rgba(156, 163, 175,1);
+  margin: 8px 0 14px 0;
+}
+
+.forgot a,.signup a {
+  color: #561509;
+  text-decoration: none;
+  padding-top: 5px;
+  font-size: 0.75rem;
+}
+
+.forgot a:hover, .signup a:hover {
+  text-decoration: underline #C4B408;
+}
+
+.sign {
+  display: block;
+  width: 100%;
+  background-color: #C4B408;
+  padding: 0.75rem;
+  text-align: center;
+  color: #561509;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+}
+
+.sign:hover {
+    background: #EEE045;
+    transform: translateY(-1px);
+}
+
+.line {
+  height: 1px;
+  flex: 1 1 0%;
+  background-color: #561509;
+}
+
+.signup {
+  text-align: center;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: #561509;
+  padding-top: 5px;
+}
