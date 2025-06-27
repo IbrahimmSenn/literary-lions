@@ -1,4 +1,4 @@
-package main
+package database
 
 import (
 	"database/sql"
@@ -7,8 +7,8 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-// This function creates a connection to our SQLite database
-func connectDB() (*sql.DB, error) {
+// ConnectDB creates a connection to our SQLite database
+func ConnectDB() (*sql.DB, error) {
 	// Open creates a database file called "forum.db" 
 	// If it doesn't exist, SQLite will create it for us
 	db, err := sql.Open("sqlite3", "forum.db")
@@ -26,8 +26,8 @@ func connectDB() (*sql.DB, error) {
 	return db, nil
 }
 
-// This function creates the Users table
-func createUsersTable(db *sql.DB) error {
+// CreateUsersTable creates the Users table
+func CreateUsersTable(db *sql.DB) error {
 	// SQL command to create the Users table
 	query := `
 	CREATE TABLE IF NOT EXISTS users (
