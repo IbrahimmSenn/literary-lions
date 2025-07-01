@@ -73,7 +73,7 @@
 
 .forgot a,.signup a {
   color: #561509;
-  text-decoration: none;
+  text-decoration: underline;
   padding-top: 5px;
   font-size: 0.75rem;
 }
