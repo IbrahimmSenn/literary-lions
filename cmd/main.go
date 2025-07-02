@@ -5,6 +5,8 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	
+	"literary-lions-forum/internal/database"
 )
 
 // Data structure for templates
@@ -18,10 +20,23 @@ type PageData struct {
 var templates *template.Template
 
 func init() {
-	templates = template.Must(template.ParseGlob("templates/*.html"))
+	templates = template.Must(template.ParseGlob("web/templates/*.html"))
 }
 
 func main() {
+	// Test our database connection
+	db, err := database.ConnectDB()
+	if err != nil {
+		log.Fatal("Failed to connect to database:", err)
+	}
+	defer db.Close() // Close the database when the program ends
+	
+	// Create the Users table
+	err = database.CreateUsersTable(db)
+	if err != nil {
+		log.Fatal("Failed to create users table:", err)
+	}
+
 	port := ":8080"
 
 	// Routes
@@ -34,14 +49,14 @@ func main() {
 	
 
 	// Static files
-	fs := http.FileServer(http.Dir("static"))
+	fs := http.FileServer(http.Dir("web/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
 	http.Handle("/media/", http.StripPrefix("/media/", http.FileServer(http.Dir("media"))))
 
 	// Start the server
 	fmt.Printf("Server starting on port %s\n", port)
 	log.Printf("Visit http://localhost%s in your browser\n", port)
-	err := http.ListenAndServe(port, nil)
+	err = http.ListenAndServe(port, nil)
 	if err != nil {
 		log.Fatal("Server error: ", err)
 	}
