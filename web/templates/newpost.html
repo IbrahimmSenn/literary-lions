@@ -5,29 +5,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookies Book Forum</title>
-        <link rel="stylesheet" href="/static/reset.css">
-        <link rel="stylesheet" href="/static/header.css">
-        <link rel="stylesheet" href="/static/newpost.css">
-        <link rel="stylesheet" href="/static/mainstyle.css">
-        <link rel="stylesheet" href="/static/footer.css">
+    <link rel="stylesheet" href="/static/reset.css">
+    <link rel="stylesheet" href="/static/header.css">
+    <link rel="stylesheet" href="/static/newpost.css">
+    <link rel="stylesheet" href="/static/mainstyle.css">
+    <link rel="stylesheet" href="/static/footer.css">
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/media/favicon.png" />
 </head>
-</head>
+
 <body>
     {{ template "header.html" . }}
+    
     <div class="container-main">
         <div class="form-container">
             <p class="title">Create</p>
             <p class="title">a</p>
             <p class="title">New Post</p>
             <form class="form">
+                <!------------------------------ category ------------------------------>
+                <div class="category-bar">
+                    <div class="category-dropdown">
+                        <button type="button" class="category-button">
+                            Category<span class="dropdown-arrow">▼</span>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="#" data-category="reviews">Book reviews</a>
+                            <a href="#" data-category="upcoming">Upcoming releases</a>
+                            <a href="#" data-category="chat-authors">Chat with authors</a>
+                            <a href="#" data-category="news">News and interviews</a>
+                            <a href="#" data-category="quotes">Favourite quotes</a>
+                            <a href="#" data-category="25award">Bookies Favourite 2025 award</a>
+                        </div>
+                    </div>
+                </div>
+                <!------------------------------ t ------------------------------>
                 <div class="input-group">
                     <label for="username">Title</label>
                     <input type="title" name="title" id="title" placeholder="">
                 </div>
+
+                <!------------------------------ Post text ------------------------------>
                 <div class="input-group">
                     <label for="newpost">Post</label>
                     <textarea 
@@ -35,16 +56,18 @@
                         name="content" 
                         class="form-textarea content-textarea"
                         placeholder=""
-                        required
-                    ></textarea>
+                        required>
+                    </textarea>
                 </div>
+                
                 <div class="form-actions">
-                     <button class="button">Post</button> 
-                     <button class="button-cancel">Cancel</button>
+                    <button class="button">Post</button> 
+                    <button class="button-cancel">Cancel</button>
                 </div>
             </form>
         </div>
     </div>
+    
     {{ template "footer.html" . }} 
 </body>
 </html>

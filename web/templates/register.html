@@ -14,7 +14,7 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
-</head>
+        <link rel="icon" type="image/x-icon" href="/media/favicon.png" />
 </head>
 <body>
     {{ template "header.html" . }}
@@ -36,6 +36,9 @@
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" placeholder="">
                 </div>
+                <p class="signup">Already have an account?
+                <a rel="noopener noreferrer" href="#" class="">Sign in </a>
+            </p>
                 <button class="sign">Register</button>
             </form>
         </div>

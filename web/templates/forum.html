@@ -14,6 +14,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/media/favicon.png" />
+</head>
 </head>
 <body>
     {{ template "header.html" . }}
@@ -37,20 +39,15 @@
         <!------------------------------ Filter ------------------------------>
         <div class="filter-bar">
             <div class="filter-dropdown">
-                <button class="filter-button">Book title<span class="dropdown-arrow">▼</span></button>
+                <button class="filter-button">Category<span class="dropdown-arrow">▼</span></button>
                 <div class="dropdown-content">
-                    <a href="#">Plum</a>
-                    <a href="#">Red</a>
-                </div>
-            </div>
-            
-            <div class="filter-dropdown">
-                <button class="filter-button">Author<span class="dropdown-arrow">▼</span></button>
-                <div class="dropdown-content">
-                    <a href="#">emil</a>
-                    <a href="#">kevin</a>
-                    <a href="#">tom</a>
-                </div>
+                            <a href="#" data-category="reviews">Book reviews</a>
+                            <a href="#" data-category="upcoming">Upcoming releases</a>
+                            <a href="#" data-category="chat-authors">Chat with authors</a>
+                            <a href="#" data-category="news">News and interviews</a>
+                            <a href="#" data-category="quotes">Favourite quotes</a>
+                            <a href="#" data-category="25award">Bookies Favourite 2025 award</a>
+                        </div>
             </div>
         <!------------------------------ Sorting ------------------------------>
         <div class="filter-dropdown">
@@ -58,9 +55,10 @@
             Sort: <span class="dropdown-arrow">▼</span>
           </button>
           <div class="dropdown-content">
-            <a href="/" class="selected">Most popular</a>
-            <a href="">Most disliked</a>
-            <a href="/">Recent</a>
+            <a href="/" class="selected">Recent</a>
+            <a href="/" class="selected">Most viewed</a>
+            <a href="/" class="selected">Most loved</a>
+            <a href="/" class="selected">Most disliked</a>
           </div>
         </div>
        
@@ -75,7 +73,7 @@
         <!------------------------------ Forum posts ------------------------------>
         <div class="forum-posts">
             <div class="post-bar">
-                <div class="post-date">Jun 25</div>
+                <div class="post-date">25.04.2025</div>
                 <div class="post-category">
                     <span class="category-tag general">Category</span>
                 </div>
@@ -93,7 +91,7 @@
             </div>
 
             <div class="post-bar">
-                <div class="post-date">Jun 25</div>
+                <div class="post-date">25.04.2025</div>
                 <div class="post-category">
                     <span class="category-tag general">Category</span>
                 </div>
