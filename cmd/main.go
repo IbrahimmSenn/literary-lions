@@ -57,6 +57,8 @@ func main() {
 	http.HandleFunc("/forum", forumHandler)
 	http.HandleFunc("/register", registerHandler)
 	http.HandleFunc("/newpost", newpostHandler)
+	http.HandleFunc("/error", errorHandler)
+	http.HandleFunc("/postview", postviewHandler)
 
 	// Static files
 	fs := http.FileServer(http.Dir("web/static"))
@@ -163,6 +165,42 @@ func newpostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err := templates.ExecuteTemplate(w, "newpost.html", data)
+	if err != nil {
+		http.Error(w, "Error rendering template", http.StatusInternalServerError)
+		log.Printf("Template error: %v", err)
+	}
+}
+
+func errorHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/error" {
+		http.NotFound(w, r)
+		return
+	}
+
+	data := PageData{
+		Result: "",
+		Status: "200",
+	}
+
+	err := templates.ExecuteTemplate(w, "error.html", data)
+	if err != nil {
+		http.Error(w, "Error rendering template", http.StatusInternalServerError)
+		log.Printf("Template error: %v", err)
+	}
+}
+
+func postviewHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/postview" {
+		http.NotFound(w, r)
+		return
+	}
+
+	data := PageData{
+		Result: "",
+		Status: "200",
+	}
+
+	err := templates.ExecuteTemplate(w, "postview.html", data)
 	if err != nil {
 		http.Error(w, "Error rendering template", http.StatusInternalServerError)
 		log.Printf("Template error: %v", err)

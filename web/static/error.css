@@ -1,0 +1,31 @@
+.error-container {
+  width: clamp(800px, 25vw, 800px); /* Min 300px, ideal 80% viewport, max 400px */
+  height: clamp(800px, 25vw, 800px); /* Keep it roughly square */
+
+
+  margin: 0 auto; 
+  margin-top: clamp(10px, 2vh, 40px); /* Responsive top margin */
+  background-image: url('/media/error.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: clamp(10px, 2vw, 40px); /* Responsive padding */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+
+}
+
+.title {
+  color: #561509;
+  text-align: center;
+  /*font-size: 2.9rem;*/
+  /*line-height: 3rem;*/
+  font-weight: normal;
+  font-size: clamp(2rem, 5vw, 2.9rem);
+  line-height: 1.2; /* Relative to font-size */
+}
+
+

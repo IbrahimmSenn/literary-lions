@@ -1,0 +1,108 @@
+{{define "postview.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookies Book Forum</title>
+    <link rel="stylesheet" href="/static/reset.css">
+    <link rel="stylesheet" href="/static/header.css">
+    <link rel="stylesheet" href="/static/postview.css">
+    <link rel="stylesheet" href="/static/mainstyle.css">
+    <link rel="stylesheet" href="/static/footer.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/media/favicon.png" />
+</head>
+
+<body>
+    {{ template "header.html" . }}
+    
+    <div class="container-main">
+        <div class="post-container">
+            <!------------------------------ Post Header ------------------------------>
+            <div class="post-header">
+                <div class="post-meta">
+                    <span class="post-date">25.04.2025</span>
+                    <span class="category-tag">Book reviews</span>
+                </div>
+                <h1 class="post-title">Title goes here</h1>
+            </div>
+
+            <!------------------------------ Post Content ------------------------------>
+            <div class="post-content">
+                <p>This is where the main post content would go. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+                
+                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                
+            </div>
+
+            <!------------------------------ Like/Dislike Section ------------------------------>
+            <div class="post-actions">
+                <div class="action-buttons">
+                    <button class="action-btn like-btn">
+                        <img src="/media/blob2.png" alt="like" class="action-icon">
+                        <span class="count">42</span>
+                    </button>
+                    <button class="action-btn dislike-btn">
+                        <img src="/media/blob7.png" alt="dislike" class="action-icon">
+                        <span class="count">2</span>
+                    </button>
+                </div>
+            </div>
+
+            <!------------------------------ Comments Section ------------------------------>
+            <div class="comments-section">
+                <h3 class="comments-title">Comments</h3>
+                
+                <!------------------------------ Add Comment Form ------------------------------>
+                <form class="comment-form">
+                    <div class="input-group">
+                        <label for="comment-input">Leave a comment</label>
+                        <textarea 
+                            id="comment-input" 
+                            name="comment" 
+                            class="comment-textarea"
+                            placeholder=""
+                            required>
+                        </textarea>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="button comment-submit">Post Comment</button> 
+                        <button type="button" class="button-cancel">Cancel</button>
+                    </div>
+                </form>
+
+                <!------------------------------ Existing Comments ------------------------------>
+                <div class="comments-list">
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">Bookwormy123</span>
+                            <span class="comment-date">17.04.2025</span>
+                        </div>
+                        <div class="comment-content">
+                            <p> bla and bla.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="comment">
+                        <div class="comment-header">
+                            <span class="comment-author">ReadingFan</span>
+                            <span class="comment-date">23.04.2025</span>
+                        </div>
+                        <div class="comment-content">
+                            <p>Thanks for all!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {{ template "footer.html" . }} 
+</body>
+</html>
+{{end}}
