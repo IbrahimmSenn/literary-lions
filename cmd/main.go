@@ -5,7 +5,7 @@ import (
 	"html/template"
 	"log"
 	"net/http"
-	
+
 	"literary-lions-forum/internal/database"
 )
 
@@ -30,11 +30,23 @@ func main() {
 		log.Fatal("Failed to connect to database:", err)
 	}
 	defer db.Close() // Close the database when the program ends
-	
+
 	// Create the Users table
 	err = database.CreateUsersTable(db)
 	if err != nil {
 		log.Fatal("Failed to create users table:", err)
+	}
+
+	// Create the Posts table
+	err = database.CreatePostsTable(db)
+	if err != nil {
+		log.Fatal("Failed to create posts table:", err)
+	}
+
+	// Create the Comments table
+	err = database.CreateCommentsTable(db)
+	if err != nil {
+		log.Fatal("Failed to create comments table:", err)
 	}
 
 	port := ":8080"
@@ -45,8 +57,6 @@ func main() {
 	http.HandleFunc("/forum", forumHandler)
 	http.HandleFunc("/register", registerHandler)
 	http.HandleFunc("/newpost", newpostHandler)
-
-	
 
 	// Static files
 	fs := http.FileServer(http.Dir("web/static"))
@@ -62,7 +72,7 @@ func main() {
 	}
 }
 
-//Handlerssssss
+// Handlers
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
@@ -105,7 +115,6 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-
 func forumHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/forum" {
 		http.NotFound(w, r)
@@ -142,7 +151,6 @@ func registerHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-
 func newpostHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/newpost" {
 		http.NotFound(w, r)
@@ -160,4 +168,3 @@ func newpostHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("Template error: %v", err)
 	}
 }
-
