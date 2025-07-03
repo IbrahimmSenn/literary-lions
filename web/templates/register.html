@@ -23,23 +23,23 @@
             <p class="title">Become</p>
             <p class="title">a</p>
             <p class="title">Bookie</p>
-            <form class="form">
+            <form class="form" action="/register" method="POST">
                 <div class="input-group">
                     <label for="username">Username</label>
-                    <input type="text" name="username" id="username" placeholder="">
+                    <input type="text" name="username" id="username" placeholder="" required>
                 </div>
                 <div class="input-group">
-                    <label for="password">Email</label>
-                    <input type="email" name="email" id="email" placeholder="">
+                    <label for="email">Email</label> 
+                    <input type="email" name="email" id="email" placeholder="" required>
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="">
+                    <input type="password" name="password" id="password" placeholder="" required minlength="6">
                 </div>
                 <p class="signup">Already have an account?
-                <a rel="noopener noreferrer" href="#" class="">Sign in </a>
+                <a rel="noopener noreferrer" href="/login" class="">Sign in</a> 
             </p>
-                <button class="sign">Register</button>
+                <button type="submit" class="sign">Register</button>
             </form>
         </div>
     </div>
