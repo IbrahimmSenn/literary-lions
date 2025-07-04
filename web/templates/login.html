@@ -16,7 +16,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
         <link rel="icon" type="image/x-icon" href="/media/favicon.png" />
 </head>
-</head>
 <body>
     {{ template "header.html" . }}
     <div class="container-main">
@@ -24,23 +23,31 @@
             <p class="title">Welcome</p>
             <p class="title">back</p>
             <p class="title">Bookie</p>
-            <form class="form">
+            <form class="form" action="/login" method="POST">
                 <div class="input-group">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" id="username" placeholder="">
+                    <label for="username">Email</label>
+                    <input type="text" name="email" id="email" placeholder="" required>
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
-                    <input type="password" name="password" id="password" placeholder="">
+                    <input type="password" name="password" id="password" placeholder="" required>
                     <div class="forgot">
-                        <a rel="noopener noreferrer" href="#">Forgot Password ?</a>
+                        <a rel="noopener noreferrer" href="/forgot-password">Forgot Password ?</a>
                     </div>
                 </div>
-                <button class="sign">Sign in</button>
+                <button type="submit" class="sign">Sign in</button>
             </form>
             <p class="signup">Don't have an account yet?
-                <a rel="noopener noreferrer" href="#" class="">Sign up</a>
+                <a rel="noopener noreferrer" href="/register" class="">Sign up</a>
             </p>
+
+            <!-- Display error messages -->
+            {{if .Error}}
+            <div class="error-message">
+                <p>{{.Error}}</p>
+            </div>
+            {{end}}
+            
         </div>
     </div>
     {{ template "footer.html" . }} 
