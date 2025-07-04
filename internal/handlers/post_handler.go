@@ -35,12 +35,6 @@ func ForumHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Debug logging
-	log.Printf("Found %d posts in database", len(posts))
-	for i, post := range posts {
-		log.Printf("Post %d: ID=%d, Title=%s", i, post.ID, post.Title)
-	}
-
 	data := PageData{
 		Result: "",
 		Status: "200",
