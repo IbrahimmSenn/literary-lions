@@ -7,6 +7,7 @@ import (
 	"literary-lions-forum/internal/database"
 	"literary-lions-forum/internal/models"
 	"literary-lions-forum/internal/repository/sqlite"
+	"literary-lions-forum/internal/utils"
 )
 
 // ForumHandler displays all posts on the forum page
@@ -48,15 +49,24 @@ func ForumHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// NewPostHandler handles post creation
+// NewPostHandler handles post creation - PROTECTED ROUTE
 func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/newpost" {
 		http.NotFound(w, r)
 		return
 	}
 
-	// Handle GET request - show the form
+	// CHECK IF USER IS LOGGED IN - NEW SECURITY!
+	currentUser, err := utils.GetCurrentUser(r)
+	if err != nil || currentUser == nil {
+		log.Printf("🚫 Unauthorized attempt to access newpost")
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		return
+	}
+
+	// Handle GET request - show the form (only for logged-in users)
 	if r.Method == http.MethodGet {
+		log.Printf("✅ User %s accessing newpost form", currentUser.Username)
 		data := PageData{
 			Result: "",
 			Status: "200",
@@ -70,7 +80,7 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Handle POST request - process the form
+	// Handle POST request - process the form (only for logged-in users)
 	if r.Method == http.MethodPost {
 		// Parse form data
 		err := r.ParseForm()
@@ -104,11 +114,11 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 		// Create post repository
 		postRepo := sqlite.NewPostRepository(db)
 
-		// Create new post
+		// Create new post with REAL USER ID (not fake!)
 		newPost := &models.Post{
 			Title:   title,
 			Content: content,
-			UserID:  1, // For now, use fake user ID (we'll fix this when we add authentication)
+			UserID:  currentUser.ID, // Use real logged-in user!
 		}
 
 		// Save post to database
@@ -118,6 +128,8 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "Error saving post", http.StatusInternalServerError)
 			return
 		}
+
+		log.Printf("✅ Post created by user %s: %s", currentUser.Username, title)
 
 		// Redirect to forum page to see the new post
 		http.Redirect(w, r, "/forum", http.StatusSeeOther)

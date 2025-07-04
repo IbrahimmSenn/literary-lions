@@ -81,7 +81,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		existingUser, _ := userRepo.GetUserByEmail(email)
 		if existingUser != nil {
 			data := PageData{
-				Error:  "Email already registered",
+				Error:  "Email already taken",
 				Status: "400",
 			}
 			Templates.ExecuteTemplate(w, "register.html", data)
@@ -91,7 +91,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		existingUserByUsername, _ := userRepo.GetUserByUsername(username)
 		if existingUserByUsername != nil {
 			data := PageData{
-				Error:  "Username already taken",
+				Error:  "Oops! This username is already taken. Try another one!",
 				Status: "400",
 			}
 			Templates.ExecuteTemplate(w, "register.html", data)
@@ -166,7 +166,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Get form values
-		usernameOrEmail := r.FormValue("username")
+		usernameOrEmail := r.FormValue("email")
 		password := r.FormValue("password")
 
 		// Basic validation
