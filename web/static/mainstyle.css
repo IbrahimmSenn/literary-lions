@@ -12,6 +12,23 @@ body {
     padding: 0;
 }
 
+/************************************* Errors **************************************/
+.error-message {
+    background-color: transparent;
+    color: #d63d22;
+    padding: 12px 16px;
+    border-radius: 0.375rem;
+    margin-bottom: 0px;
+    margin-top: 40px;
+    font-family: 'Hepta Slab', serif;
+    font-size: 14px;
+    text-align: center;
+}
+
+.error-message p {
+    margin: 0;
+    font-weight: 500;
+}
 
 
 /************************************* MEDIA queries for additional responsive behavior **************************************/
