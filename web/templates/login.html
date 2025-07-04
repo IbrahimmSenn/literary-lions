@@ -25,8 +25,8 @@
             <p class="title">Bookie</p>
             <form class="form" action="/login" method="POST">
                 <div class="input-group">
-                    <label for="username">Username</label>
-                    <input type="text" name="username" id="username" placeholder="" required>
+                    <label for="username">Email</label>
+                    <input type="text" name="email" id="email" placeholder="" required>
                 </div>
                 <div class="input-group">
                     <label for="password">Password</label>
@@ -40,6 +40,14 @@
             <p class="signup">Don't have an account yet?
                 <a rel="noopener noreferrer" href="/register" class="">Sign up</a>
             </p>
+
+            <!-- Display error messages -->
+            {{if .Error}}
+            <div class="error-message">
+                <p>{{.Error}}</p>
+            </div>
+            {{end}}
+            
         </div>
     </div>
     {{ template "footer.html" . }} 

@@ -40,6 +40,15 @@
                 <a rel="noopener noreferrer" href="/login" class="">Sign in</a> 
             </p>
                 <button type="submit" class="sign">Register</button>
+            
+
+            <!-- Display error messages -->
+            {{if .Error}}
+            <div class="error-message">
+                <p>{{.Error}}</p>
+            </div>
+            {{end}}
+
             </form>
         </div>
     </div>
