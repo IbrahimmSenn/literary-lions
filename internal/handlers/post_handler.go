@@ -10,14 +10,14 @@ import (
 	"literary-lions-forum/internal/utils"
 )
 
-// ForumHandler displays all posts on the forum page
+// ForumHandler displays all posts with real-time vote counts from the database.
+// Loads posts and their corresponding like/dislike counts for the forum page.(single user cannot like and dislike a post)
 func ForumHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/forum" {
 		http.NotFound(w, r)
 		return
 	}
 
-	// Connect to database
 	db, err := database.ConnectDB()
 	if err != nil {
 		http.Error(w, "Database connection failed", http.StatusInternalServerError)
@@ -25,10 +25,9 @@ func ForumHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	defer db.Close()
 
-	// Create post repository
 	postRepo := sqlite.NewPostRepository(db)
+	likeRepo := sqlite.NewLikeRepository(db)
 
-	// Get all posts from database
 	posts, err := postRepo.GetAllPosts()
 	if err != nil {
 		log.Printf("Error getting posts: %v", err)
@@ -36,10 +35,21 @@ func ForumHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	voteCounts := make(map[int]*models.VoteCount)
+	for _, post := range posts {
+		voteCount, err := likeRepo.GetPostVoteCount(post.ID)
+		if err != nil {
+			log.Printf("Error getting vote count for post %d: %v", post.ID, err)
+			voteCount = &models.VoteCount{Likes: 0, Dislikes: 0}
+		}
+		voteCounts[post.ID] = voteCount
+	}
+
 	data := PageData{
-		Result: "",
-		Status: "200",
-		Posts:  posts,
+		Result:     "",
+		Status:     "200",
+		Posts:      posts,
+		VoteCounts: voteCounts,
 	}
 
 	err = Templates.ExecuteTemplate(w, "forum.html", data)
@@ -49,14 +59,15 @@ func ForumHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// NewPostHandler handles post creation - PROTECTED ROUTE
+// NewPostHandler manages post creation with authentication protection.
+// Only authenticated users can access the form and create posts (LOGIN REQUIRED)
+// Posts are automatically linked to the logged-in user's ID.
 func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/newpost" {
 		http.NotFound(w, r)
 		return
 	}
 
-	// CHECK IF USER IS LOGGED IN - NEW SECURITY!
 	currentUser, err := utils.GetCurrentUser(r)
 	if err != nil || currentUser == nil {
 		log.Printf("🚫 Unauthorized attempt to access newpost")
@@ -64,7 +75,6 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Handle GET request - show the form (only for logged-in users)
 	if r.Method == http.MethodGet {
 		log.Printf("✅ User %s accessing newpost form", currentUser.Username)
 		data := PageData{
@@ -80,20 +90,16 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Handle POST request - process the form (only for logged-in users)
 	if r.Method == http.MethodPost {
-		// Parse form data
 		err := r.ParseForm()
 		if err != nil {
 			http.Error(w, "Error parsing form", http.StatusBadRequest)
 			return
 		}
 
-		// Get form values
 		title := r.FormValue("title")
 		content := r.FormValue("content")
 
-		// Basic validation
 		if title == "" || content == "" {
 			data := PageData{
 				Error:  "Title and content are required",
@@ -103,7 +109,6 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// Connect to database
 		db, err := database.ConnectDB()
 		if err != nil {
 			http.Error(w, "Database connection failed", http.StatusInternalServerError)
@@ -111,17 +116,14 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 		}
 		defer db.Close()
 
-		// Create post repository
 		postRepo := sqlite.NewPostRepository(db)
 
-		// Create new post with REAL USER ID (not fake!)
 		newPost := &models.Post{
 			Title:   title,
 			Content: content,
-			UserID:  currentUser.ID, // Use real logged-in user!
+			UserID:  currentUser.ID,
 		}
 
-		// Save post to database
 		err = postRepo.CreatePost(newPost)
 		if err != nil {
 			log.Printf("Error creating post: %v", err)
@@ -130,12 +132,9 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		log.Printf("✅ Post created by user %s: %s", currentUser.Username, title)
-
-		// Redirect to forum page to see the new post
 		http.Redirect(w, r, "/forum", http.StatusSeeOther)
 		return
 	}
 
-	// Handle unsupported methods
 	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 }

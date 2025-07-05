@@ -83,13 +83,30 @@
                 </div>
                 <div class="post-title">{{.Title}}</div>
                 <div class="post-stats">
+                    <!-- Like Button with Real Count -->
                     <div class="stat-item like-count">
-                        <img src="/media/blob2.png" alt="like" class="icon">
-                        <span>0</span>
+                        <form method="POST" action="/vote" style="display: inline;">
+                            <input type="hidden" name="post_id" value="{{.ID}}">
+                            <input type="hidden" name="action" value="like">
+                            <button type="submit"
+                                style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                                <img src="/media/blob2.png" alt="like" class="icon">
+                                <span>{{(index $.VoteCounts .ID).Likes}}</span>
+                            </button>
+                        </form>
                     </div>
+
+                    <!-- Dislike Button with Real Count -->
                     <div class="stat-item dislike-count">
-                        <img src="/media/blob7.png" alt="dislike" class="icon">
-                        <span>0</span>
+                        <form method="POST" action="/vote" style="display: inline;">
+                            <input type="hidden" name="post_id" value="{{.ID}}">
+                            <input type="hidden" name="action" value="dislike">
+                            <button type="submit"
+                                style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                                <img src="/media/blob7.png" alt="dislike" class="icon">
+                                <span>{{(index $.VoteCounts .ID).Dislikes}}</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

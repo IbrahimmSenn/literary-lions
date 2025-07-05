@@ -42,6 +42,7 @@ func createTables(db *sql.DB) error {
 		database.CreatePostsTable,
 		database.CreateCommentsTable,
 		database.CreateSessionsTable,
+		database.CreateLikesTable,
 	}
 
 	for _, createTable := range tables {
@@ -67,6 +68,8 @@ func setupRoutes() {
 	// Forum routes
 	http.HandleFunc("/forum", handlers.ForumHandler)
 	http.HandleFunc("/newpost", handlers.NewPostHandler)
+
+	http.HandleFunc("/vote", handlers.VoteHandler)
 }
 
 // Static Configuration

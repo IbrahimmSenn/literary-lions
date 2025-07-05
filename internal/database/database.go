@@ -113,3 +113,28 @@ func CreateSessionsTable(db *sql.DB) error {
 	log.Println("✅ Sessions table created successfully!")
 	return nil
 }
+
+func CreateLikesTable(db *sql.DB) error {
+	query := `
+	CREATE TABLE IF NOT EXISTS likes (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		user_id INTEGER NOT NULL,
+		post_id INTEGER,
+		comment_id INTEGER,
+		is_like BOOLEAN NOT NULL,
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY (user_id) REFERENCES users(id),
+		FOREIGN KEY (post_id) REFERENCES posts(id),
+		FOREIGN KEY (comment_id) REFERENCES comments(id),
+		UNIQUE(user_id, post_id),
+		UNIQUE(user_id, comment_id)
+	)`
+
+	_, err := db.Exec(query)
+	if err != nil {
+		return err
+	}
+
+	log.Println("✅ Likes table created successfully!")
+	return nil
+}
