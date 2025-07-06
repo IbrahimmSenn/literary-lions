@@ -15,12 +15,16 @@ import (
 )
 
 type PageData struct {
-	Input      string
-	Result     string
-	Status     string
-	Error      string
-	Posts      []*models.Post
-	VoteCounts map[int]*models.VoteCount
+	Input       string
+	Result      string
+	Status      string
+	Error       string
+	Posts       []*models.Post
+	Post        *models.Post
+	VoteCounts  map[int]*models.VoteCount
+	VoteCount   *models.VoteCount
+	Comments    []*models.Comment
+	CurrentUser *models.User
 }
 
 // Templates variable (will be set from main)

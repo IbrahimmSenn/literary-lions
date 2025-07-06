@@ -3,6 +3,7 @@ package handlers
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"literary-lions-forum/internal/database"
 	"literary-lions-forum/internal/models"
@@ -62,6 +63,9 @@ func ForumHandler(w http.ResponseWriter, r *http.Request) {
 // NewPostHandler manages post creation with authentication protection.
 // Only authenticated users can access the form and create posts (LOGIN REQUIRED)
 // Posts are automatically linked to the logged-in user's ID.
+// NewPostHandler manages post creation with authentication protection.
+// Only authenticated users can access the form and create posts (LOGIN REQUIRED)
+// Posts are automatically linked to the logged-in user's ID.
 func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/newpost" {
 		http.NotFound(w, r)
@@ -70,8 +74,8 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	currentUser, err := utils.GetCurrentUser(r)
 	if err != nil || currentUser == nil {
-		log.Printf("🚫 Unauthorized attempt to access newpost")
-		http.Redirect(w, r, "/login", http.StatusSeeOther)
+		// Redirect with helpful context
+		http.Redirect(w, r, "/login?message=login_to_post", http.StatusSeeOther)
 		return
 	}
 
@@ -137,4 +141,63 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+}
+
+// PostDetailHandler displays a single post with all its comments
+func PostDetailHandler(w http.ResponseWriter, r *http.Request) {
+	// Get post ID from URL - we'll need to parse /post/123
+	postIDStr := r.URL.Path[len("/post/"):]
+	postID, err := strconv.Atoi(postIDStr)
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+
+	// Connect to database
+	db, err := database.ConnectDB()
+	if err != nil {
+		http.Error(w, "Database connection failed", http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+
+	// Get the post
+	postRepo := sqlite.NewPostRepository(db)
+	post, err := postRepo.GetPostByID(postID)
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+
+	// Get vote count for this post
+	likeRepo := sqlite.NewLikeRepository(db)
+	voteCount, err := likeRepo.GetPostVoteCount(postID)
+	if err != nil {
+		voteCount = &models.VoteCount{Likes: 0, Dislikes: 0}
+	}
+
+	// Get comments for this post
+	commentRepo := sqlite.NewCommentRepository(db)
+	comments, err := commentRepo.GetCommentsByPostID(postID)
+	if err != nil {
+		log.Printf("Error getting comments: %v", err)
+		comments = []*models.Comment{} // Empty slice if error
+	}
+
+	currentUser, _ := utils.GetCurrentUser(r)
+
+	data := PageData{
+		Result:      "",
+		Status:      "200",
+		Post:        post,
+		VoteCount:   voteCount,
+		Comments:    comments,
+		CurrentUser: currentUser,
+	}
+
+	err = Templates.ExecuteTemplate(w, "postview.html", data)
+	if err != nil {
+		http.Error(w, "Error rendering template", http.StatusInternalServerError)
+		log.Printf("Template error: %v", err)
+	}
 }

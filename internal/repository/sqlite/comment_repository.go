@@ -38,9 +38,21 @@ func (r *SQLiteCommentRepository) CreateComment(comment *models.Comment) error {
 	return nil
 }
 
-// GetCommentsByPostID finds all comments for a specific post
+// GetCommentsByPostID finds all comments for a specific post with usernames
 func (r *SQLiteCommentRepository) GetCommentsByPostID(postID int) ([]*models.Comment, error) {
-	query := `SELECT id, content, user_id, post_id, created_at FROM comments WHERE post_id = ? ORDER BY created_at ASC`
+	query := `
+		SELECT 
+			c.id, 
+			c.content, 
+			c.user_id, 
+			c.post_id, 
+			c.created_at,
+			u.username
+		FROM comments c
+		JOIN users u ON c.user_id = u.id
+		WHERE c.post_id = ? 
+		ORDER BY c.created_at ASC
+	`
 
 	rows, err := r.db.Query(query, postID)
 	if err != nil {
@@ -51,10 +63,14 @@ func (r *SQLiteCommentRepository) GetCommentsByPostID(postID int) ([]*models.Com
 	var comments []*models.Comment
 	for rows.Next() {
 		comment := &models.Comment{}
-		err := rows.Scan(&comment.ID, &comment.Content, &comment.UserID, &comment.PostID, &comment.CreatedAt)
+		var username string
+		err := rows.Scan(&comment.ID, &comment.Content, &comment.UserID, &comment.PostID, &comment.CreatedAt, &username)
 		if err != nil {
 			return nil, err
 		}
+
+		// Add username to comment
+		comment.Username = username
 		comments = append(comments, comment)
 	}
 

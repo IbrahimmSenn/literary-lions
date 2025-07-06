@@ -68,8 +68,12 @@ func setupRoutes() {
 	// Forum routes
 	http.HandleFunc("/forum", handlers.ForumHandler)
 	http.HandleFunc("/newpost", handlers.NewPostHandler)
+	http.HandleFunc("/post/", handlers.PostDetailHandler)
 
 	http.HandleFunc("/vote", handlers.VoteHandler)
+
+	// Comment routes
+	http.HandleFunc("/comment", handlers.CommentHandler)
 }
 
 // Static Configuration
