@@ -10,6 +10,7 @@ body {
     background: #FBF2E7;
     margin: 0;
     padding: 0;
+    padding-bottom: 120px; /* space at bottom of content area */
 }
 
 /************************************* Errors **************************************/
