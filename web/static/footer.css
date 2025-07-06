@@ -1,7 +1,222 @@
-.container-footer {
+/* Footer Styles */
+footer {
+    background-color: #FBF2E7;
+    padding: 50px 0 25px 0; /* Reduced padding */
     width: 100%;
-    background: #e7e4d1;
+    color: #561509;
+    clear: both;
+    border: none;
+    outline: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Smaller columns */
+    gap: 30px; /* Reduced gap */
+    margin-bottom: 25px; /* Reduced margin */
+}
+
+.footer-column h4 {
+    color: #561509;
+    font-size: 16px; /* Reduced from 18px */
+    font-weight: 600;
+    margin-bottom: 15px; /* Reduced margin */
+    font-family: 'Hepta Slab', serif;
+}
+
+.footer-logo {
+    width: 100px; /* Reduced from 120px */
+    height: auto;
+    margin-bottom: 12px; /* Reduced margin */
+}
+
+.footer-column p {
+    color: #561509;
+    line-height: 1.5; /* Reduced from 1.6 */
+    margin-bottom: 12px; /* Reduced margin */
+    font-size: 13px; /* Reduced from 14px */
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
     margin: 0;
-    padding: 20px 0;
-    text-align: center;
+}
+
+.footer-column ul li {
+    margin-bottom: 6px; /* Reduced from 8px */
+}
+
+.footer-column ul li a {
+    color: #561509;
+    text-decoration: none;
+    font-size: 13px; /* Reduced from 14px */
+    transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover {
+    color: #C4B408;
+}
+
+/* Social Media Icons */
+.footer-social {
+    display: flex;
+    gap: 12px; /* Reduced from 15px */
+    margin-top: 12px; /* Reduced margin */
+}
+
+.footer-social a {
+    color: #561509;
+    transition: color 0.3s ease;
+}
+
+.footer-social a:hover {
+    color: #C4B408;
+}
+
+.footer-social svg {
+    width: 18px; /* Smaller icons */
+    height: 18px;
+}
+
+/* Contact Information */
+.footer-contact p {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px; /* Reduced from 10px */
+    margin-bottom: 10px; /* Reduced from 12px */
+    font-size: 13px; /* Reduced from 14px */
+}
+
+.footer-contact svg {
+    color: #C4B408;
+    margin-top: 2px;
+    flex-shrink: 0;
+    width: 16px; /* Smaller icons */
+    height: 16px;
+}
+
+/* Newsletter Form - Made Smaller */
+.newsletter-form {
+    display: flex;
+    gap: 6px; /* Reduced from 8px */
+    margin-top: 12px; /* Reduced margin */
+}
+
+.newsletter-form input {
+    flex: 1;
+    padding: 8px 10px; /* Reduced padding */
+    border: 1px solid #561509;
+    border-radius: 0.375rem;
+    background-color: #FBF2E7;
+    color: #561509;
+    font-family: 'Hepta Slab', serif;
+    font-size: 12px; /* Reduced from 14px */
+}
+
+.newsletter-form input::placeholder {
+    color: #561509;
+    opacity: 0.7;
+}
+
+.newsletter-form button {
+    background-color: #C4B408;
+    color: #561509;
+    border: none;
+    padding: 8px 12px; /* Reduced padding */
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-family: 'Hepta Slab', serif;
+    font-size: 12px; /* Reduced from 14px */
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.newsletter-form button:hover {
+    background-color: #EEE045;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+    border-top: 1px solid #561509;
+    padding-top: 15px; /* Reduced from 20px */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px; /* Reduced from 15px */
+}
+
+.footer-bottom-left p {
+    margin: 0;
+    color: #561509;
+    font-size: 12px; /* Reduced from 14px */
+}
+
+.footer-bottom-right {
+    display: flex;
+    gap: 15px; /* Reduced from 20px */
+    flex-wrap: wrap;
+}
+
+.footer-bottom-right a {
+    color: #561509;
+    text-decoration: none;
+    font-size: 12px; /* Reduced from 14px */
+    transition: color 0.3s ease;
+}
+
+.footer-bottom-right a:hover {
+    color: #C4B408;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+        gap: 25px; /* Reduced gap */
+    }
+    
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-bottom-right {
+        justify-content: center;
+    }
+    
+    .newsletter-form {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    footer {
+        padding: 35px 0 18px 0; /* Reduced padding */
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-content {
+        gap: 20px; /* Further reduced */
+    }
+    
+    .footer-column h4 {
+        font-size: 14px; /* Reduced from 16px */
+    }
+    
+    .footer-bottom-right {
+        flex-direction: column;
+        gap: 8px; /* Reduced gap */
+    }
+    
+    footer {
+        padding: 25px 0 12px 0; /* Reduced padding */
+    }
 }

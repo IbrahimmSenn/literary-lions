@@ -8,24 +8,24 @@
 .logo img {
     display: block;
     margin: 0 auto;
-    width: clamp(300px, 25vw, 400px);  /* Min 300px, ideal 25% viewport, max 400px */
+    width: clamp(350px, 30vw, 500px);
     height: auto;
     cursor: pointer;
 }
 
 .nav {
     background-color: #FBF2E7;
-    padding: clamp(10px, 2vw, 20px) 0; /* Responsive padding */;
+    padding: clamp(10px, 3vw, 25px) 0; /* INCREASED: More space from logo */
     text-align: center;
 }
 
 .nav ul {
     list-style: none;        
     display: flex;           
-    justify-content: center; /* Centers the navigation */
+    justify-content: center;
     margin: 0;
     padding: 0;
-    gap: clamp(10px, 4vw, 40px); /* Responsive spacing between items */
+    gap: clamp(8px, 3vw, 30px); /* INCREASED: More space between nav items */
 }
 
 .nav a {
@@ -35,11 +35,14 @@
     font-weight: bold;
     cursor: pointer;
     text-align: center;
-    font-size: clamp(0.9rem, 2.5vw, 1.1rem); /* Responsive font size */
-    padding: 8px 12px; /* Add some clickable area */
-    white-space: nowrap; /* Prevent text wrapping within links */
+    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+    padding: 8px 12px;
+    white-space: nowrap;
 }
 
 .nav a:hover {
     color: #94AE6D;
 }
+
+/************************************* Avatar **************************************/
+

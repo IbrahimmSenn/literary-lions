@@ -1,0 +1,29 @@
+{{define "user_home.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookies Book Forum</title>
+        <link rel="stylesheet" href="/static/reset.css">
+        <link rel="stylesheet" href="/static/header.css">
+        <link rel="stylesheet" href="/static/mainstyle.css">
+        <link rel="stylesheet" href="/static/footer.css">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="/media/favicon.png" />
+    </head>
+</head>
+<body>
+    {{ template "user_header.html" . }}
+    <div class="container-main">
+        <header>
+            <h1>Blaaben</h1>
+        </header>
+    </div>
+    {{ template "footer.html" . }} 
+</body>
+</html>
+{{end}}

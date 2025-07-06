@@ -1,0 +1,57 @@
+{{define "profile.html"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile - Bookies Book Forum</title>
+    <link rel="stylesheet" href="/static/reset.css">
+    <link rel="stylesheet" href="/static/header.css">
+    <link rel="stylesheet" href="/static/profile.css">
+    <link rel="stylesheet" href="/static/mainstyle.css">
+    <link rel="stylesheet" href="/static/footer.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/media/favicon.png" />
+</head>
+<body>
+    {{ template "user_header.html" . }}
+    
+    <div class="container-main">
+        <!-- Profile Header Section -->
+        <div class="profile-header">
+            <div class="profile-basic-info">
+                <h1 class="profile-username">{{.User.Username}}</h1>
+                <p class="profile-email">{{.User.Email}}</p>
+                <p class="profile-joined">Member since {{.User.CreatedAt.Format "January 2006"}}</p>
+            </div>
+        </div>
+
+        <!-- Profile Stats -->
+        <div class="profile-stats">
+            <div class="stat-item">
+                <span class="stat-number">{{.Stats.PostCount}}</span>
+                <span class="stat-label">Posts</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{.Stats.CommentCount}}</span>
+                <span class="stat-label">Comments</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">{{.Stats.LikesReceived}}</span>
+                <span class="stat-label">Likes Received</span>
+            </div>
+        </div>
+
+        <!-- Account Actions -->
+        <div class="account-actions">
+            <a href="/logout" class="button logout-btn">Logout</a>
+        </div>
+    </div>
+
+    {{ template "footer.html" . }}
+</body>
+</html>
+{{end}}

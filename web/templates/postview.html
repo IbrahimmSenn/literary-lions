@@ -26,8 +26,9 @@
             <!------------------------------ Post Header ------------------------------>
             <div class="post-header">
                 <div class="post-meta">
-                    <span class="post-date">{{.Post.CreatedAt.Format "02.01.2006"}}</span>
                     <span class="category-tag">General</span>
+                    <span class="post-author">By add username</span>
+                    <span class="post-date">{{.Post.CreatedAt.Format "02.01.2006"}}</span>
                 </div>
                 <h1 class="post-title">{{.Post.Title}}</h1>
             </div>
@@ -79,8 +80,7 @@
                     <input type="hidden" name="post_id" value="{{.Post.ID}}">
                     <div class="input-group">
                         <label for="comment-input">Leave a comment</label>
-                        <textarea id="comment-input" name="comment" class="comment-textarea" placeholder="" required>
-                            </textarea>
+                        <textarea id="comment-input" name="comment" class="comment-textarea" placeholder="" required></textarea>
                     </div>
 
                     <div class="form-actions">
