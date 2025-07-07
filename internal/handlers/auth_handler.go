@@ -15,19 +15,20 @@ import (
 )
 
 type PageData struct {
-	Input       string
-	Result      string
-	Status      string
-	Error       string
-	Posts       []*models.Post
-	Post        *models.Post
-	VoteCounts  map[int]*models.VoteCount
-	VoteCount   *models.VoteCount
-	Comments    []*models.Comment
-	CurrentUser *models.User
-	User        *models.User
-	Stats       *UserStats
-	Categories  []*models.Category
+	Input             string
+	Result            string
+	Status            string
+	Error             string
+	Posts             []*models.Post
+	Post              *models.Post
+	VoteCounts        map[int]*models.VoteCount
+	VoteCount         *models.VoteCount
+	Comments          []*models.Comment
+	CurrentUser       *models.User
+	User              *models.User
+	Stats             *UserStats
+	Categories        []*models.Category
+	CommentVoteCounts map[int]*models.VoteCount
 }
 
 type UserStats struct {

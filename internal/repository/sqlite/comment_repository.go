@@ -41,18 +41,27 @@ func (r *SQLiteCommentRepository) CreateComment(comment *models.Comment) error {
 // GetCommentsByPostID finds all comments for a specific post with usernames
 func (r *SQLiteCommentRepository) GetCommentsByPostID(postID int) ([]*models.Comment, error) {
 	query := `
-		SELECT 
-			c.id, 
-			c.content, 
-			c.user_id, 
-			c.post_id, 
-			c.created_at,
-			u.username
-		FROM comments c
-		JOIN users u ON c.user_id = u.id
-		WHERE c.post_id = ? 
-		ORDER BY c.created_at ASC
-	`
+    SELECT 
+        c.id, 
+        c.content, 
+        c.user_id, 
+        c.post_id, 
+        c.created_at,
+        u.username,
+        COALESCE(like_counts.likes, 0) as like_count
+    FROM comments c
+    JOIN users u ON c.user_id = u.id
+    LEFT JOIN (
+        SELECT 
+            comment_id,
+            COUNT(CASE WHEN is_like = 1 THEN 1 END) as likes
+        FROM likes 
+        WHERE comment_id IS NOT NULL
+        GROUP BY comment_id
+    ) like_counts ON c.id = like_counts.comment_id
+    WHERE c.post_id = ? 
+    ORDER BY like_count DESC, c.created_at DESC
+`
 
 	rows, err := r.db.Query(query, postID)
 	if err != nil {
@@ -64,7 +73,7 @@ func (r *SQLiteCommentRepository) GetCommentsByPostID(postID int) ([]*models.Com
 	for rows.Next() {
 		comment := &models.Comment{}
 		var username string
-		err := rows.Scan(&comment.ID, &comment.Content, &comment.UserID, &comment.PostID, &comment.CreatedAt, &username)
+		err := rows.Scan(&comment.ID, &comment.Content, &comment.UserID, &comment.PostID, &comment.CreatedAt, &comment.Username, &comment.LikeCount)
 		if err != nil {
 			return nil, err
 		}

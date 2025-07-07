@@ -168,7 +168,7 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 }
 
-// PostDetailHandler displays a single post with all its comments
+// PostDetailHandler displays a single post with all its comments and vote counts
 func PostDetailHandler(w http.ResponseWriter, r *http.Request) {
 	// Get post ID from URL - we'll need to parse /post/123
 	postIDStr := r.URL.Path[len("/post/"):]
@@ -209,15 +209,27 @@ func PostDetailHandler(w http.ResponseWriter, r *http.Request) {
 		comments = []*models.Comment{} // Empty slice if error
 	}
 
+	// Get vote counts for each comment
+	commentVoteCounts := make(map[int]*models.VoteCount)
+	for _, comment := range comments {
+		commentVoteCount, err := likeRepo.GetCommentVoteCount(comment.ID)
+		if err != nil {
+			log.Printf("Error getting vote count for comment %d: %v", comment.ID, err)
+			commentVoteCount = &models.VoteCount{Likes: 0, Dislikes: 0}
+		}
+		commentVoteCounts[comment.ID] = commentVoteCount
+	}
+
 	currentUser, _ := utils.GetCurrentUser(r)
 
 	data := PageData{
-		Result:      "",
-		Status:      "200",
-		Post:        post,
-		VoteCount:   voteCount,
-		Comments:    comments,
-		CurrentUser: currentUser,
+		Result:            "",
+		Status:            "200",
+		Post:              post,
+		VoteCount:         voteCount,
+		Comments:          comments,
+		CurrentUser:       currentUser,
+		CommentVoteCounts: commentVoteCounts, // Add this new field
 	}
 
 	err = Templates.ExecuteTemplate(w, "postview.html", data)

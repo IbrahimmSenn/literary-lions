@@ -175,8 +175,6 @@
   resize: vertical;
   min-height: 80px;
   text-align: left;
-  
-
   display: block;
   line-height: 1.4;
   box-sizing: border-box;
@@ -275,4 +273,51 @@
 
 .comment-content p {
   margin: 0;
+}
+
+/* Comment Actions */
+.comment-actions {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(86, 21, 9, 0.1);
+}
+
+.comment-actions .action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.comment-vote-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Hepta Slab', serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.comment-vote-btn:hover {
+  background: rgba(238, 224, 69, 0.3);
+  transform: translateY(-1px);
+}
+
+.comment-vote-btn .action-icon {
+  width: 14px;
+  height: 14px;
+  image-rendering: crisp-edges;
+}
+
+.comment-vote-btn.like-btn .count {
+  color: #27ae60;
+}
+
+.comment-vote-btn.dislike-btn .count {
+  color: #e74c3c;
 }

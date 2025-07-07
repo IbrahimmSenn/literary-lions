@@ -10,4 +10,5 @@ type Comment struct {
 	PostID    int       `json:"post_id"`
 	CreatedAt time.Time `json:"created_at"`
 	Username  string    `json:"username"`
+	LikeCount int       `json:"like_count"`
 }
