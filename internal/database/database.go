@@ -138,3 +138,75 @@ func CreateLikesTable(db *sql.DB) error {
 	log.Println("✅ Likes table created successfully!")
 	return nil
 }
+
+// Add these functions to your internal/database/database.go file
+
+// CreateCategoriesTable creates the Categories table
+func CreateCategoriesTable(db *sql.DB) error {
+	query := `
+	CREATE TABLE IF NOT EXISTS categories (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		name TEXT UNIQUE NOT NULL,
+		slug TEXT UNIQUE NOT NULL,
+		description TEXT,
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+	)`
+
+	_, err := db.Exec(query)
+	if err != nil {
+		return err
+	}
+
+	log.Println("✅ Categories table created successfully!")
+	return nil
+}
+
+// CreatePostCategoriesTable creates the junction table for post-category relationships
+func CreatePostCategoriesTable(db *sql.DB) error {
+	query := `
+	CREATE TABLE IF NOT EXISTS post_categories (
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		post_id INTEGER NOT NULL,
+		category_id INTEGER NOT NULL,
+		created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
+		FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE CASCADE,
+		UNIQUE(post_id, category_id)
+	)`
+
+	_, err := db.Exec(query)
+	if err != nil {
+		return err
+	}
+
+	log.Println("✅ Post Categories table created successfully!")
+	return nil
+}
+
+func InsertDefaultCategories(db *sql.DB) error {
+	categories := []struct {
+		name        string
+		slug        string
+		description string
+	}{
+		{"Book Reviews", "reviews", "Share your thoughts and reviews on books you've read"},
+		{"Upcoming Releases", "upcoming", "Discuss upcoming book releases and new authors"},
+		{"Chat with Authors", "chat-authors", "Connect and discuss with your favorite authors"},
+		{"News and Interviews", "news", "Latest book industry news and author interviews"},
+		{"Favourite Quotes", "quotes", "Share your favorite quotes from books"},
+		{"Bookies Favourite 2025 Award", "25award", "Nominations and discussions for our annual award"},
+		{"Book Recommendations", "recommendations", "Get and give book suggestions"},
+		{"General Discussion", "general", "All other book-related conversations"},
+	}
+
+	for _, cat := range categories {
+		query := `INSERT OR IGNORE INTO categories (name, slug, description) VALUES (?, ?, ?)`
+		_, err := db.Exec(query, cat.name, cat.slug, cat.description)
+		if err != nil {
+			return err
+		}
+	}
+
+	log.Println("✅ Default categories inserted successfully!")
+	return nil
+}

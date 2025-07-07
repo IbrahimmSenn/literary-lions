@@ -66,6 +66,7 @@ func ForumHandler(w http.ResponseWriter, r *http.Request) {
 // NewPostHandler manages post creation with authentication protection.
 // Only authenticated users can access the form and create posts (LOGIN REQUIRED)
 // Posts are automatically linked to the logged-in user's ID.
+// Replace your existing NewPostHandler with this updated version
 func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/newpost" {
 		http.NotFound(w, r)
@@ -79,11 +80,28 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Connect to database
+	db, err := database.ConnectDB()
+	if err != nil {
+		http.Error(w, "Database connection failed", http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+
+	// Get categories for dropdown
+	categoryRepo := sqlite.NewCategoryRepository(db)
+	categories, err := categoryRepo.GetAllCategories()
+	if err != nil {
+		log.Printf("Error getting categories: %v", err)
+		categories = []*models.Category{} // Empty slice on error
+	}
+
 	if r.Method == http.MethodGet {
 		log.Printf("✅ User %s accessing newpost form", currentUser.Username)
 		data := PageData{
-			Result: "",
-			Status: "200",
+			Result:     "",
+			Status:     "200",
+			Categories: categories, // Pass categories to template
 		}
 
 		err := Templates.ExecuteTemplate(w, "newpost.html", data)
@@ -103,22 +121,17 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 
 		title := r.FormValue("title")
 		content := r.FormValue("content")
+		categoryIDStr := r.FormValue("category") // Get selected category
 
 		if title == "" || content == "" {
 			data := PageData{
-				Error:  "Title and content are required",
-				Status: "400",
+				Error:      "Title and content are required",
+				Status:     "400",
+				Categories: categories, // Include categories for re-rendering
 			}
 			Templates.ExecuteTemplate(w, "newpost.html", data)
 			return
 		}
-
-		db, err := database.ConnectDB()
-		if err != nil {
-			http.Error(w, "Database connection failed", http.StatusInternalServerError)
-			return
-		}
-		defer db.Close()
 
 		postRepo := sqlite.NewPostRepository(db)
 
@@ -133,6 +146,18 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 			log.Printf("Error creating post: %v", err)
 			http.Error(w, "Error saving post", http.StatusInternalServerError)
 			return
+		}
+
+		// Associate category with post if selected
+		if categoryIDStr != "" {
+			categoryID, err := strconv.Atoi(categoryIDStr)
+			if err == nil && categoryID > 0 {
+				err = categoryRepo.AddCategoryToPost(newPost.ID, categoryID)
+				if err != nil {
+					log.Printf("Error associating category with post: %v", err)
+					// Don't fail the post creation, just log the error
+				}
+			}
 		}
 
 		log.Printf("✅ Post created by user %s: %s", currentUser.Username, title)

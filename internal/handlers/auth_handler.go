@@ -27,6 +27,7 @@ type PageData struct {
 	CurrentUser *models.User
 	User        *models.User
 	Stats       *UserStats
+	Categories  []*models.Category
 }
 
 type UserStats struct {

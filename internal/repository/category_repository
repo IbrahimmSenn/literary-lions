@@ -1,0 +1,24 @@
+package repository
+
+import "literary-lions-forum/internal/models"
+
+// CategoryRepository defines operations for managing categories
+type CategoryRepository interface {
+	// GetAllCategories retrieves all available categories
+	GetAllCategories() ([]*models.Category, error)
+
+	// GetCategoryByID finds a category by its ID
+	GetCategoryByID(id int) (*models.Category, error)
+
+	// GetCategoryBySlug finds a category by its slug
+	GetCategoryBySlug(slug string) (*models.Category, error)
+
+	// AddCategoryToPost associates a category with a post
+	AddCategoryToPost(postID, categoryID int) error
+
+	// GetCategoriesForPost gets all categories associated with a post
+	GetCategoriesForPost(postID int) ([]*models.Category, error)
+
+	// RemoveCategoriesFromPost removes all category associations from a post
+	RemoveCategoriesFromPost(postID int) error
+}

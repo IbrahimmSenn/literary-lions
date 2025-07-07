@@ -39,6 +39,8 @@ func main() {
 func createTables(db *sql.DB) error {
 	tables := []func(*sql.DB) error{
 		database.CreateUsersTable,
+		database.CreateCategoriesTable,
+		database.CreatePostCategoriesTable,
 		database.CreatePostsTable,
 		database.CreateCommentsTable,
 		database.CreateSessionsTable,
