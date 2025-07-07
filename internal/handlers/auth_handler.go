@@ -25,6 +25,14 @@ type PageData struct {
 	VoteCount   *models.VoteCount
 	Comments    []*models.Comment
 	CurrentUser *models.User
+	User        *models.User
+	Stats       *UserStats
+}
+
+type UserStats struct {
+	PostCount     int
+	CommentCount  int
+	LikesReceived int
 }
 
 // Templates variable (will be set from main)

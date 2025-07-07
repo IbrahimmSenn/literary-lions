@@ -59,7 +59,6 @@ func setupRoutes() {
 	// Page routes
 	http.HandleFunc("/", handlers.HomeHandler)
 	http.HandleFunc("/error", handlers.ErrorHandler)
-	http.HandleFunc("/postview", handlers.PostViewHandler)
 	http.HandleFunc("/profile", handlers.ProfileHandler)
 
 	// Authentication routes
