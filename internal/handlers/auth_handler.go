@@ -36,6 +36,7 @@ type UserStats struct {
 	PostCount     int
 	CommentCount  int
 	LikesReceived int
+	LikesGiven int
 }
 
 // Templates variable (will be set from main)
