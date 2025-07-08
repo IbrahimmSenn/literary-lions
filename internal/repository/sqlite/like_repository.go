@@ -98,3 +98,20 @@ func (r *SQLiteLikeRepository) GetCommentVoteCount(commentID int) (*models.VoteC
 
 	return voteCount, nil
 }
+
+// GetLikesGivenByUserID returns the count of likes given by a user
+func (r *SQLiteLikeRepository) GetLikesGivenByUserID(userID int) (int, error) {
+	query := `
+		SELECT COUNT(*) 
+		FROM likes 
+		WHERE user_id = ? AND is_like = 1
+	`
+	
+	var count int
+	err := r.db.QueryRow(query, userID).Scan(&count)
+	if err != nil {
+		return 0, err
+	}
+	
+	return count, nil
+}
