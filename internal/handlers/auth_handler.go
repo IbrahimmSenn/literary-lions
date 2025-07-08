@@ -21,6 +21,7 @@ type PageData struct {
 	Error             string
 	Posts             []*models.Post
 	Post              *models.Post
+	PostAuthor        *models.User
 	VoteCounts        map[int]*models.VoteCount
 	VoteCount         *models.VoteCount
 	Comments          []*models.Comment
@@ -30,13 +31,15 @@ type PageData struct {
 	Categories        []*models.Category
 	CommentVoteCounts map[int]*models.VoteCount
 	PostCategories    map[int]*models.Category
+	Quote             *models.Quote
+	Book              *models.Book
 }
 
 type UserStats struct {
 	PostCount     int
 	CommentCount  int
 	LikesReceived int
-	LikesGiven int
+	LikesGiven    int
 }
 
 // Templates variable (will be set from main)
@@ -264,4 +267,63 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 func generateSessionID() string {
 	return uuid.New().String()
+}
+
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/logout" {
+		http.NotFound(w, r)
+		return
+	}
+
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Get session cookie
+	cookie, err := r.Cookie("session_id")
+	if err != nil {
+		// No session cookie found, redirect to home anyway
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	// Connect to database
+	db, err := database.ConnectDB()
+	if err != nil {
+		// Even if DB connection fails, clear the cookie and redirect
+		clearSessionCookie(w)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+	defer db.Close()
+
+	// Delete session from database
+	sessionRepo := sqlite.NewSessionRepository(db)
+	err = sessionRepo.DeleteSession(cookie.Value)
+	if err != nil {
+		log.Printf("Error deleting session from database: %v", err)
+		// Continue anyway - we'll clear the cookie
+	}
+
+	// Clear session cookie
+	clearSessionCookie(w)
+
+	log.Printf("✅ User logged out successfully")
+
+	// Redirect to home page
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+// Helper function to clear session cookie
+func clearSessionCookie(w http.ResponseWriter) {
+	cookie := &http.Cookie{
+		Name:     "session_id",
+		Value:    "",
+		Expires:  time.Unix(0, 0), // Set to past date to delete
+		HttpOnly: true,
+		Path:     "/",
+		MaxAge:   -1, // Negative MaxAge means delete cookie immediately
+	}
+	http.SetCookie(w, cookie)
 }

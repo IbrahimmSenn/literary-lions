@@ -47,20 +47,11 @@ func (r *SQLiteCommentRepository) GetCommentsByPostID(postID int) ([]*models.Com
         c.user_id, 
         c.post_id, 
         c.created_at,
-        u.username,
-        COALESCE(like_counts.likes, 0) as like_count
+        u.username
     FROM comments c
     JOIN users u ON c.user_id = u.id
-    LEFT JOIN (
-        SELECT 
-            comment_id,
-            COUNT(CASE WHEN is_like = 1 THEN 1 END) as likes
-        FROM likes 
-        WHERE comment_id IS NOT NULL
-        GROUP BY comment_id
-    ) like_counts ON c.id = like_counts.comment_id
     WHERE c.post_id = ? 
-    ORDER BY like_count DESC, c.created_at DESC
+    ORDER BY c.created_at ASC
 `
 
 	rows, err := r.db.Query(query, postID)
@@ -72,14 +63,20 @@ func (r *SQLiteCommentRepository) GetCommentsByPostID(postID int) ([]*models.Com
 	var comments []*models.Comment
 	for rows.Next() {
 		comment := &models.Comment{}
-		var username string
-		err := rows.Scan(&comment.ID, &comment.Content, &comment.UserID, &comment.PostID, &comment.CreatedAt, &comment.Username, &comment.LikeCount)
+
+		// Scan directly into the comment fields
+		err := rows.Scan(
+			&comment.ID,
+			&comment.Content,
+			&comment.UserID,
+			&comment.PostID,
+			&comment.CreatedAt,
+			&comment.Username, // This will be populated correctly
+		)
 		if err != nil {
 			return nil, err
 		}
 
-		// Add username to comment
-		comment.Username = username
 		comments = append(comments, comment)
 	}
 

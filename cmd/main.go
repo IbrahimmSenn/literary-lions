@@ -12,7 +12,6 @@ import (
 )
 
 func init() {
-
 	handlers.Templates = template.Must(template.ParseGlob("web/templates/*.html"))
 }
 
@@ -33,9 +32,9 @@ func main() {
 		log.Fatal("Failed to insert default categories:", err)
 	}
 
-	setupRoutes()
+	setupStaticFiles() // Move this BEFORE setupRoutes
 
-	setupStaticFiles()
+	setupRoutes()
 
 	startServer()
 }
@@ -71,6 +70,7 @@ func setupRoutes() {
 	// Authentication routes
 	http.HandleFunc("/login", handlers.LoginHandler)
 	http.HandleFunc("/register", handlers.RegisterHandler)
+	http.HandleFunc("/logout", handlers.LogoutHandler)
 
 	// Forum routes
 	http.HandleFunc("/forum", handlers.ForumHandler)

@@ -8,6 +8,7 @@
     <title>Bookies Book Forum</title>
     <link rel="stylesheet" href="/static/reset.css">
     <link rel="stylesheet" href="/static/header.css">
+    <link rel="stylesheet" href="/static/home.css">
     <link rel="stylesheet" href="/static/mainstyle.css">
     <link rel="stylesheet" href="/static/footer.css">
 
@@ -16,19 +17,93 @@
     <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/media/favicon.png" />
 </head>
-</head>
 
 <body>
+    <!-- Dynamic header based on user login status -->
     {{if .CurrentUser}}
     {{ template "user_header.html" . }}
     {{else}}
     {{ template "header.html" . }}
     {{end}}
+
     <div class="container-main">
-        <header>
-            <h1>Blaaben</h1>
-        </header>
+        <div class="home-content-wrapper">
+            <!-- Left side: Hot Topics -->
+            <div class="left-column">
+                <section class="hot-topics">
+                    <h3>🔥 What's Hot in the Forum</h3>
+                    <div class="topic-list">
+                        <div class="topic-item">
+                            <span class="topic-category">Book Reviews</span>
+                            <a href="/forum" class="topic-title">Latest book discussions and honest reviews</a>
+                            <span class="topic-meta">Active discussions about recent reads</span>
+                        </div>
+                        <div class="topic-item">
+                            <span class="topic-category">Recommendations</span>
+                            <a href="/forum" class="topic-title">Hidden gems and must-read suggestions</a>
+                            <span class="topic-meta">Community-driven book discoveries</span>
+                        </div>
+                    </div>
+                    <a href="/forum" class="view-all-link">View all forum discussions →</a>
+                </section>
+            </div>
+
+            <!-- Right side: Quote and Book Recommendation -->
+            <div class="right-column">
+                <!-- Quote of the Day -->
+                <div class="quote-container">
+                    <div class="quote-header">
+                        <h3>quote of the day</h3>
+                    </div>
+                    {{if .Quote}}
+                    <blockquote class="daily-quote">
+                        <p class="quote-text">"{{.Quote.Text}}"</p>
+                        <footer class="quote-footer">
+                            <cite class="quote-author">— {{.Quote.Author}}</cite>
+                            {{if .Quote.BookTitle}}
+                            <span class="quote-book">{{.Quote.BookTitle}}</span>
+                            {{end}}
+                        </footer>
+                    </blockquote>
+                    {{else}}
+                    <p>Loading today's quote...</p>
+                    {{end}}
+                </div>
+
+                <!-- Book Recommendation -->
+                <div class="book-recommendation">
+                    <div class="book-header">
+                        <h3>Book Recommendation of the Day</h3>
+                    </div>
+                    {{if .Book}}
+                    <div class="book-card">
+                        {{if .Book.ImageURL}}
+                        <div class="book-image">
+                            <img src="{{.Book.ImageURL}}" alt="{{.Book.Title}}">
+                        </div>
+                        {{else}}
+                        <div class="book-image">
+                            <div
+                                style="width: 80px; height: 120px; background: linear-gradient(135deg, #561509, #C4B408); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; text-align: center; font-weight: bold;">
+                                📚<br>BOOK
+                            </div>
+                        </div>
+                        {{end}}
+                        <div class="book-info">
+                            <h4 class="book-title">{{.Book.Title}}</h4>
+                            <p class="book-author">by {{.Book.Author}}</p>
+                            <span class="book-genre">{{.Book.Genre}}</span>
+                            <p class="book-description">{{.Book.Description}}</p>
+                        </div>
+                    </div>
+                    {{else}}
+                    <p>Loading today's recommendation...</p>
+                    {{end}}
+                </div>
+            </div>
+        </div>
     </div>
+
     {{ template "footer.html" . }}
 </body>
 

@@ -219,6 +219,15 @@ func PostDetailHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Get the username of the post author
+	userRepo := sqlite.NewUserRepository(db)
+	postAuthor, err := userRepo.GetUserByID(post.UserID)
+	if err != nil {
+		log.Printf("Error getting post author: %v", err)
+		// Set a default username if we can't find the author
+		postAuthor = &models.User{Username: "Unknown User"}
+	}
+
 	// Get vote count for this post
 	likeRepo := sqlite.NewLikeRepository(db)
 	voteCount, err := likeRepo.GetPostVoteCount(postID)
@@ -251,10 +260,11 @@ func PostDetailHandler(w http.ResponseWriter, r *http.Request) {
 		Result:            "",
 		Status:            "200",
 		Post:              post,
+		PostAuthor:        postAuthor, // Pass the author properly
 		VoteCount:         voteCount,
 		Comments:          comments,
 		CurrentUser:       currentUser,
-		CommentVoteCounts: commentVoteCounts, // Add this new field
+		CommentVoteCounts: commentVoteCounts,
 	}
 
 	err = Templates.ExecuteTemplate(w, "postview.html", data)
