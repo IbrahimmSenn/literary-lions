@@ -171,7 +171,7 @@
   color: #561509;
   font-size: 1rem;
   font-family: 'Hepta Slab', serif;
-  height: clamp(100px, 15vh, 120px);
+  height: clamp(80px, 12vh, 100px);
   resize: vertical;
   min-height: 80px;
   text-align: left;

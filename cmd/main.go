@@ -28,6 +28,11 @@ func main() {
 		log.Fatal("Failed to create tables:", err)
 	}
 
+	// HELI ADDED THIS - This populates the categories table
+	if err := database.InsertDefaultCategories(db); err != nil {
+		log.Fatal("Failed to insert default categories:", err)
+	}
+
 	setupRoutes()
 
 	setupStaticFiles()
