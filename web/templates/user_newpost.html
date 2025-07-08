@@ -1,4 +1,4 @@
-{{define "newpost.html"}}
+{{define "user_newpost.html"}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    {{ template "header.html" . }}
+    {{ template "user_header.html" . }}
 
     <div class="container-main">
         <div class="form-container">
@@ -29,36 +29,46 @@
             <form class="form" action="/newpost" method="POST">
 
                 <!------------------------------ category ------------------------------>
-                <!------------------------------ category ------------------------------>
                 <div class="category-bar">
-                    <div class="filter-dropdown">
-                        <button type="button" class="filter-button">Category<span
-                                class="dropdown-arrow">▼</span></button>
+                    <div class="category-dropdown">
+                        <!-- Radio buttons MUST come first for CSS selectors to work -->
+                        {{range .Categories}}
+                        <input type="radio" name="category" value="{{.ID}}" id="cat-{{.ID}}" style="display: none;">
+                        {{end}}
+                        
+                        <!-- Button with dynamic text -->
+                        <button type="button" class="category-button">
+                            <span class="button-text-default">Category</span>
+                            {{range .Categories}}
+                            <span class="button-text-selected button-text-{{.ID}}">{{.Name}}</span>
+                            {{end}}
+                            <span class="dropdown-arrow">▼</span>
+                        </button>
+                        
+                        <!-- Dropdown content -->
                         <div class="dropdown-content">
                             {{range .Categories}}
-                            <input type="radio" name="category" value="{{.ID}}" id="cat-{{.ID}}" style="display: none;">
                             <label for="cat-{{.ID}}" class="category-link">{{.Name}}</label>
                             {{end}}
                         </div>
                     </div>
                 </div>
-                <!------------------------------ t ------------------------------>
+                <!------------------------------ title ------------------------------>
                 <div class="input-group">
-                    <label for="username">Title</label>
-                    <input type="title" name="title" id="title" placeholder="">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" id="title" placeholder="">
                 </div>
 
                 <!------------------------------ Post text ------------------------------>
                 <div class="input-group">
                     <label for="newpost">Post</label>
                     <textarea id="post-content" name="content" class="form-textarea content-textarea" placeholder=""
-                        required>
-                    </textarea>
+                        required></textarea>
                 </div>
 
                 <div class="form-actions">
                     <button class="button">Post</button>
-                    <button class="button-cancel">Cancel</button>
+                    <button class="button-cancel" type="button">Cancel</button>
                 </div>
             </form>
         </div>

@@ -104,7 +104,7 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 			Categories: categories, // Pass categories to template
 		}
 
-		err := Templates.ExecuteTemplate(w, "newpost.html", data)
+		err := Templates.ExecuteTemplate(w, "user_newpost.html", data)
 		if err != nil {
 			http.Error(w, "Error rendering template", http.StatusInternalServerError)
 			log.Printf("Template error: %v", err)

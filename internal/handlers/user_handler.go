@@ -71,7 +71,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 		Stats:  stats,
 	}
 
-	err = Templates.ExecuteTemplate(w, "profile.html", data)
+	err = Templates.ExecuteTemplate(w, "user_profile.html", data)
 	if err != nil {
 		http.Error(w, "Error rendering template", http.StatusInternalServerError)
 		log.Printf("Template error: %v", err)
