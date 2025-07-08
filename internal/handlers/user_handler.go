@@ -49,6 +49,13 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//FOR THE LIKES
+
+	likesGiven, err := likeRepo.GetLikesGivenByUserID(currentUser.ID)
+	if err != nil {
+    	log.Printf("Error getting likes given: %v", err)
+    	likesGiven = 0 // Default to 0 on error
+	}
+
 	likesReceived := 0
 	for _, post := range userPosts {
 		voteCount, err := likeRepo.GetPostVoteCount(post.ID)
@@ -61,7 +68,9 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	stats := &UserStats{
 		PostCount:     len(userPosts),
 		CommentCount:  len(userComments),
+		LikesGiven: likesGiven,
 		LikesReceived: likesReceived,
+
 	}
 
 	data := PageData{
