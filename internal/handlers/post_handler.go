@@ -28,6 +28,9 @@ func ForumHandler(w http.ResponseWriter, r *http.Request) {
 
 	postRepo := sqlite.NewPostRepository(db)
 	likeRepo := sqlite.NewLikeRepository(db)
+	categoryRepo := sqlite.NewCategoryRepository(db)
+
+	currentUser, _ := utils.GetCurrentUser(r)
 
 	posts, err := postRepo.GetAllPosts()
 	if err != nil {
@@ -37,20 +40,38 @@ func ForumHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	voteCounts := make(map[int]*models.VoteCount)
+	postCategories := make(map[int]*models.Category)
+
 	for _, post := range posts {
+		// Get vote counts
 		voteCount, err := likeRepo.GetPostVoteCount(post.ID)
 		if err != nil {
 			log.Printf("Error getting vote count for post %d: %v", post.ID, err)
 			voteCount = &models.VoteCount{Likes: 0, Dislikes: 0}
 		}
 		voteCounts[post.ID] = voteCount
+
+		// Get category for each post - SAFER VERSION
+		categories, err := categoryRepo.GetCategoriesForPost(post.ID)
+		if err != nil || len(categories) == 0 {
+			// Create a default General category object
+			postCategories[post.ID] = &models.Category{
+				ID:   0,
+				Name: "General",
+				Slug: "general",
+			}
+		} else {
+			postCategories[post.ID] = categories[0]
+		}
 	}
 
 	data := PageData{
-		Result:     "",
-		Status:     "200",
-		Posts:      posts,
-		VoteCounts: voteCounts,
+		Result:         "",
+		Status:         "200",
+		Posts:          posts,
+		VoteCounts:     voteCounts,
+		PostCategories: postCategories,
+		CurrentUser:    currentUser,
 	}
 
 	err = Templates.ExecuteTemplate(w, "forum.html", data)
@@ -66,13 +87,14 @@ func ForumHandler(w http.ResponseWriter, r *http.Request) {
 // NewPostHandler manages post creation with authentication protection.
 // Only authenticated users can access the form and create posts (LOGIN REQUIRED)
 // Posts are automatically linked to the logged-in user's ID.
-// Replace your existing NewPostHandler with this updated version
+
 func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/newpost" {
 		http.NotFound(w, r)
 		return
 	}
 
+	// Check authentication first
 	currentUser, err := utils.GetCurrentUser(r)
 	if err != nil || currentUser == nil {
 		// Redirect with helpful context
@@ -99,9 +121,10 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		log.Printf("✅ User %s accessing newpost form", currentUser.Username)
 		data := PageData{
-			Result:     "",
-			Status:     "200",
-			Categories: categories, // Pass categories to template
+			Result:      "",
+			Status:      "200",
+			Categories:  categories,
+			CurrentUser: currentUser, // IMPORTANT: Pass current user to template
 		}
 
 		err := Templates.ExecuteTemplate(w, "user_newpost.html", data)
@@ -121,15 +144,17 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 
 		title := r.FormValue("title")
 		content := r.FormValue("content")
-		categoryIDStr := r.FormValue("category") // Get selected category
+		categoryIDStr := r.FormValue("category")
+		log.Printf("🔍 DEBUG: Received category ID: '%s'", categoryIDStr)
 
 		if title == "" || content == "" {
 			data := PageData{
-				Error:      "Title and content are required",
-				Status:     "400",
-				Categories: categories, // Include categories for re-rendering
+				Error:       "Title and content are required",
+				Status:      "400",
+				Categories:  categories,
+				CurrentUser: currentUser, // IMPORTANT: Pass current user for error rendering
 			}
-			Templates.ExecuteTemplate(w, "newpost.html", data)
+			Templates.ExecuteTemplate(w, "user_newpost.html", data) // Use correct template
 			return
 		}
 

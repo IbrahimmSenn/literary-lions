@@ -20,7 +20,11 @@
 </head>
 
 <body>
+    {{if .CurrentUser}}
+    {{ template "user_header.html" . }}
+    {{else}}
     {{ template "header.html" . }}
+    {{end}}
 
     <div class="container-main">
         <!------------------------------ Search bar ------------------------------>
@@ -80,7 +84,7 @@
                 <div class="post-bar">
                     <div class="post-date">{{.CreatedAt.Format "02.01.2006"}}</div>
                     <div class="post-category">
-                        <span class="category-tag general">General</span>
+                        <span class="category-tag">{{(index $.PostCategories .ID).Name}}</span>
                     </div>
                     <div class="post-title">{{.Title}}</div>
                     <div class="post-stats">

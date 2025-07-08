@@ -1,11 +1,11 @@
 package handlers
 
 import (
+	"literary-lions-forum/internal/utils"
 	"log"
 	"net/http"
 )
 
-// HomeHandler handles the home page
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
@@ -17,15 +17,26 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// Get current user
+	currentUser, _ := utils.GetCurrentUser(r)
+
 	data := PageData{
-		Result: "",
-		Status: "200",
+		Result:      "",
+		Status:      "200",
+		CurrentUser: currentUser,
 	}
 
-	err := Templates.ExecuteTemplate(w, "home.html", data)
-	if err != nil {
-		http.Error(w, "Error rendering template", http.StatusInternalServerError)
-		log.Printf("Template error: %v", err)
+	// Choose template based on login status
+	if currentUser != nil {
+		// User is logged in - redirect to profile or show user home
+		http.Redirect(w, r, "/profile", http.StatusSeeOther)
+	} else {
+		// User not logged in - show public home
+		err := Templates.ExecuteTemplate(w, "home.html", data)
+		if err != nil {
+			http.Error(w, "Error rendering template", http.StatusInternalServerError)
+			log.Printf("Template error: %v", err)
+		}
 	}
 }
 

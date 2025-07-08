@@ -1,23 +1,29 @@
 {{define "register.html"}}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bookies Book Forum</title>
-        <link rel="stylesheet" href="/static/reset.css">
-        <link rel="stylesheet" href="/static/header.css">
-        <link rel="stylesheet" href="/static/register.css">
-        <link rel="stylesheet" href="/static/mainstyle.css">
-        <link rel="stylesheet" href="/static/footer.css">
+    <link rel="stylesheet" href="/static/reset.css">
+    <link rel="stylesheet" href="/static/header.css">
+    <link rel="stylesheet" href="/static/register.css">
+    <link rel="stylesheet" href="/static/mainstyle.css">
+    <link rel="stylesheet" href="/static/footer.css">
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
-        <link rel="icon" type="image/x-icon" href="/media/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="/media/favicon.png" />
 </head>
+
 <body>
+    {{if .CurrentUser}}
+    {{ template "user_header.html" . }}
+    {{else}}
     {{ template "header.html" . }}
+    {{end}}
     <div class="container-main">
         <div class="form-container">
             <p class="title">Become</p>
@@ -29,7 +35,7 @@
                     <input type="text" name="username" id="username" placeholder="" required>
                 </div>
                 <div class="input-group">
-                    <label for="email">Email</label> 
+                    <label for="email">Email</label>
                     <input type="email" name="email" id="email" placeholder="" required>
                 </div>
                 <div class="input-group">
@@ -37,22 +43,23 @@
                     <input type="password" name="password" id="password" placeholder="" required minlength="6">
                 </div>
                 <p class="signup">Already have an account?
-                <a rel="noopener noreferrer" href="/login" class="">Sign in</a> 
-            </p>
+                    <a rel="noopener noreferrer" href="/login" class="">Sign in</a>
+                </p>
                 <button type="submit" class="sign">Register</button>
-            
 
-            <!-- Display error messages -->
-            {{if .Error}}
-            <div class="error-message">
-                <p>{{.Error}}</p>
-            </div>
-            {{end}}
+
+                <!-- Display error messages -->
+                {{if .Error}}
+                <div class="error-message">
+                    <p>{{.Error}}</p>
+                </div>
+                {{end}}
 
             </form>
         </div>
     </div>
-    {{ template "footer.html" . }} 
+    {{ template "footer.html" . }}
 </body>
+
 </html>
 {{end}}

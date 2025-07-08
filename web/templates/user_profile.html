@@ -1,6 +1,7 @@
 {{define "user_profile.html"}}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,19 +17,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/media/favicon.png" />
 </head>
+
 <body>
     {{ template "user_header.html" . }}
-    
+
     <div class="container-main">
         <!-- Profile Header Section -->
         <div class="profile-header">
             <div class="profile-basic-info">
-                <h1 class="profile-username">{{.User.Username}}</h1>
-                <p class="profile-email">{{.User.Email}}</p>
-                <p class="profile-joined">Member since {{.User.CreatedAt.Format "January 2006"}}</p>
+                <h1 class="profile-username">{{.CurrentUser.Username}}</h1>
+                <p class="profile-email">{{.CurrentUser.Email}}</p>
+                <p class="profile-joined">Member since {{.CurrentUser.CreatedAt.Format "January 2006"}}</p>
             </div>
         </div>
-
         <!-- Profile Stats -->
         <div class="profile-stats">
             <div class="stat-item">
@@ -53,5 +54,6 @@
 
     {{ template "footer.html" . }}
 </body>
+
 </html>
 {{end}}

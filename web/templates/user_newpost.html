@@ -19,7 +19,11 @@
 </head>
 
 <body>
+    {{if .CurrentUser}}
     {{ template "user_header.html" . }}
+    {{else}}
+    {{ template "header.html" . }}
+    {{end}}
 
     <div class="container-main">
         <div class="form-container">
@@ -35,7 +39,7 @@
                         {{range .Categories}}
                         <input type="radio" name="category" value="{{.ID}}" id="cat-{{.ID}}" style="display: none;">
                         {{end}}
-                        
+
                         <!-- Button with dynamic text -->
                         <button type="button" class="category-button">
                             <span class="button-text-default">Category</span>
@@ -44,7 +48,7 @@
                             {{end}}
                             <span class="dropdown-arrow">▼</span>
                         </button>
-                        
+
                         <!-- Dropdown content -->
                         <div class="dropdown-content">
                             {{range .Categories}}

@@ -29,6 +29,7 @@ type PageData struct {
 	Stats             *UserStats
 	Categories        []*models.Category
 	CommentVoteCounts map[int]*models.VoteCount
+	PostCategories    map[int]*models.Category
 }
 
 type UserStats struct {

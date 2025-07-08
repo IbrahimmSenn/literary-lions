@@ -19,7 +19,11 @@
 </head>
 
 <body>
+    {{if .CurrentUser}}
+    {{ template "user_header.html" . }}
+    {{else}}
     {{ template "header.html" . }}
+    {{end}}
 
     <div class="container-main">
         <div class="post-container">

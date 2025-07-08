@@ -65,10 +65,11 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := PageData{
-		Result: "",
-		Status: "200",
-		User:   currentUser,
-		Stats:  stats,
+		Result:      "",
+		Status:      "200",
+		CurrentUser: currentUser, // Add this for conditional headers
+		User:        currentUser, // Keep this for backward compatibility
+		Stats:       stats,
 	}
 
 	err = Templates.ExecuteTemplate(w, "user_profile.html", data)
