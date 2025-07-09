@@ -1,77 +1,79 @@
-# Literary Lions Forum - Entity Relationship Diagram
+# Database ERD - Literary Lions Forum
 
-## Database Schema Overview
-
-This ERD shows the relationships between all tables in the Literary Lions Forum database.
+The structure of the database is visualised here:
 
 ```mermaid
 erDiagram
     users {
-        int id PK
-        string email UK
-        string username UK
-        string password
-        datetime created_at
+        INTEGER user_id PK
+        TEXT username
+        TEXT email
+        TEXT password_hash
+        TIMESTAMP date_created
     }
     
     posts {
-        int id PK
-        string title
-        text content
-        int user_id FK
-        datetime created_at
-        datetime updated_at
+        INTEGER post_id PK
+        INTEGER user_id FK
+        TEXT post_title
+        TEXT post_content
+        TEXT post_category
+        TIMESTAMP post_time
+        INTEGER post_likes
+        INTEGER post_dislikes
     }
     
     comments {
-        int id PK
-        text content
-        int user_id FK
-        int post_id FK
-        datetime created_at
+        INTEGER comment_id PK
+        INTEGER post_id FK
+        INTEGER user_id FK
+        TEXT comment_content
+        TIMESTAMP comment_time
+        INTEGER comment_likes
+        INTEGER comment_dislikes
     }
     
     categories {
-        int id PK
-        string name UK
-        string slug UK
-        text description
-        datetime created_at
+        INTEGER category_id PK
+        TEXT name
+        TEXT slug
+        TEXT description
+        TIMESTAMP created_at
     }
     
     post_categories {
-        int id PK
-        int post_id FK
-        int category_id FK
-        datetime created_at
-    }
-    
-    likes {
-        int id PK
-        int user_id FK
-        int post_id FK
-        int comment_id FK
-        boolean is_like
-        datetime created_at
+        INTEGER id PK
+        INTEGER post_id FK
+        INTEGER category_id FK
+        TIMESTAMP created_at
     }
     
     sessions {
-        string id PK
-        int user_id FK
-        datetime created_at
-        datetime expires_at
+        TEXT session_id PK
+        INTEGER user_id FK
+        TIMESTAMP start_time
+        TIMESTAMP expiry_time
+    }
+    
+    likes {
+        INTEGER like_id PK
+        INTEGER user_id FK
+        INTEGER post_id FK
+        INTEGER comment_id FK
+        BOOLEAN is_like
+        TIMESTAMP created_at
     }
     
     %% Relationships
-    users ||--o{ posts : "creates"
-    users ||--o{ comments : "writes"
-    users ||--o{ likes : "gives"
-    users ||--o{ sessions : "has"
+    users ||--o{ posts : creates
+    users ||--o{ comments : writes
+    users ||--o{ sessions : has
+    users ||--o{ likes : gives
     
-    posts ||--o{ comments : "has"
-    posts ||--o{ likes : "receives"
-    posts ||--o{ post_categories : "belongs_to"
+    posts ||--o{ comments : contains
+    posts ||--o{ likes : receives
+    posts ||--o{ post_categories : belongs_to
     
-    comments ||--o{ likes : "receives"
+    comments ||--o{ likes : receives
     
-    categories ||--o{ post_categories : "contains"
+    categories ||--o{ post_categories : includes
