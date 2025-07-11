@@ -99,12 +99,12 @@ func (r *SQLiteLikeRepository) GetCommentVoteCount(commentID int) (*models.VoteC
 	return voteCount, nil
 }
 
-// GetLikesGivenByUserID returns the count of likes given by a user
+// GetLikesGivenByUserID returns the count of likes given by a user, but only for posts not comments
 func (r *SQLiteLikeRepository) GetLikesGivenByUserID(userID int) (int, error) {
 	query := `
 		SELECT COUNT(*) 
 		FROM likes 
-		WHERE user_id = ? AND is_like = 1
+		WHERE user_id = ? AND is_like = 1 AND post_id IS NOT NULL
 	`
 	
 	var count int
