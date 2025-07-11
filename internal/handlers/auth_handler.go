@@ -33,6 +33,10 @@ type PageData struct {
 	PostCategories    map[int]*models.Category
 	Quote             *models.Quote
 	Book              *models.Book
+	LikedPosts         []*models.Post              
+    LikedPostCategories map[int]*models.Category   
+    LikedPostVoteCounts map[int]*models.VoteCount  
+	
 }
 
 type UserStats struct {

@@ -25,4 +25,6 @@ type LikeRepository interface {
 
 	// GetLikesGivenByUserID returns the count of likes given by a user
 	GetLikesGivenByUserID(userID int) (int, error)
+
+	GetPostsLikedByUser(userID int) ([]*models.Post, error)
 }
