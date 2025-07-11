@@ -1,3 +1,4 @@
+/* Profile Header */
 .profile-header {
   width: clamp(340px, 85vw, 700px);
   margin: 0 auto;
@@ -14,7 +15,6 @@
   box-sizing: border-box;
   font-family: 'Hepta Slab', serif;
 }
-
 
 .profile-basic-info {
   display: flex;
@@ -79,6 +79,34 @@
   opacity: 0.8;
 }
 
+/* Clickable Stats */
+.clickable-stat {
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+.clickable-stat:hover .stat-number {
+  color: #C4B408;
+}
+
+/* Active stat styling */
+#posts-tab-radio:checked ~ .profile-stats label[for="posts-tab-radio"] .stat-number,
+#comments-tab-radio:checked ~ .profile-stats label[for="comments-tab-radio"] .stat-number,
+#liked-given-tab-radio:checked ~ .profile-stats label[for="liked-given-tab-radio"] .stat-number,
+#liked-received-tab-radio:checked ~ .profile-stats label[for="liked-received-tab-radio"] .stat-number {
+  color: #C4B408;
+  font-weight: 700;
+}
+
+#posts-tab-radio:checked ~ .profile-stats label[for="posts-tab-radio"] .stat-label,
+#comments-tab-radio:checked ~ .profile-stats label[for="comments-tab-radio"] .stat-label,
+#liked-given-tab-radio:checked ~ .profile-stats label[for="liked-given-tab-radio"] .stat-label,
+#liked-received-tab-radio:checked ~ .profile-stats label[for="liked-received-tab-radio"] .stat-label {
+  color: #C4B408;
+  font-weight: 600;
+}
+
 /* Profile Container */
 .profile-container {
   width: clamp(340px, 85vw, 650px);
@@ -92,21 +120,6 @@
   margin-bottom: 25px;
   box-sizing: border-box;
 }
-
-.section-title {
-  color: #561509;
-  font-size: clamp(1.2rem, 3vw, 1.5rem);
-  font-weight: 600;
-  margin: 0 0 25px 0;
-  text-align: center;
-  padding-bottom: 15px;
-}
-
-
-
-
-
-
 
 /* Form Actions */
 .form-actions {
@@ -133,10 +146,6 @@
   font-family: 'Hepta Slab', serif;
   text-decoration: none;
 }
-
-
-
-
 
 /* Account Actions */
 .account-actions {
@@ -171,6 +180,184 @@
 .success-message p {
   margin: 0;
   font-weight: 500;
+}
+
+/* Tab Content */
+.tab-contents {
+  width: 100%;
+  margin-top: 30px;
+}
+
+/* Tab Content Display Logic */
+.tab-content {
+  display: none;
+  width: 100%;
+}
+
+/* Show posts tab by default (since posts-tab-radio is checked) */
+#posts-tab-radio:checked ~ .tab-contents #posts-tab {
+  display: block;
+}
+
+#comments-tab-radio:checked ~ .tab-contents #comments-tab {
+  display: block;
+}
+
+#liked-given-tab-radio:checked ~ .tab-contents #liked-given-tab {
+  display: block;
+}
+
+#liked-received-tab-radio:checked ~ .tab-contents #liked-received-tab {
+  display: block;
+}
+
+
+
+/* Section Headers */
+.section-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.section-title {
+  color: #561509;
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-weight: 600;
+  margin: 0 0 25px 0;
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+/* Profile Posts Specific Styling */
+.profile-posts {
+  margin-top: 20px;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #561509;
+  font-family: 'Hepta Slab', serif;
+  opacity: 0.7;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 16px;
+}
+
+/* Post Bars - Using forum.css styles */
+.forum-posts {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: clamp(320px, 85vw, 800px);
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 0 20px;
+}
+
+.post-bar {
+  width: clamp(320px, 85vw, 800px);
+  height: 40px;
+  background: #FBF2E7;
+  border-radius: 0.375rem;
+  border: 1px solid #561509;
+  margin-bottom: 12px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.2s ease;
+  cursor: pointer;  
+  font-family: 'Hepta Slab', serif;      
+}
+
+.post-bar:hover {
+  background: #EEE045;
+  transform: translateY(-1px);
+}
+
+.post-date {
+  min-width: 80px;
+  font-size: 12px;
+  color: #561509;
+  font-weight: normal;
+}
+
+.post-category {
+  min-width: 120px;
+}
+
+.category-tag {
+  background: #C4B408;
+  color: #561509;
+  padding: 4px 12px;
+  border-radius: 0.375rem;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.category-tag.general { 
+  background: #C4B408; 
+}
+
+.post-title {
+  flex: 1;
+  font-size: 12px;
+  font-weight: 600;
+  color: #561509;
+  line-height: 1.4;
+}
+
+.post-stats {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.post-stats .stat-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.like-count {
+  color: #27ae60;
+}
+
+.dislike-count {
+  color: #e74c3c;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  image-rendering: crisp-edges;
+}
+
+.post-meta {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  font-size: 12px;
+  color: #561509;
+}
+
+.replies-count {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.author {
+  font-weight: 500;
+  color: #561509;
 }
 
 /* Mobile Responsiveness */
