@@ -17,7 +17,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Hepta+Slab:wght@100..900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="/media/favicon.png" />
 </head>
-</head>
 
 <body>
     {{if .CurrentUser}}
@@ -46,31 +45,69 @@
         <!------------------------------ Filter ------------------------------>
         <div class="filter-bar">
             <div class="filter-dropdown">
-                <button class="filter-button">Category<span class="dropdown-arrow">▼</span></button>
+                <!-- Radio buttons MUST come first for CSS selectors to work -->
+                <input type="radio" name="category" value="all" id="cat-all" checked style="display: none;">
+                <input type="radio" name="category" value="reviews" id="cat-reviews" style="display: none;">
+                <input type="radio" name="category" value="upcoming" id="cat-upcoming" style="display: none;">
+                <input type="radio" name="category" value="chat-authors" id="cat-chat-authors" style="display: none;">
+                <input type="radio" name="category" value="news" id="cat-news" style="display: none;">
+                <input type="radio" name="category" value="quotes" id="cat-quotes" style="display: none;">
+                <input type="radio" name="category" value="25award" id="cat-25award" style="display: none;">
+
+                <!-- Button with dynamic text -->
+                <button type="button" class="filter-button">
+                    <span class="button-text-default">Category</span>
+                    <span class="button-text-selected button-text-all">All Categories</span>
+                    <span class="button-text-selected button-text-reviews">Book Reviews</span>
+                    <span class="button-text-selected button-text-upcoming">Upcoming Releases</span>
+                    <span class="button-text-selected button-text-chat-authors">Chat with Authors</span>
+                    <span class="button-text-selected button-text-news">News and Interviews</span>
+                    <span class="button-text-selected button-text-quotes">Favourite Quotes</span>
+                    <span class="button-text-selected button-text-25award">Bookies Favourite 2025 Award</span>
+                    <span class="dropdown-arrow">▼</span>
+                </button>
+
+                <!-- Dropdown content -->
                 <div class="dropdown-content">
-                    <a href="#" data-category="reviews">Book reviews</a>
-                    <a href="#" data-category="upcoming">Upcoming releases</a>
-                    <a href="#" data-category="chat-authors">Chat with authors</a>
-                    <a href="#" data-category="news">News and interviews</a>
-                    <a href="#" data-category="quotes">Favourite quotes</a>
-                    <a href="#" data-category="25award">Bookies Favourite 2025 award</a>
+                    <label for="cat-all" class="category-link">All Categories</label>
+                    <label for="cat-reviews" class="category-link">Book Reviews</label>
+                    <label for="cat-upcoming" class="category-link">Upcoming Releases</label>
+                    <label for="cat-chat-authors" class="category-link">Chat with Authors</label>
+                    <label for="cat-news" class="category-link">News and Interviews</label>
+                    <label for="cat-quotes" class="category-link">Favourite Quotes</label>
+                    <label for="cat-25award" class="category-link">Bookies Favourite 2025 Award</label>
                 </div>
             </div>
+            
             <!------------------------------ Sorting ------------------------------>
             <div class="filter-dropdown">
-                <button class="filter-button">
-                    Sort: <span class="dropdown-arrow">▼</span>
+                <!-- Radio buttons MUST come first for CSS selectors to work -->
+                <input type="radio" name="sort" value="recent" id="sort-recent" checked style="display: none;">
+                <input type="radio" name="sort" value="viewed" id="sort-viewed" style="display: none;">
+                <input type="radio" name="sort" value="loved" id="sort-loved" style="display: none;">
+                <input type="radio" name="sort" value="disliked" id="sort-disliked" style="display: none;">
+
+                <!-- Button with dynamic text -->
+                <button type="button" class="filter-button">
+                    <span class="button-text-default">Sort:</span>
+                    <span class="button-text-selected button-text-recent">Recent</span>
+                    <span class="button-text-selected button-text-viewed">Most Viewed</span>
+                    <span class="button-text-selected button-text-loved">Most Loved</span>
+                    <span class="button-text-selected button-text-disliked">Most Disliked</span>
+                    <span class="dropdown-arrow">▼</span>
                 </button>
+
+                <!-- Dropdown content -->
                 <div class="dropdown-content">
-                    <a href="/" class="selected">Recent</a>
-                    <a href="/" class="selected">Most viewed</a>
-                    <a href="/" class="selected">Most loved</a>
-                    <a href="/" class="selected">Most disliked</a>
+                    <label for="sort-recent" class="category-link">Recent</label>
+                    <label for="sort-viewed" class="category-link">Most Viewed</label>
+                    <label for="sort-loved" class="category-link">Most Loved</label>
+                    <label for="sort-disliked" class="category-link">Most Disliked</label>
                 </div>
             </div>
 
             <div class="filter-clear">
-                <a href="/" class="clear-checkbox-label">
+                <a href="/forum" class="clear-checkbox-label">
                     <span class="checkbox-box"></span>
                     <span class="clear-text">Clear All</span>
                 </a>
