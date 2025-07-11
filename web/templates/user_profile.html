@@ -44,17 +44,9 @@
                 <span class="stat-number">{{.Stats.PostCount}}</span>
                 <span class="stat-label">Posts</span>
             </label>
-            <label for="comments-tab-radio" class="stat-item clickable-stat">
-                <span class="stat-number">{{.Stats.CommentCount}}</span>
-                <span class="stat-label">Comments</span>
-            </label>
             <label for="liked-given-tab-radio" class="stat-item clickable-stat">
                 <span class="stat-number">{{.Stats.LikesGiven}}</span>
                 <span class="stat-label">Liked Posts</span>
-            </label>
-            <label for="liked-received-tab-radio" class="stat-item clickable-stat">
-                <span class="stat-number">{{.Stats.LikesReceived}}</span>
-                <span class="stat-label">Liked by Others</span>
             </label>
         </div>
 
@@ -68,11 +60,6 @@
                 
                 <!-- Posts Container -->
                 <div class="forum-posts profile-posts">
-                    <!-- DEBUG: Add this temporarily -->
-                    <div style="background: yellow; padding: 10px; margin: 10px;">
-                        <p>Debug: Posts count = {{len .Posts}}</p>
-                        <p>Debug: First post = {{if .Posts}}{{(index .Posts 0).Title}}{{else}}No posts{{end}}</p>
-                    </div>
                     {{range .Posts}}
                     <a href="/post/{{.ID}}" style="text-decoration: none; color: inherit; display: block;">
                         <div class="post-bar">
@@ -133,37 +120,74 @@
                 </div>
             </div>
 
-            <!-- Comments Section -->
-            <div id="comments-tab" class="tab-content">
-                <div class="section-header">
-                    <h2 class="section-title">My Comments</h2>
-                </div>
-                <div class="empty-state">
-                    <p>Your comments will be displayed here</p>
-                </div>
-            </div>
-
             <!-- Liked Posts Section -->
             <div id="liked-given-tab" class="tab-content">
                 <div class="section-header">
                     <h2 class="section-title">Posts I Liked</h2>
                 </div>
-                <div class="empty-state">
-                    <p>Posts you liked will be displayed here</p>
-                </div>
-            </div>
-
-            <!-- Liked By Others Section -->
-            <div id="liked-received-tab" class="tab-content">
-                <div class="section-header">
-                    <h2 class="section-title">Posts Liked by Others</h2>
-                </div>
-                <div class="empty-state">
-                    <p>Your posts that others liked will be displayed here</p>
+                
+                <!-- Liked Posts Container -->
+                <div class="forum-posts profile-posts">
+                    {{range .LikedPosts}}
+                    <a href="/post/{{.ID}}" style="text-decoration: none; color: inherit; display: block;">
+                        <div class="post-bar">
+                            <div class="post-date">{{.CreatedAt.Format "02.01.2006"}}</div>
+                            <div class="post-category">
+                                <span class="category-tag">{{(index $.LikedPostCategories .ID).Name}}</span>
+                            </div>
+                            <div class="post-title">{{.Title}}</div>
+                            <div class="post-stats">
+                                <!-- Thumbs Up Button (Like) -->
+                                <div class="stat-item like-count">
+                                    <form method="POST" action="/vote" style="display: inline;"
+                                        onclick="event.stopPropagation();">
+                                        <input type="hidden" name="post_id" value="{{.ID}}">
+                                        <input type="hidden" name="action" value="like">
+                                        <button type="submit"
+                                            style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: transform 0.1s ease;">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#27ae60" stroke="#27ae60"
+                                                stroke-width="1.5">
+                                                <path
+                                                    d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
+                                            </svg>
+                                            <span style="color: #27ae60; font-weight: 600;">{{(index $.LikedPostVoteCounts
+                                                .ID).Likes}}</span>
+                                        </button>
+                                    </form>
+                                </div>
+                                
+                                <!-- Thumbs Down Button (Dislike) -->
+                                <div class="stat-item dislike-count">
+                                    <form method="POST" action="/vote" style="display: inline;"
+                                        onclick="event.stopPropagation();">
+                                        <input type="hidden" name="post_id" value="{{.ID}}">
+                                        <input type="hidden" name="action" value="dislike">
+                                        <button type="submit"
+                                            style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: transform 0.1s ease;">
+                                            <svg width="18" height="18" viewBox="0 0 24 24" fill="#e74c3c" stroke="#e74c3c" 
+                                                stroke-width="1.5" style="margin-top: 2px;">
+                                                <path 
+                                                d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3" />     
+                                            </svg>
+                                            <span style="color: #e74c3c; font-weight: 600;">{{(index $.LikedPostVoteCounts
+                                                .ID).Dislikes}}</span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    {{end}}
+                    
+                    <!-- Empty state when no liked posts -->
+                    {{if not .LikedPosts}}
+                    <div class="empty-state">
+                        <p>You haven't liked any posts yet</p>
+                    </div>
+                    {{end}}
                 </div>
             </div>
         </div>
-
         <!-- Account Actions -->
         <div class="account-actions">
             <a href="/logout" class="button logout-btn">Logout</a>
@@ -172,6 +196,5 @@
 
     {{ template "footer.html" . }}
 </body>
-
 </html>
 {{end}}

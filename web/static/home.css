@@ -1,11 +1,12 @@
-/* Home Page Layout */
 .home-content-wrapper {
     display: flex;
     gap: 40px;
-    max-width: 1200px;
+    width: 100%;;
+    justify-content: center;
     margin: 0 auto;
     padding: 20px;
     min-height: 500px;
+    margin-top: 80px;
 }
 
 .left-column {
@@ -192,7 +193,7 @@
 /* Book Recommendation Section - Right Side Elegant Style */
 .book-recommendation {
     background: transparent;
-    padding: 0;
+    padding-top: 40px;
     margin: 0;
     text-align: left;
     position: relative;

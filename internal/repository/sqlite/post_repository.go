@@ -96,3 +96,32 @@ func (r *SQLitePostRepository) GetPostsByUserID(userID int) ([]*models.Post, err
 	
 	return posts, nil
 }
+
+// GetPostsByUserIDWithLikes gets posts created by a user that have at least one like
+func (r *SQLitePostRepository) GetPostsByUserIDWithLikes(userID int) ([]*models.Post, error) {
+	query := `
+        SELECT DISTINCT p.id, p.title, p.content, p.user_id, p.created_at, p.updated_at
+        FROM posts p
+        JOIN likes l ON p.id = l.post_id
+        WHERE p.user_id = ? AND l.is_like = 1
+        ORDER BY p.created_at DESC
+    `
+    
+    rows, err := r.db.Query(query, userID)
+    if err != nil {
+        return nil, err
+    }
+    defer rows.Close()
+    
+    var posts []*models.Post
+    for rows.Next() {
+        post := &models.Post{}
+        err := rows.Scan(&post.ID, &post.Title, &post.Content, &post.UserID, &post.CreatedAt, &post.UpdatedAt)
+        if err != nil {
+            return nil, err
+        }
+        posts = append(posts, post)
+    }
+    
+    return posts, nil
+}

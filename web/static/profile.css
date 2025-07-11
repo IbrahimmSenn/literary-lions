@@ -1,4 +1,3 @@
-/* Profile Header */
 .profile-header {
   width: clamp(340px, 85vw, 700px);
   margin: 0 auto;
@@ -151,12 +150,15 @@
 .account-actions {
   display: flex;
   justify-content: center;
+  margin-bottom: 0px;
 }
 
 .logout-btn {
   background-color: #F08C2D !important;
   color: #561509 !important;
   width: 140px;
+  margin-top: 40px;
+  margin-bottom: 10px;
 }
 
 .logout-btn:hover {
@@ -216,21 +218,21 @@
 /* Section Headers */
 .section-header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
+  margin-top: 20px;
 }
 
 .section-title {
   color: #561509;
   font-size: clamp(1.2rem, 3vw, 1.5rem);
   font-weight: 600;
-  margin: 0 0 25px 0;
   text-align: center;
-  padding-bottom: 15px;
+  padding-bottom: 0px;
 }
 
 /* Profile Posts Specific Styling */
 .profile-posts {
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 /* Empty State */
@@ -254,7 +256,7 @@
   align-items: center;
   width: clamp(320px, 85vw, 800px);
   margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 0px;
   padding: 0 20px;
 }
 
@@ -360,38 +362,3 @@
   color: #561509;
 }
 
-/* Mobile Responsiveness */
-@media (max-width: 768px) {
-  .form-row {
-    grid-template-columns: 1fr;
-    gap: 15px;
-  }
-  
-  .profile-stats {
-    gap: clamp(20px, 6vw, 40px);
-  }
-  
-  .form-actions,
-  .account-actions {
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .button,
-  .button-cancel {
-    width: 100%;
-    max-width: 250px;
-  }
-}
-
-@media (max-width: 480px) {
-  .profile-header {
-    margin-top: 20px;
-    padding: 20px;
-  }
-  
-  .profile-section {
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-}

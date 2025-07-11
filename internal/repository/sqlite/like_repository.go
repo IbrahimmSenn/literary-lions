@@ -116,3 +116,31 @@ func (r *SQLiteLikeRepository) GetLikesGivenByUserID(userID int) (int, error) {
 	return count, nil
 }
 
+// GetPostsLikedByUser gets all posts that a user has liked
+func (r *SQLiteLikeRepository) GetPostsLikedByUser(userID int) ([]*models.Post, error) {
+	query := `
+		SELECT DISTINCT p.id, p.title, p.content, p.created_at, p.user_id
+		FROM posts p
+		JOIN likes l ON p.id = l.post_id
+		WHERE l.user_id = ? AND l.is_like = 1
+		ORDER BY l.created_at DESC
+	`
+	
+	rows, err := r.db.Query(query, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+	
+	var posts []*models.Post
+	for rows.Next() {
+		post := &models.Post{}
+		err := rows.Scan(&post.ID, &post.Title, &post.Content, &post.CreatedAt, &post.UserID)
+		if err != nil {
+			return nil, err
+		}
+		posts = append(posts, post)
+	}
+	
+	return posts, nil
+}

@@ -13,6 +13,7 @@ type PostRepository interface {
 	// GetAllPosts grabs every single post to show on the main forum page
 	GetAllPosts() ([]*models.Post, error)
 	
-	// GetPostsByUserID finds all posts by one user (like "show my posts" filter)
+	// GetPostsByUserID finds all posts by one user ("show my posts" filter)
 	GetPostsByUserID(userID int) ([]*models.Post, error)
+	
 }
