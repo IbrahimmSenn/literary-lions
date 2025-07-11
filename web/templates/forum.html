@@ -45,64 +45,35 @@
         <!------------------------------ Filter ------------------------------>
         <div class="filter-bar">
             <div class="filter-dropdown">
-                <!-- Radio buttons MUST come first for CSS selectors to work -->
-                <input type="radio" name="category" value="all" id="cat-all" checked style="display: none;">
-                <input type="radio" name="category" value="reviews" id="cat-reviews" style="display: none;">
-                <input type="radio" name="category" value="upcoming" id="cat-upcoming" style="display: none;">
-                <input type="radio" name="category" value="chat-authors" id="cat-chat-authors" style="display: none;">
-                <input type="radio" name="category" value="news" id="cat-news" style="display: none;">
-                <input type="radio" name="category" value="quotes" id="cat-quotes" style="display: none;">
-                <input type="radio" name="category" value="25award" id="cat-25award" style="display: none;">
-
                 <!-- Button with dynamic text -->
                 <button type="button" class="filter-button">
-                    <span class="button-text-default">Category</span>
-                    <span class="button-text-selected button-text-all">All Categories</span>
-                    <span class="button-text-selected button-text-reviews">Book Reviews</span>
-                    <span class="button-text-selected button-text-upcoming">Upcoming Releases</span>
-                    <span class="button-text-selected button-text-chat-authors">Chat with Authors</span>
-                    <span class="button-text-selected button-text-news">News and Interviews</span>
-                    <span class="button-text-selected button-text-quotes">Favourite Quotes</span>
-                    <span class="button-text-selected button-text-25award">Bookies Favourite 2025 Award</span>
+                    <span class="button-text-default">{{if eq .SelectedCategory "all"}}All Categories{{else if eq .SelectedCategory "reviews"}}Book Reviews{{else if eq .SelectedCategory "upcoming"}}Upcoming Releases{{else if eq .SelectedCategory "chat-authors"}}Chat with Authors{{else if eq .SelectedCategory "news"}}News and Interviews{{else if eq .SelectedCategory "quotes"}}Favourite Quotes{{else if eq .SelectedCategory "25award"}}Bookies Favourite 2025 Award{{else}}Category{{end}}</span>
                     <span class="dropdown-arrow">▼</span>
                 </button>
 
                 <!-- Dropdown content -->
                 <div class="dropdown-content">
-                    <label for="cat-all" class="category-link">All Categories</label>
-                    <label for="cat-reviews" class="category-link">Book Reviews</label>
-                    <label for="cat-upcoming" class="category-link">Upcoming Releases</label>
-                    <label for="cat-chat-authors" class="category-link">Chat with Authors</label>
-                    <label for="cat-news" class="category-link">News and Interviews</label>
-                    <label for="cat-quotes" class="category-link">Favourite Quotes</label>
-                    <label for="cat-25award" class="category-link">Bookies Favourite 2025 Award</label>
+                    <a href="/forum?category=all{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">All Categories</a>
+                    <a href="/forum?category=reviews{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">Book Reviews</a>
+                    <a href="/forum?category=upcoming{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">Upcoming Releases</a>
+                    <a href="/forum?category=chat-authors{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">Chat with Authors</a>
+                    <a href="/forum?category=news{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">News and Interviews</a>
+                    <a href="/forum?category=quotes{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">Favourite Quotes</a>
+                    <a href="/forum?category=25award{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">Bookies Favourite 2025 Award</a>
                 </div>
             </div>
             
             <!------------------------------ Sorting ------------------------------>
             <div class="filter-dropdown">
-                <!-- Radio buttons MUST come first for CSS selectors to work -->
-                <input type="radio" name="sort" value="recent" id="sort-recent" checked style="display: none;">
-                <input type="radio" name="sort" value="viewed" id="sort-viewed" style="display: none;">
-                <input type="radio" name="sort" value="loved" id="sort-loved" style="display: none;">
-                <input type="radio" name="sort" value="disliked" id="sort-disliked" style="display: none;">
-
-                <!-- Button with dynamic text -->
                 <button type="button" class="filter-button">
-                    <span class="button-text-default">Sort:</span>
-                    <span class="button-text-selected button-text-recent">Recent</span>
-                    <span class="button-text-selected button-text-viewed">Most Viewed</span>
-                    <span class="button-text-selected button-text-loved">Most Loved</span>
-                    <span class="button-text-selected button-text-disliked">Most Disliked</span>
+                    <span class="button-text-default">Sort: {{if eq .SelectedSort "recent"}}Recent{{else if eq .SelectedSort "loved"}}Most Loved{{else if eq .SelectedSort "disliked"}}Most Disliked{{else}}Recent{{end}}</span>
                     <span class="dropdown-arrow">▼</span>
                 </button>
 
-                <!-- Dropdown content -->
                 <div class="dropdown-content">
-                    <label for="sort-recent" class="category-link">Recent</label>
-                    <label for="sort-viewed" class="category-link">Most Viewed</label>
-                    <label for="sort-loved" class="category-link">Most Loved</label>
-                    <label for="sort-disliked" class="category-link">Most Disliked</label>
+                    <a href="/forum?sort=recent{{if ne .SelectedCategory "all"}}&category={{.SelectedCategory}}{{end}}" class="category-link">Recent</a>
+                    <a href="/forum?sort=loved{{if ne .SelectedCategory "all"}}&category={{.SelectedCategory}}{{end}}" class="category-link">Most Loved</a>
+                    <a href="/forum?sort=disliked{{if ne .SelectedCategory "all"}}&category={{.SelectedCategory}}{{end}}" class="category-link">Most Disliked</a>
                 </div>
             </div>
 
