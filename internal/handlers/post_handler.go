@@ -30,6 +30,8 @@ func ForumHandler(w http.ResponseWriter, r *http.Request) {
     if selectedSort == "" {
         selectedSort = "recent" // Default to "recent"
     }
+    
+    searchQuery := r.URL.Query().Get("search")
 
     db, err := database.ConnectDB()
     if err != nil {
@@ -44,12 +46,23 @@ func ForumHandler(w http.ResponseWriter, r *http.Request) {
 
     currentUser, _ := utils.GetCurrentUser(r)
 
-    // Get posts based on category filter AND sorting
+    // Get posts based on search, category filter AND sorting
     var posts []*models.Post
-    if selectedCategory == "all" {
-        posts, err = postRepo.GetAllPostsSorted(selectedSort)
+    
+    if searchQuery != "" {
+        // Search functionality
+        if selectedCategory == "all" {
+            posts, err = postRepo.SearchPosts(searchQuery, selectedSort)
+        } else {
+            posts, err = postRepo.SearchPostsByCategory(searchQuery, selectedCategory, selectedSort)
+        }
     } else {
-        posts, err = postRepo.GetPostsByCategorySorted(selectedCategory, selectedSort)
+        // Regular filtering (no search)
+        if selectedCategory == "all" {
+            posts, err = postRepo.GetAllPostsSorted(selectedSort)
+        } else {
+            posts, err = postRepo.GetPostsByCategorySorted(selectedCategory, selectedSort)
+        }
     }
     
     if err != nil {
@@ -91,7 +104,8 @@ func ForumHandler(w http.ResponseWriter, r *http.Request) {
         PostCategories:   postCategories,
         CurrentUser:      currentUser,
         SelectedCategory: selectedCategory,
-        SelectedSort:     selectedSort, // ADD THIS LINE
+        SelectedSort:     selectedSort,
+        SearchQuery:      searchQuery, 
     }
 
     err = Templates.ExecuteTemplate(w, "forum.html", data)

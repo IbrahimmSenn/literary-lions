@@ -28,9 +28,13 @@
     <div class="container-main">
         <!------------------------------ Search bar ------------------------------>
         <div class="search-container-main">
-            <form action="#" method="get">
+            <form action="/forum" method="get">
+                <!-- Preserve current filters -->
+                {{if ne .SelectedCategory "all"}}<input type="hidden" name="category" value="{{.SelectedCategory}}">{{end}}
+                {{if ne .SelectedSort "recent"}}<input type="hidden" name="sort" value="{{.SelectedSort}}">{{end}}
+                
                 <div class="input-container-main">
-                    <input type="text" id="search" placeholder="Search ..." required="">
+                    <input type="text" name="search" placeholder="Search ..." value="{{.SearchQuery}}">
                     <button type="submit" class="search-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

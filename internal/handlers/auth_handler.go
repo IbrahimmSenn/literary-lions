@@ -38,6 +38,7 @@ type PageData struct {
     LikedPostVoteCounts map[int]*models.VoteCount 
 	SelectedCategory  string  
 	SelectedSort      string  
+	SearchQuery       string 
 	
 }
 

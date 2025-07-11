@@ -22,5 +22,9 @@ type PostRepository interface {
     // For sorting
     GetAllPostsSorted(sortBy string) ([]*models.Post, error)
     GetPostsByCategorySorted(category string, sortBy string) ([]*models.Post, error)
+    
+	// For search
+	SearchPosts(query string, sortBy string) ([]*models.Post, error)
+    SearchPostsByCategory(query string, category string, sortBy string) ([]*models.Post, error)
 }
 	
