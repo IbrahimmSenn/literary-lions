@@ -35,7 +35,10 @@ type PageData struct {
 	Book              *models.Book
 	LikedPosts         []*models.Post              
     LikedPostCategories map[int]*models.Category   
-    LikedPostVoteCounts map[int]*models.VoteCount  
+    LikedPostVoteCounts map[int]*models.VoteCount 
+	SelectedCategory  string  
+	SelectedSort      string  
+	SearchQuery       string 
 	
 }
 

@@ -15,5 +15,16 @@ type PostRepository interface {
 	
 	// GetPostsByUserID finds all posts by one user ("show my posts" filter)
 	GetPostsByUserID(userID int) ([]*models.Post, error)
-	
+
+	// GetPostsByCategory gets posts filtered by category
+    GetPostsByCategory(category string) ([]*models.Post, error)
+    
+    // For sorting
+    GetAllPostsSorted(sortBy string) ([]*models.Post, error)
+    GetPostsByCategorySorted(category string, sortBy string) ([]*models.Post, error)
+    
+	// For search
+	SearchPosts(query string, sortBy string) ([]*models.Post, error)
+    SearchPostsByCategory(query string, category string, sortBy string) ([]*models.Post, error)
 }
+	
