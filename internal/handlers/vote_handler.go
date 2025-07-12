@@ -51,6 +51,35 @@ func VoteHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
+		// Check if user already has a vote on this comment
+		existingVote, err := likeRepo.GetUserVoteOnComment(currentUser.ID, commentID)
+		if err == nil && existingVote != nil {
+			// User already has a vote on this comment
+			if (action == "like" && existingVote.IsLike) || (action == "dislike" && !existingVote.IsLike) {
+				// Same vote - remove it
+				err = likeRepo.RemoveLikeFromComment(currentUser.ID, commentID)
+				if err != nil {
+					log.Printf("Error removing comment vote: %v", err)
+					http.Error(w, "Error processing vote", http.StatusInternalServerError)
+					return
+				}
+				log.Printf("🚫 User %s removed vote from comment %d", currentUser.Username, commentID)
+
+				// Redirect
+				redirectURL := r.FormValue("redirect")
+				if redirectURL == "" {
+					if postIDStr != "" {
+						redirectURL = "/post/" + postIDStr
+					} else {
+						redirectURL = "/forum"
+					}
+				}
+				http.Redirect(w, r, redirectURL, http.StatusSeeOther)
+				return
+			}
+		}
+
+		// If we get here, either no existing vote or different vote - proceed with normal logic
 		switch action {
 		case "like":
 			err = likeRepo.AddLikeToComment(currentUser.ID, commentID, true)
@@ -72,21 +101,50 @@ func VoteHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// Redirect back to the post page
-		if postIDStr != "" {
-			http.Redirect(w, r, "/post/"+postIDStr, http.StatusSeeOther)
-		} else {
-			http.Redirect(w, r, "/forum", http.StatusSeeOther)
+		// Get redirect parameter or default to post page
+		redirectURL := r.FormValue("redirect")
+		if redirectURL == "" {
+			if postIDStr != "" {
+				redirectURL = "/post/" + postIDStr
+			} else {
+				redirectURL = "/forum"
+			}
 		}
+		http.Redirect(w, r, redirectURL, http.StatusSeeOther)
 
 	} else if postIDStr != "" {
-		// Post vote (existing logic)
+		// Post vote
 		postID, err := strconv.Atoi(postIDStr)
 		if err != nil {
 			http.Error(w, "Invalid post ID", http.StatusBadRequest)
 			return
 		}
 
+		// Check if user already has a vote on this post
+		existingVote, err := likeRepo.GetUserVoteOnPost(currentUser.ID, postID)
+		if err == nil && existingVote != nil {
+			// User already has a vote on this post
+			if (action == "like" && existingVote.IsLike) || (action == "dislike" && !existingVote.IsLike) {
+				// Same vote - remove it
+				err = likeRepo.RemoveLikeFromPost(currentUser.ID, postID)
+				if err != nil {
+					log.Printf("Error removing post vote: %v", err)
+					http.Error(w, "Error processing vote", http.StatusInternalServerError)
+					return
+				}
+				log.Printf("🚫 User %s removed vote from post %d", currentUser.Username, postID)
+
+				// Redirect
+				redirectURL := r.FormValue("redirect")
+				if redirectURL == "" {
+					redirectURL = "/post/" + strconv.Itoa(postID)
+				}
+				http.Redirect(w, r, redirectURL, http.StatusSeeOther)
+				return
+			}
+		}
+
+		// If we get here, either no existing vote or different vote - proceed with normal logic
 		switch action {
 		case "like":
 			err = likeRepo.AddLikeToPost(currentUser.ID, postID, true)
@@ -108,8 +166,12 @@ func VoteHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		// Redirect back to the post page
-		http.Redirect(w, r, "/post/"+strconv.Itoa(postID), http.StatusSeeOther)
+		// Get redirect parameter or default to post page
+		redirectURL := r.FormValue("redirect")
+		if redirectURL == "" {
+			redirectURL = "/post/" + strconv.Itoa(postID)
+		}
+		http.Redirect(w, r, redirectURL, http.StatusSeeOther)
 
 	} else {
 		http.Error(w, "Missing post_id or comment_id", http.StatusBadRequest)

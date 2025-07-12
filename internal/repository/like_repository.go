@@ -23,6 +23,9 @@ type LikeRepository interface {
 	// GetCommentVoteCount gets total likes and dislikes for a comment
 	GetCommentVoteCount(commentID int) (*models.VoteCount, error)
 
+	// GetUserVoteOnComment checks if user has voted on a comment and what type
+	GetUserVoteOnComment(userID, commentID int) (*models.Like, error)
+
 	// GetLikesGivenByUserID returns the count of likes given by a user
 	GetLikesGivenByUserID(userID int) (int, error)
 

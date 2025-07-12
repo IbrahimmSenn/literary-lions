@@ -63,7 +63,16 @@ func createTables(db *sql.DB) error {
 // Configuration
 func setupRoutes() {
 	// Page routes
-	http.HandleFunc("/", handlers.HomeHandler)
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		// Handle home page specifically
+		if r.URL.Path == "/" {
+			handlers.HomeHandler(w, r)
+			return
+		}
+		// For any other unmatched path, show 404
+		handlers.NotFoundHandler(w, r)
+	})
+
 	http.HandleFunc("/error", handlers.ErrorHandler)
 	http.HandleFunc("/profile", handlers.ProfileHandler)
 
@@ -87,7 +96,7 @@ func setupRoutes() {
 func setupStaticFiles() {
 	fs := http.FileServer(http.Dir("web/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
-	http.Handle("/media/", http.StripPrefix("/media/", http.FileServer(http.Dir("media"))))
+	http.Handle("/media/", http.StripPrefix("/media/", http.FileServer(http.Dir("../media"))))
 }
 
 func startServer() {

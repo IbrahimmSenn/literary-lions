@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"database/sql"
 	"log"
 	"net/http"
 	"strconv"
@@ -15,104 +16,104 @@ import (
 // Loads posts and their corresponding like/dislike counts for the forum page.(single user cannot like and dislike a post)
 
 func ForumHandler(w http.ResponseWriter, r *http.Request) {
-    if r.URL.Path != "/forum" {
-        http.NotFound(w, r)
-        return
-    }
+	if r.URL.Path != "/forum" {
+		http.NotFound(w, r)
+		return
+	}
 
-    // Get query parameters
-    selectedCategory := r.URL.Query().Get("category")
-    if selectedCategory == "" {
-        selectedCategory = "all" // Default to "all"
-    }
-    
-    selectedSort := r.URL.Query().Get("sort")
-    if selectedSort == "" {
-        selectedSort = "recent" // Default to "recent"
-    }
-    
-    searchQuery := r.URL.Query().Get("search")
+	// Get query parameters
+	selectedCategory := r.URL.Query().Get("category")
+	if selectedCategory == "" {
+		selectedCategory = "all" // Default to "all"
+	}
 
-    db, err := database.ConnectDB()
-    if err != nil {
-        http.Error(w, "Database connection failed", http.StatusInternalServerError)
-        return
-    }
-    defer db.Close()
+	selectedSort := r.URL.Query().Get("sort")
+	if selectedSort == "" {
+		selectedSort = "recent" // Default to "recent"
+	}
 
-    postRepo := sqlite.NewPostRepository(db)
-    likeRepo := sqlite.NewLikeRepository(db)
-    categoryRepo := sqlite.NewCategoryRepository(db)
+	searchQuery := r.URL.Query().Get("search")
 
-    currentUser, _ := utils.GetCurrentUser(r)
+	db, err := database.ConnectDB()
+	if err != nil {
+		http.Error(w, "Database connection failed", http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
 
-    // Get posts based on search, category filter AND sorting
-    var posts []*models.Post
-    
-    if searchQuery != "" {
-        // Search functionality
-        if selectedCategory == "all" {
-            posts, err = postRepo.SearchPosts(searchQuery, selectedSort)
-        } else {
-            posts, err = postRepo.SearchPostsByCategory(searchQuery, selectedCategory, selectedSort)
-        }
-    } else {
-        // Regular filtering (no search)
-        if selectedCategory == "all" {
-            posts, err = postRepo.GetAllPostsSorted(selectedSort)
-        } else {
-            posts, err = postRepo.GetPostsByCategorySorted(selectedCategory, selectedSort)
-        }
-    }
-    
-    if err != nil {
-        log.Printf("Error getting posts: %v", err)
-        http.Error(w, "Error loading posts", http.StatusInternalServerError)
-        return
-    }
+	postRepo := sqlite.NewPostRepository(db)
+	likeRepo := sqlite.NewLikeRepository(db)
+	categoryRepo := sqlite.NewCategoryRepository(db)
 
-    voteCounts := make(map[int]*models.VoteCount)
-    postCategories := make(map[int]*models.Category)
+	currentUser, _ := utils.GetCurrentUser(r)
 
-    for _, post := range posts {
-        // Get vote counts
-        voteCount, err := likeRepo.GetPostVoteCount(post.ID)
-        if err != nil {
-            log.Printf("Error getting vote count for post %d: %v", post.ID, err)
-            voteCount = &models.VoteCount{Likes: 0, Dislikes: 0}
-        }
-        voteCounts[post.ID] = voteCount
+	// Get posts based on search, category filter AND sorting
+	var posts []*models.Post
 
-        // Get category for each post
-        categories, err := categoryRepo.GetCategoriesForPost(post.ID)
-        if err != nil || len(categories) == 0 {
-            postCategories[post.ID] = &models.Category{
-                ID:   0,
-                Name: "General",
-                Slug: "general",
-            }
-        } else {
-            postCategories[post.ID] = categories[0]
-        }
-    }
+	if searchQuery != "" {
+		// Search functionality
+		if selectedCategory == "all" {
+			posts, err = postRepo.SearchPosts(searchQuery, selectedSort)
+		} else {
+			posts, err = postRepo.SearchPostsByCategory(searchQuery, selectedCategory, selectedSort)
+		}
+	} else {
+		// Regular filtering (no search)
+		if selectedCategory == "all" {
+			posts, err = postRepo.GetAllPostsSorted(selectedSort)
+		} else {
+			posts, err = postRepo.GetPostsByCategorySorted(selectedCategory, selectedSort)
+		}
+	}
 
-    data := PageData{
-        Result:           "",
-        Status:           "200",
-        Posts:            posts,
-        VoteCounts:       voteCounts,
-        PostCategories:   postCategories,
-        CurrentUser:      currentUser,
-        SelectedCategory: selectedCategory,
-        SelectedSort:     selectedSort,
-        SearchQuery:      searchQuery, 
-    }
+	if err != nil {
+		log.Printf("Error getting posts: %v", err)
+		http.Error(w, "Error loading posts", http.StatusInternalServerError)
+		return
+	}
 
-    err = Templates.ExecuteTemplate(w, "forum.html", data)
-    if err != nil {
-        http.Error(w, "Error rendering template", http.StatusInternalServerError)
-        log.Printf("Template error: %v", err)
-    }
+	voteCounts := make(map[int]*models.VoteCount)
+	postCategories := make(map[int]*models.Category)
+
+	for _, post := range posts {
+		// Get vote counts
+		voteCount, err := likeRepo.GetPostVoteCount(post.ID)
+		if err != nil {
+			log.Printf("Error getting vote count for post %d: %v", post.ID, err)
+			voteCount = &models.VoteCount{Likes: 0, Dislikes: 0}
+		}
+		voteCounts[post.ID] = voteCount
+
+		// Get category for each post
+		categories, err := categoryRepo.GetCategoriesForPost(post.ID)
+		if err != nil || len(categories) == 0 {
+			postCategories[post.ID] = &models.Category{
+				ID:   0,
+				Name: "General",
+				Slug: "general",
+			}
+		} else {
+			postCategories[post.ID] = categories[0]
+		}
+	}
+
+	data := PageData{
+		Result:           "",
+		Status:           "200",
+		Posts:            posts,
+		VoteCounts:       voteCounts,
+		PostCategories:   postCategories,
+		CurrentUser:      currentUser,
+		SelectedCategory: selectedCategory,
+		SelectedSort:     selectedSort,
+		SearchQuery:      searchQuery,
+	}
+
+	err = Templates.ExecuteTemplate(w, "forum.html", data)
+	if err != nil {
+		http.Error(w, "Error rendering template", http.StatusInternalServerError)
+		log.Printf("Template error: %v", err)
+	}
 }
 
 // NewPostHandler manages post creation with authentication protection.
@@ -249,10 +250,22 @@ func PostDetailHandler(w http.ResponseWriter, r *http.Request) {
 	postRepo := sqlite.NewPostRepository(db)
 	post, err := postRepo.GetPostByID(postID)
 	if err != nil {
-		http.NotFound(w, r)
+		if err == sql.ErrNoRows {
+			// Post doesn't exist - return 404
+			http.Error(w, "Post not found", http.StatusNotFound)
+			return
+		}
+		// Other database error - return 500
+		log.Printf("Error fetching post: %v", err)
+		http.Error(w, "Internal server error", http.StatusInternalServerError)
 		return
 	}
 
+	if post == nil {
+		// Post doesn't exist - return 404
+		http.Error(w, "Post not found", http.StatusNotFound)
+		return
+	}
 	// Get the username of the post author
 	userRepo := sqlite.NewUserRepository(db)
 	postAuthor, err := userRepo.GetUserByID(post.UserID)

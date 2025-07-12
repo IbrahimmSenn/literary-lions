@@ -55,7 +55,26 @@ func (r *SQLiteLikeRepository) GetUserVoteOnPost(userID, postID int) (*models.Li
 	like := &models.Like{}
 	err := r.db.QueryRow(query, userID, postID).Scan(&like.ID, &like.UserID, &like.PostID, &like.CommentID, &like.IsLike, &like.CreatedAt)
 	if err != nil {
-		return nil, err // No vote found
+		if err == sql.ErrNoRows {
+			return nil, nil // No vote found
+		}
+		return nil, err
+	}
+
+	return like, nil
+}
+
+// GetUserVoteOnComment checks if user has voted on a comment and what type
+func (r *SQLiteLikeRepository) GetUserVoteOnComment(userID, commentID int) (*models.Like, error) {
+	query := `SELECT id, user_id, post_id, comment_id, is_like, created_at FROM likes WHERE user_id = ? AND comment_id = ?`
+
+	like := &models.Like{}
+	err := r.db.QueryRow(query, userID, commentID).Scan(&like.ID, &like.UserID, &like.PostID, &like.CommentID, &like.IsLike, &like.CreatedAt)
+	if err != nil {
+		if err == sql.ErrNoRows {
+			return nil, nil // No vote found
+		}
+		return nil, err
 	}
 
 	return like, nil
@@ -106,13 +125,13 @@ func (r *SQLiteLikeRepository) GetLikesGivenByUserID(userID int) (int, error) {
 		FROM likes 
 		WHERE user_id = ? AND is_like = 1 AND post_id IS NOT NULL
 	`
-	
+
 	var count int
 	err := r.db.QueryRow(query, userID).Scan(&count)
 	if err != nil {
 		return 0, err
 	}
-	
+
 	return count, nil
 }
 
@@ -125,13 +144,13 @@ func (r *SQLiteLikeRepository) GetPostsLikedByUser(userID int) ([]*models.Post, 
 		WHERE l.user_id = ? AND l.is_like = 1
 		ORDER BY l.created_at DESC
 	`
-	
+
 	rows, err := r.db.Query(query, userID)
 	if err != nil {
 		return nil, err
 	}
 	defer rows.Close()
-	
+
 	var posts []*models.Post
 	for rows.Next() {
 		post := &models.Post{}
@@ -141,6 +160,6 @@ func (r *SQLiteLikeRepository) GetPostsLikedByUser(userID int) ([]*models.Post, 
 		}
 		posts = append(posts, post)
 	}
-	
+
 	return posts, nil
 }

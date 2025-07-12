@@ -15,31 +15,30 @@ import (
 )
 
 type PageData struct {
-	Input             string
-	Result            string
-	Status            string
-	Error             string
-	Posts             []*models.Post
-	Post              *models.Post
-	PostAuthor        *models.User
-	VoteCounts        map[int]*models.VoteCount
-	VoteCount         *models.VoteCount
-	Comments          []*models.Comment
-	CurrentUser       *models.User
-	User              *models.User
-	Stats             *UserStats
-	Categories        []*models.Category
-	CommentVoteCounts map[int]*models.VoteCount
-	PostCategories    map[int]*models.Category
-	Quote             *models.Quote
-	Book              *models.Book
-	LikedPosts         []*models.Post              
-    LikedPostCategories map[int]*models.Category   
-    LikedPostVoteCounts map[int]*models.VoteCount 
-	SelectedCategory  string  
-	SelectedSort      string  
-	SearchQuery       string 
-	
+	Input               string
+	Result              string
+	Status              string
+	Error               string
+	Posts               []*models.Post
+	Post                *models.Post
+	PostAuthor          *models.User
+	VoteCounts          map[int]*models.VoteCount
+	VoteCount           *models.VoteCount
+	Comments            []*models.Comment
+	CurrentUser         *models.User
+	User                *models.User
+	Stats               *UserStats
+	Categories          []*models.Category
+	CommentVoteCounts   map[int]*models.VoteCount
+	PostCategories      map[int]*models.Category
+	Quote               *models.Quote
+	Book                *models.Book
+	LikedPosts          []*models.Post
+	LikedPostCategories map[int]*models.Category
+	LikedPostVoteCounts map[int]*models.VoteCount
+	SelectedCategory    string
+	SelectedSort        string
+	SearchQuery         string
 }
 
 type UserStats struct {
@@ -266,7 +265,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 		log.Printf("✅ User logged in successfully: %s (ID: %d)", user.Username, user.ID)
 
-		http.Redirect(w, r, "/forum", http.StatusSeeOther)
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 
