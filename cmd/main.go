@@ -96,7 +96,7 @@ func setupRoutes() {
 func setupStaticFiles() {
 	fs := http.FileServer(http.Dir("web/static"))
 	http.Handle("/static/", http.StripPrefix("/static/", fs))
-	http.Handle("/media/", http.StripPrefix("/media/", http.FileServer(http.Dir("../media"))))
+	http.Handle("/media/", http.StripPrefix("/media/", http.FileServer(http.Dir("media"))))
 }
 
 func startServer() {
