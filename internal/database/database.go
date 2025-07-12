@@ -11,7 +11,7 @@ import (
 func ConnectDB() (*sql.DB, error) {
 	// Open creates a database file called "forum.db"
 	// If it doesn't exist, SQLite will create it for us
-	db, err := sql.Open("sqlite3", "forum.db")
+	db, err := sql.Open("sqlite3", "/host/forum.db")
 	if err != nil {
 		return nil, err
 	}

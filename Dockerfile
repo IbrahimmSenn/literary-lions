@@ -9,4 +9,8 @@ COPY . .
 RUN go build -o forum cmd/main.go
 
 EXPOSE 8080
+
+# Create data directory for database
+RUN mkdir -p /app/data
+
 CMD ["./forum"]
