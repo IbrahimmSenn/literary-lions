@@ -15,7 +15,7 @@
 
 .nav {
     background-color: #FBF2E7;
-    padding: clamp(10px, 3vw, 25px) 0; /* INCREASED: More space from logo */
+    padding: clamp(10px, 3vw, 25px) 0; 
     text-align: center;
 }
 
@@ -25,7 +25,7 @@
     justify-content: center;
     margin: 0;
     padding: 0;
-    gap: clamp(8px, 3vw, 30px); /* INCREASED: More space between nav items */
+    gap: clamp(8px, 3vw, 30px); 
 }
 
 .nav a {

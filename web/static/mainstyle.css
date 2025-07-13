@@ -10,7 +10,7 @@ body {
     background: #FBF2E7;
     margin: 0;
     padding: 0;
-    padding-bottom: 120px; /* space at bottom of content area */
+    padding-bottom: 120px; 
 }
 
 /************************************* Errors **************************************/
@@ -32,7 +32,7 @@ body {
 }
 
 
-/************************************* MEDIA queries for additional responsive behavior **************************************/
+/************************************* MEDIA queries for some other pages **************************************/
 @media (max-width: 768px) {
     .nav ul {
         flex-direction: column; 
@@ -129,7 +129,6 @@ body {
     }
 }
 
-/* Extra small phones */
 @media screen and (max-width: 480px) {
     .filter-bar {
         margin-top: 20px;

@@ -2,7 +2,7 @@
   width: clamp(340px, 85vw, 560px); 
   height: clamp(400px, 85vw, 600px); 
   margin: 0 auto; 
-  margin-top: clamp(25px, 5vh, 100px); /* Responsive top margin */
+  margin-top: clamp(25px, 5vh, 100px); 
   margin-bottom: 30px;
   background-image: url('/media/blob3.png');
   background-size: clamp(30px, 20vw, 160px);
@@ -23,12 +23,12 @@
   text-align: center;
   font-weight: normal;
   font-size: clamp(2rem, 5vw, 2.9rem);
-  line-height: 1.2; /* Relative to font-size */
+  line-height: 1.2; 
 }
 
 .form {
   /*margin-top: 3rem;;*/
-  margin-top: clamp(1rem, 4vw, 3rem); /* Responsive spacing */
+  margin-top: clamp(1rem, 4vw, 3rem); 
 }
 
 .input-group {
@@ -204,12 +204,11 @@
     background-color: #EEE045;
 }
 
-/* SHOW the dropdown menu on hover - THIS MAKES IT WORK */
+/* SHOW the dropdown menu on hover */
 .category-dropdown:hover .dropdown-content {
     display: block;
 }
 
-/* added FOR I TO LOOK CUTEEEE */
 
 
 .category-button:focus + .dropdown-content,
@@ -218,7 +217,6 @@
 }
 
 
-/* Your existing text and highlight rules stay the same */
 .button-text-default { display: block; }
 .button-text-selected { display: none; }
 
@@ -242,4 +240,27 @@
 .category-dropdown input[type="radio"]:checked + .category-link {
     background-color: #EEE045;
     font-weight: bold;
+}
+
+
+/******************************** MOBILE ONLY ********************************/
+
+
+@media (max-width: 480px) {
+    .form-container {
+        height: auto !important;
+        min-height: 550px !important; 
+        margin-top: 80px !important;
+        padding: 50px 25px !important;
+        width: clamp(300px, 90vw, 500px) !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .form-container {
+        height: auto !important;
+        min-height: 600px !important; 
+        margin-top: 90px !important;
+        padding: 60px 20px !important;
+    }
 }

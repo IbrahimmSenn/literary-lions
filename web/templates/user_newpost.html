@@ -35,7 +35,6 @@
                 <!------------------------------ category ------------------------------>
                 <div class="category-bar">
                     <div class="category-dropdown">
-                        <!-- Radio buttons MUST come first for CSS selectors to work -->
                         {{range .Categories}}
                         <input type="radio" name="category" value="{{.ID}}" id="cat-{{.ID}}" style="display: none;">
                         {{end}}

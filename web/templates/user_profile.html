@@ -32,13 +32,12 @@
             </div>
         </div>
         
-        <!-- Hidden Radio Buttons for Tab Control -->
         <input type="radio" id="posts-tab-radio" name="profile-tab" checked style="display: none;">
         <input type="radio" id="comments-tab-radio" name="profile-tab" style="display: none;">
         <input type="radio" id="liked-given-tab-radio" name="profile-tab" style="display: none;">
         <input type="radio" id="liked-received-tab-radio" name="profile-tab" style="display: none;">
         
-        <!-- Profile Stats as Clickable Tabs -->
+        <!-- Profile Stats -->
         <div class="profile-stats">
             <label for="posts-tab-radio" class="stat-item clickable-stat">
                 <span class="stat-number">{{.Stats.PostCount}}</span>
@@ -52,7 +51,7 @@
 
         <!-- Tab Contents -->
         <div class="tab-contents">
-            <!-- Posts Section -->
+            <!------------------------------ Posts made by the user ------------------------------>
             <div id="posts-tab" class="tab-content">
                 <div class="section-header">
                     <h2 class="section-title">My Posts</h2>
@@ -120,7 +119,7 @@
                 </div>
             </div>
 
-            <!-- Liked Posts Section -->
+            <!------------------------------ Liked Posts ------------------------------>
             <div id="liked-given-tab" class="tab-content">
                 <div class="section-header">
                     <h2 class="section-title">Posts I Liked</h2>
