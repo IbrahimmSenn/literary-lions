@@ -1,5 +1,5 @@
 # Book Forum – Bookies
-OnlyCars is an intuitive platform where car enthusiasts can explore different car models, search for vehicles based on their preferences and compare specifications side-by-side.
+Bookies is an intuitive forum platform where book enthusiasts can discuss literature, share insights, and engage in meaningful conversations with fellow readers.
 
 ## 1. Summary
 ### Current situation:
@@ -110,11 +110,9 @@ cd literary-lions
 
 ### Build and run with Docker (Recommended) 
 If you don't have Docker installed, download and install it from:
-```
 - [Windows: Docker Desktop for Windows](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe)
 - [Mac: Docker Desktop for Mac](https://desktop.docker.com/mac/main/amd64/Docker.dmg)
 - [Linux: Docker Engine](https://docs.docker.com/engine/install/)
-```
 
 ```
 docker build -t literary-lions .  
