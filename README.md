@@ -119,11 +119,7 @@ docker build -t literary-lions .
 docker run -v $(pwd):/host -p 8080:8080 literary-lions
 ```
 ### Access the application
-```
 Open your browser and navigate to http://localhost:8080
-```
-
-
 
 ## 4. Features
 - User Authentication
@@ -132,7 +128,6 @@ Open your browser and navigate to http://localhost:8080
 - Like/Dislike System
 - Category Organization and filtering posts
 - Error Handling
-
 
 ## 5. Bonus features (for review)
 - User Profiles: Personal dashboards showing user activity
