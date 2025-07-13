@@ -152,23 +152,19 @@ Open your browser and navigate to http://localhost:8080
 - Security: bcrypt password hashing
 
 ## 7. Credits & Attributions
-Fonts
-Logo font: [Barriecito - Copyright 2018 The Barriecito Project Authors](https://fonts.google.com/specimen/Barriecito)
-Main font: [Hepta Slab - Copyright 2018 The Hepta Slab Project Authors](https://fonts.google.com/specimen/Hepta+Slab)
+#### Fonts
+- Logo font: [Barriecito - Copyright 2018 The Barriecito Project Authors](https://fonts.google.com/specimen/Barriecito)
+- Main font: [Hepta Slab - Copyright 2018 The Hepta Slab Project Authors](https://fonts.google.com/specimen/Hepta+Slab)
 
-Search bar icon
+#### Search bar icon
 [Search bar icons created by Bharat Icons - Flaticon](https://www.flaticon.com/free-icons/search-bar)
 
-Photos and images used:
-1. [Lion - Unsplash](https://www.flaticon.com/free-icon/lion_490125) 
-
-2. [Plant - Unsplash](https://www.flaticon.com/free-icon/succulent_3968246) 
-
-3. [Plant2 - Unsplash](https://www.flaticon.com/free-icon/alocasia_6670600)
-
-4. [Books - Unsplash](https://www.flaticon.com/free-icon/book-stack_3389066)
-
-5. [Blobs – Muhammad Abdullah – Freepik](https://www.freepik.com/free-vector/colorful-abstract-fluid-handdrawn-organic-creative-blob-shapes-element_381357218.htm#fromView=keyword&page=1&position=19&uuid=6d9b47bf-4bde-4289-a23c-c517641187c5&query=Blob) 
+#### Photos and images used:
+- [Lion - Unsplash](https://www.flaticon.com/free-icon/lion_490125) 
+- [Plant - Unsplash](https://www.flaticon.com/free-icon/succulent_3968246) 
+- [Plant2 - Unsplash](https://www.flaticon.com/free-icon/alocasia_6670600)
+- [Books - Unsplash](https://www.flaticon.com/free-icon/book-stack_3389066)
+- [Blobs – Muhammad Abdullah – Freepik](https://www.freepik.com/free-vector/colorful-abstract-fluid-handdrawn-organic-creative-blob-shapes-element_381357218.htm#fromView=keyword&page=1&position=19&uuid=6d9b47bf-4bde-4289-a23c-c517641187c5&query=Blob) 
 
 ## Authors
 - [Heli Savila](https://gitea.kood.tech/helisavila) Frontend Development, UI/UX Design
