@@ -130,10 +130,10 @@ Open your browser and navigate to http://localhost:8080
 - Error Handling
 
 ## 5. Bonus features (for review)
-- User Profiles: Personal dashboards showing user activity
+- User Profiles: personal dashboards showing user activity
 - Search tab
 - Sorting feature: sort posts by recent, most liked, most disliked
-- Responsive Design: Optimized for desktop and mobile devices
+- Responsive Design: optimized for desktop and mobile devices
 
 ## 6. Technical Stack
 Backend: Go (Golang) with net/http
@@ -145,29 +145,22 @@ Security: bcrypt password hashing
 
 ## 7. Credits & Attributions
 Fonts
-Logo font: (https://fonts.google.com/specimen/Barriecito)
-Barriecito - Copyright 2018 The Barriecito Project Authors
-Main font: (https://fonts.google.com/specimen/Hepta+Slab)
-Hepta Slab - Copyright 2018 The Hepta Slab Project Authors 
+Logo font: [Barriecito - Copyright 2018 The Barriecito Project Authors](https://fonts.google.com/specimen/Barriecito)
+Main font: [Hepta Slab - Copyright 2018 The Hepta Slab Project Authors](https://fonts.google.com/specimen/Hepta+Slab)
 
 Search bar icon
-(https://www.flaticon.com/free-icons/search-bar)
-Search bar icons created by Bharat Icons - Flaticon
+[Search bar icons created by Bharat Icons - Flaticon](https://www.flaticon.com/free-icons/search-bar)
 
 Photos and images used:
-1. (https://www.flaticon.com/free-icon/lion_490125) 
-Lion - Unsplash 
+1. [Lion - Unsplash](https://www.flaticon.com/free-icon/lion_490125) 
 
-2. (https://www.flaticon.com/free-icon/succulent_3968246) 
-Plant - Unsplash
+2. [Plant - Unsplash](https://www.flaticon.com/free-icon/succulent_3968246) 
 
-3. (https://www.flaticon.com/free-icon/alocasia_6670600)
-Plant2 - Unsplash
+3. [Plant2 - Unsplash](https://www.flaticon.com/free-icon/alocasia_6670600)
 
-4. (https://www.flaticon.com/free-icon/book-stack_3389066)
-Books - Unsplash
+4. [Books - Unsplash](https://www.flaticon.com/free-icon/book-stack_3389066)
 
-5. (https://www.freepik.com/free-vector/colorful-abstract-fluid-handdrawn-organic-creative-blob-shapes-element_381357218.htm#fromView=keyword&page=1&position=19&uuid=6d9b47bf-4bde-4289-a23c-c517641187c5&query=Blob) Blobs – Muhammad Abdullah – Freepik
+5. [Blobs – Muhammad Abdullah – Freepik] (https://www.freepik.com/free-vector/colorful-abstract-fluid-handdrawn-organic-creative-blob-shapes-element_381357218.htm#fromView=keyword&page=1&position=19&uuid=6d9b47bf-4bde-4289-a23c-c517641187c5&query=Blob) 
 
 ## Authors
 - [Heli Savila](https://gitea.kood.tech/helisavila) Frontend Development, UI/UX Design
