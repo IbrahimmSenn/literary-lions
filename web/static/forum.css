@@ -203,11 +203,13 @@
 
 /* Show specific text when corresponding radio is checked */
 #cat-all:checked~.filter-button .button-text-all,
+#cat-recommendations:checked~.filter-button .button-text-recommendations,
 #cat-reviews:checked~.filter-button .button-text-reviews,
 #cat-upcoming:checked~.filter-button .button-text-upcoming,
 #cat-chat-authors:checked~.filter-button .button-text-chat-authors,
 #cat-news:checked~.filter-button .button-text-news,
 #cat-quotes:checked~.filter-button .button-text-quotes,
+#cat-general:checked~.filter-button .button-text-general,
 #cat-25award:checked~.filter-button .button-text-25award {
     display: inline;
 }
