@@ -48,15 +48,23 @@ literary-lions/
 │   ├── session.go              # Session model
 │   └── user.go                 # User model
 ├── repository/                  # Data access layer
-│   └── sqlite/                 # SQLite implementations
-│       ├── books_repository.go
-│       ├── category_repository.go
-│       ├── comment_repository.go
-│       ├── like_repository.go
-│       ├── post_repository.go
-│       ├── quote_repository.go
-│       ├── session_repository.go
-│       └── user_repository.go
+│   ├── sqlite/                 # SQLite implementations
+│   │   ├── books_repository.go
+│   │   ├── category_repository.go
+│   │   ├── comment_repository.go
+│   │   ├── like_repository.go
+│   │   ├── post_repository.go
+│   │   ├── quote_repository.go
+│   │   ├── session_repository.go
+│   │   └── user_repository.go
+│   ├── books_repository.go
+│   ├── category_repository.go
+│   ├── comment_repository.go
+│   ├── like_repository.go
+│   ├── post_repository.go
+│   ├── quote_repository.go
+│   ├── session_repository.go
+│   └── user_repository.go
 ├── web/    
     └── templates/                # HTML templates
     │   ├── error404.html           # 404 error page
@@ -160,7 +168,7 @@ Photos and images used:
 
 4. [Books - Unsplash](https://www.flaticon.com/free-icon/book-stack_3389066)
 
-5. [Blobs – Muhammad Abdullah – Freepik] (https://www.freepik.com/free-vector/colorful-abstract-fluid-handdrawn-organic-creative-blob-shapes-element_381357218.htm#fromView=keyword&page=1&position=19&uuid=6d9b47bf-4bde-4289-a23c-c517641187c5&query=Blob) 
+5. [Blobs – Muhammad Abdullah – Freepik](https://www.freepik.com/free-vector/colorful-abstract-fluid-handdrawn-organic-creative-blob-shapes-element_381357218.htm#fromView=keyword&page=1&position=19&uuid=6d9b47bf-4bde-4289-a23c-c517641187c5&query=Blob) 
 
 ## Authors
 - [Heli Savila](https://gitea.kood.tech/helisavila) Frontend Development, UI/UX Design
