@@ -144,12 +144,12 @@ Open your browser and navigate to http://localhost:8080
 - Responsive Design: optimized for desktop and mobile devices
 
 ## 6. Technical Stack
-Backend: Go (Golang) with net/http
-Database: SQLite with go-sqlite3 driver
-Frontend: HTML templates with CSS styling
-Containerization: Docker for deployment
-Session Management: Cookie-based with UUID tokens
-Security: bcrypt password hashing
+- Backend: Go (Golang) with net/http
+- Database: SQLite with go-sqlite3 driver
+- Frontend: HTML templates with CSS styling
+- Containerization: Docker for deployment
+- Session Management: Cookie-based with UUID tokens
+- Security: bcrypt password hashing
 
 ## 7. Credits & Attributions
 Fonts
