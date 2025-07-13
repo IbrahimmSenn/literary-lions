@@ -385,3 +385,107 @@
     font-weight: 500;
     color: #561509;
 }
+
+
+/* Add this at the bottom of your CSS file */
+
+/******************************** MOBILE POST BAR STYLING ********************************/
+
+/* Make taller on smaller screens */
+@media (max-width: 768px) {
+    .post-bar {
+        height: 40px; 
+        gap: 10px; 
+        padding: 12px 12px; 
+    }
+}
+
+@media (max-width: 480px) {
+    .post-bar {
+        height: 40px; 
+        gap: 8px; 
+        padding: 10px 8px; 
+    }
+}
+
+/* INSIDES */
+/* Mobile styling - shrink content inside post bars */
+@media (max-width: 768px) {
+    .post-date {
+        font-size: 10px;
+        min-width: 60px;
+    }
+    
+    .category-tag {
+        font-size: 9px;
+        padding: 3px 8px;
+        letter-spacing: 0.3px;
+    }
+    
+    .post-title {
+        font-size: 11px;
+        line-height: 1.3;
+    }
+    
+    .post-stats {
+        gap: 8px;
+    }
+    
+    .stat-item {
+        font-size: 10px;
+        gap: 3px;
+    }
+    
+    .icon {
+        width: 10px !important;
+        height: 10px !important;
+    }
+    
+    .post-meta {
+        font-size: 10px;
+        gap: 8px;
+    }
+    
+    .author {
+        font-size: 10px;
+    }
+
+    .like-count, .dislike-count {
+    font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .post-date {
+        font-size: 9px;
+        min-width: 50px;
+    }
+    
+    .category-tag {
+        font-size: 8px;
+        padding: 2px 6px;
+    }
+    
+    .post-title {
+        font-size: 8px;
+    }
+    
+    .stat-item {
+        font-size: 9px;
+    }
+    
+    .icon {
+        width: 8px !important; 
+        height: 8px !important;
+    }
+    
+    .post-meta {
+        font-size: 9px;
+        gap: 6px;
+    }
+
+    .like-count, .dislike-count {
+        font-size: 9px;
+        font-weight: 600;
+    }
+}

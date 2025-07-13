@@ -26,14 +26,13 @@
     {{end}}
 
     <div class="container-main">
-        <!------------------------------ Search bar ------------------------------>
+        <!------------------------------ Search Bar ------------------------------>
         <div class="search-container-main">
             <form action="/forum" method="get">
                 <!-- Preserve current filters -->
-                {{if ne .SelectedCategory "all"}}<input type="hidden" name="category"
-                    value="{{.SelectedCategory}}">{{end}}
+                {{if ne .SelectedCategory "all"}}<input type="hidden" name="category" value="{{.SelectedCategory}}">{{end}}
                 {{if ne .SelectedSort "recent"}}<input type="hidden" name="sort" value="{{.SelectedSort}}">{{end}}
-
+                
                 <div class="input-container-main">
                     <input type="text" name="search" placeholder="Search ..." value="{{.SearchQuery}}">
                     <button type="submit" class="search-icon">
@@ -50,30 +49,40 @@
         <!------------------------------ Filter ------------------------------>
         <div class="filter-bar">
             <div class="filter-dropdown">
-                <button class="filter-button">Category<span class="dropdown-arrow">▼</span></button>
+                <!-- Button with dynamic text -->
+                <button type="button" class="filter-button">
+                    <span class="button-text-default">{{if eq .SelectedCategory "all"}}All Categories{{else if eq .SelectedCategory "reviews"}}Book Reviews{{else if eq .SelectedCategory "upcoming"}}Upcoming Releases{{else if eq .SelectedCategory "chat-authors"}}Chat with Authors{{else if eq .SelectedCategory "news"}}News and Interviews{{else if eq .SelectedCategory "quotes"}}Favourite Quotes{{else if eq .SelectedCategory "25award"}}Bookies Favourite 2025 Award{{else}}Category{{end}}</span>
+                    <span class="dropdown-arrow">▼</span>
+                </button>
+
+                <!-- Dropdown content -->
                 <div class="dropdown-content">
-                    <a href="/forum" class="category-link">All Categories</a>
-                    <a href="/forum?category=reviews" class="category-link">Book Reviews</a>
-                    <a href="/forum?category=upcoming" class="category-link">Upcoming Releases</a>
-                    <a href="/forum?category=chat-authors" class="category-link">Chat with Authors</a>
-                    <a href="/forum?category=news" class="category-link">News and Interviews</a>
-                    <a href="/forum?category=quotes" class="category-link">Favourite Quotes</a>
-                    <a href="/forum?category=25award" class="category-link">Bookies Favourite 2025 Award</a>
+                    <a href="/forum?category=all{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">All Categories</a>
+                    <a href="/forum?category=recommendations{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">Book Recommendations</a>
+                    <a href="/forum?category=reviews{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">Book Reviews</a>
+                    <a href="/forum?category=25award{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">Bookies Favourite 2025 Award</a>
+                    <a href="/forum?category=chat-authors{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">Chat with Authors</a>
+                    <a href="/forum?category=quotes{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">Favourite Quotes</a>
+                    <a href="/forum?category=general{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">General Discussion</a>
+                    <a href="/forum?category=news{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">News and Interviews</a>
+                    <a href="/forum?category=upcoming{{if ne .SelectedSort "recent"}}&sort={{.SelectedSort}}{{end}}" class="category-link">Upcoming Releases</a>
                 </div>
             </div>
-
+            
             <!------------------------------ Sorting ------------------------------>
             <div class="filter-dropdown">
-                <button class="filter-button">
-                    Sort: Recent<span class="dropdown-arrow">▼</span>
+                <button type="button" class="filter-button">
+                    <span class="button-text-default">Sort: {{if eq .SelectedSort "recent"}}Recent{{else if eq .SelectedSort "loved"}}Most Loved{{else if eq .SelectedSort "disliked"}}Most Disliked{{else}}Recent{{end}}</span>
+                    <span class="dropdown-arrow">▼</span>
                 </button>
+
                 <div class="dropdown-content">
-                    <a href="/forum?sort=recent" class="category-link">Recent</a>
-                    <a href="/forum?sort=loved" class="category-link">Most Loved</a>
-                    <a href="/forum?sort=disliked" class="category-link">Most Disliked</a>
+                    <a href="/forum?sort=recent{{if ne .SelectedCategory "all"}}&category={{.SelectedCategory}}{{end}}" class="category-link">Recent</a>
+                    <a href="/forum?sort=loved{{if ne .SelectedCategory "all"}}&category={{.SelectedCategory}}{{end}}" class="category-link">Most Loved</a>
+                    <a href="/forum?sort=disliked{{if ne .SelectedCategory "all"}}&category={{.SelectedCategory}}{{end}}" class="category-link">Most Disliked</a>
                 </div>
             </div>
-
+            <!------------------------------ All Clear ------------------------------>
             <div class="filter-clear">
                 <a href="/forum" class="clear-checkbox-label">
                     <span class="checkbox-box"></span>
@@ -82,7 +91,7 @@
             </div>
         </div>
 
-        <!------------------------------ Forum posts ------------------------------>
+        <!------------------------------ Forum Posts ------------------------------>
         <div class="forum-posts">
             {{range .Posts}}
             <a href="/post/{{.ID}}" style="text-decoration: none; color: inherit; display: block;">
@@ -99,7 +108,6 @@
                                 onclick="event.stopPropagation();">
                                 <input type="hidden" name="post_id" value="{{.ID}}">
                                 <input type="hidden" name="action" value="like">
-                                <input type="hidden" name="redirect" value="/forum">
                                 <button type="submit"
                                     style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: transform 0.1s ease;">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="#27ae60" stroke="#27ae60"
@@ -119,13 +127,12 @@
                                 onclick="event.stopPropagation();">
                                 <input type="hidden" name="post_id" value="{{.ID}}">
                                 <input type="hidden" name="action" value="dislike">
-                                <input type="hidden" name="redirect" value="/forum">
                                 <button type="submit"
                                     style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: transform 0.1s ease;">
-                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#e74c3c" stroke="#e74c3c"
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#e74c3c" stroke="#e74c3c" 
                                         stroke-width="1.5">
-                                        <path
-                                            d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3" />
+                                        <path 
+                                        d="M10 15v4a3 3 0 0 0 3 3l4-9V2H5.72a2 2 0 0 0-2 1.7l-1.38 9a2 2 0 0 0 2 2.3zm7-13h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3" />     
                                     </svg>
                                     <span style="color: #e74c3c; font-weight: 600;">{{(index $.VoteCounts
                                         .ID).Dislikes}}</span>

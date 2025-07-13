@@ -19,7 +19,7 @@
 </head>
 
 <body>
-    <!-- Dynamic header based on user login status -->
+    <!-- Header based on user login status -->
     {{if .CurrentUser}}
     {{ template "user_header.html" . }}
     {{else}}
