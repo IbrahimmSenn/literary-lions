@@ -157,7 +157,7 @@ Open your browser and navigate to http://localhost:8080
 - Main font: [Hepta Slab - Copyright 2018 The Hepta Slab Project Authors](https://fonts.google.com/specimen/Hepta+Slab)
 
 #### Search bar icon
-- [Search bar icons created by Bharat Icons - Flaticon](https://www.flaticon.com/free-icons/search-bar)
+- [Bharat Icons - Flaticon](https://www.flaticon.com/free-icons/search-bar)
 
 #### Photos and images used:
 - [Lion - Unsplash](https://www.flaticon.com/free-icon/lion_490125) 
