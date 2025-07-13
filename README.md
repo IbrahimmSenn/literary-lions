@@ -1,60 +1,109 @@
-# Cars-Viewer – OnlyCars
-OnlyCars is an intuitive platform where car enthusiasts can explore different car models, search for vehicles based on their preferences and compare specifications side-by-side.
+# Book Forum – Bookies
+Bookies is an intuitive forum platform where book enthusiasts can discuss literature, share insights and engage in meaningful conversations with fellow readers.
 
 ## 1. Summary
 ### Current situation:
 
-Car enthusiasts often struggle to find comprehensive, organized information about different vehicle models in one place. Existing automotive websites may be cluttered, difficult to navigate or lack proper comparison tools. Users need a streamlined way to:
-
-- Browse different car models and specifications
-- Search for vehicles that match their interests
-- Compare multiple cars side-by-side
-- Access detailed information in an organized format
-
-The challenge is to create a platform that presents complex automotive data in an intuitive, visually appealing manner while maintaining ease of use across all devices.
+The "Literary Lions" book club was drowning in paper-based discussions that created chaos and confusion. Sticky notes overflowed pages, comments got lost in scribbles and finding past insights felt like navigating a literary labyrinth. New members felt intimidated by the chaotic paper trails, hindering their engagement and knowledge sharing.
+The challenge was to design a digital forum that tames the paper pandemonium and fosters a thriving online book club community.
 
 ### Solution:
-OnlyCars addresses these needs by providing a dedicated web platform that showcases comprehensive information about different car models, their specifications, manufacturers and more in a user-friendly way. The solution includes:
+Literary Lions Forum addresses these needs by providing a comprehensive digital platform that transforms chaotic paper discussions into organized, accessible conversations. The solution includes:
 
-- Clean, modern interface with card-based design for easy browsing
-- Advanced search functionality for quick vehicle discovery
-- Detailed car pages with comprehensive specifications
-- Side-by-side comparison tool for multiple vehicles
-- Filtering by type, manufacturer, country, and year
+- User authentication system with secure registration and login
+- Comprehensive post and comment system for rich discussions
+- Category-based organization for different books, genres, and topics
+- Like/dislike functionality to highlight valuable contributions
+- Advanced filtering capabilities for easy content discovery
 - Responsive design optimized for all devices
-
-Information is displayed through visually appealing car cards and detailed specification pages, making it easy for users to find and compare vehicles that match their interests.
+- SQLite database for reliable data management
+- Dockerized deployment for easy setup and scalability
 
 ## 2. Code Structure
 ```
-cars/
-├── main.go                    # Application entry point
-├── go.mod                     # Go module dependencies
-├── README.md                  # Project documentation
-├── api/                       # API server (separate service)
-├── handlers/                  # HTTP request handlers
-│   ├── cardetailshandler.go  # Car details page handler
-│   ├── comparehandler.go     # Car comparison handler
-│   ├── mainpagehandler.go    # Home page handler
-│   ├── searchcarshandle.go   # Search functionality handler
-│   └── utils.go              # Handler utilities
-├── images/                    # Image assets
-├── jsondata/                  # JSON data files
-├── static/                    # Static CSS files
-│   ├── style.css             # Global styles
-│   ├── cardetails.css        # Car details page styles
-├── templates/                 # HTML templates
-│   ├── carcards.html         # Car card component
-│   ├── cardetails.html       # Car details view
-│   ├── compare.html          # Car comparison page
-│   ├── footer.html           # Site footer component
-│   ├── header.html           # Site header component
-│   ├── home.html             # Home page template
-│   └── search.html           # Search results page
-├── utils/                     # Utility functions
-│   ├── cookie_helper.go      # Cookie management
-│   ├── fetch_data_by_id.go   # Data fetching by ID
-│   └── fetch_data.go         # General data fetching
+literary-lions/
+├── cmd/
+│   └── main.go                   # Application entry point
+├── internal/
+│   ├── data/                     # Data initialization
+│   │   ├── books.go             # Book data setup
+│   │   └── quotes.go            # Quote data setup
+│   ├── database/
+│   │   └── database.go          # Database connection and setup
+│   └── handlers/                # HTTP request handlers
+│       ├── auth_handler.go      # Authentication handlers
+│       ├── comment_handler.go   # Comment management
+│       ├── error_handler.go     # Error page handlers
+│       ├── page_handler.go      # Main page handlers
+│       ├── post_handler.go      # Post management
+│       ├── user_handler.go      # User profile handlers
+│       └── vote_handler.go      # Like/dislike functionality
+├── models/                      # Data models
+│   ├── books.go                # Book model
+│   ├── category.go             # Category model
+│   ├── comment.go              # Comment model
+│   ├── like.go                 # Like/dislike model
+│   ├── post.go                 # Post model
+│   ├── quote.go                # Quote model
+│   ├── session.go              # Session model
+│   └── user.go                 # User model
+├── repository/                  # Data access layer
+│   ├── sqlite/                 # SQLite implementations
+│   │   ├── books_repository.go
+│   │   ├── category_repository.go
+│   │   ├── comment_repository.go
+│   │   ├── like_repository.go
+│   │   ├── post_repository.go
+│   │   ├── quote_repository.go
+│   │   ├── session_repository.go
+│   │   └── user_repository.go
+│   ├── books_repository.go
+│   ├── category_repository.go
+│   ├── comment_repository.go
+│   ├── like_repository.go
+│   ├── post_repository.go
+│   ├── quote_repository.go
+│   ├── session_repository.go
+│   └── user_repository.go
+├── web/    
+│   └── templates/                # HTML templates
+│   │   ├── error404.html           # 404 error page
+│   │   ├── error500.html           # 500 error page
+│   │   ├── footer.html             # Site footer component
+│   │   ├── forum.html              # Main forum page
+│   │   ├── header.html             # Guest user header
+│   │   ├── home.html               # Landing page
+│   │   ├── login.html              # User login page
+│   │   ├── postview.html           # Individual post view
+│   │   ├── register.html           # User registration page
+│   │   ├── user_header.html        # Logged-in user header
+│   │   ├── user_newpost.html       # New post creation
+│   │   └── user_profile.html       # User profile page
+│   └── static/                    # CSS stylesheets
+│       ├── error.css           # Error page styles
+│       ├── footer.css          # Footer styles
+│       ├── forum.css           # Forum page styles
+│       ├── header.css          # Header styles
+│       ├── home.css            # Home page styles
+│       ├── login.css           # Login page styles
+│       ├── mainstyle.css       # Global styles
+│       ├── newpost.css         # New post form styles
+│       ├── postview.css        # Post view styles
+│       ├── profile.css         # Profile page styles
+│       ├── register.css        # Registration page styles
+│       └── reset.css           # CSS reset
+├── media/                    
+│   │   ├── books/ 
+│   └── images...               # Logo, lion, error pages etc
+├── utils/                      # Utility functions
+│   ├── password.go             # Password encryption utilities
+│   └── session.go              # Session management utilities
+├── database_erd.md             # Entity Relationship Diagram
+├── Dockerfile                  # Docker configuration
+├── forum.db                    # SQLite database file
+├── go.mod                      # Go module dependencies
+├── go.sum                      # Go module checksums
+└── README.md                   # Project documentation
 ```
 
 ## 3. Installation
@@ -63,99 +112,61 @@ cars/
 Clone the repository
 ```
 bash
-git clone <https://gitea.koodsisu.fi/helisavila/cars>
-cd cars
+git clone <https://gitea.kood.tech/helisavila/literary-lions>
+cd literary-lions
 ```
-Start the API server
-```
-cd api
-make build  # First time only
-export PORT=3000  # Linux/Mac
-# OR
-$env:PORT=3000  # Windows PowerShell
-make run &
-```
-The API server will run on http://localhost:3000
 
-Start the web application
-```
-cd ..  # Back to project root (cars/)
-go run .
-```
-The web application will start on http://localhost:8080
+### Build and run with Docker (Recommended) 
+If you don't have Docker installed, download and install it from:
+- [Windows: Docker Desktop for Windows](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe)
+- [Mac: Docker Desktop for Mac](https://desktop.docker.com/mac/main/amd64/Docker.dmg)
+- [Linux: Docker Engine](https://docs.docker.com/engine/install/)
 
+```
+docker build -t literary-lions .  
+docker run -v $(pwd):/host -p 8080:8080 literary-lions
+```
 ### Access the application
 Open your browser and navigate to http://localhost:8080
-The API serves data to the web application from port 3000
-
-#### Development Notes
-- Leave the API server running in the background
-- The web application fetches data from the API server
-- Static files are served from the /static directory
-- Templates are rendered server-side using Go's html/template package
 
 ## 4. Features
-- Interactive Home Page with slideshow and car grid.
-- Responsive Design for mobile and desktop.
-- Smooth hover animations and transitions
-- Grid-based responsive layouts
-- Clean typography with Lora font family
-- Dark theme with blue accent colors
-- Intuitive navigation and user flow
-
+- User Authentication
+- Post Management
+- Comment System
+- Like/Dislike System
+- Category Organization and filtering posts
+- Error Handling
 
 ## 5. Bonus features (for review)
-Filter feature – user can filter cars by vehicle type, make, country and year.
-Comparison – user can pick cars to compare on a separate page.
-Personalised recommendations – user can see similar cars to the one they are reading details about.
-Search tab – user can separately search for cars using keywords.
+- User Profiles: personal dashboards showing user activity
+- Search tab
+- Sorting feature: sort posts by recent, most liked, most disliked
+- Responsive Design: optimized for desktop and mobile devices
 
-## 6. Usage
-
-### Browsing Cars
-- Visit the home page to see featured cars
-- Use filter dropdowns to narrow by type, make, country or year
-- Click on any car card to view detailed specifications
-
-### Searching
-- Use the search bar on any page
-- Enter keywords like car names, manufacturers, or features
-
-### Comparing Cars
-- Select "Add to comparison" on car cards
-- Choose multiple vehicles
-- Click "Compare selected" to see side-by-side specs
-
+## 6. Technical Stack
+- Backend: Go (Golang) with net/http
+- Database: SQLite with go-sqlite3 driver
+- Frontend: HTML templates with CSS styling
+- Containerization: Docker for deployment
+- Session Management: Cookie-based with UUID tokens
+- Security: bcrypt password hashing
 
 ## 7. Credits & Attributions
-Logo / Car
-(https://www.flaticon.com/free-icons/eco-car)
-Eco car icons created by Mike Zuidgeest - Flaticon
+#### Fonts
+- Logo font: [Barriecito - Copyright 2018 The Barriecito Project Authors](https://fonts.google.com/specimen/Barriecito)
+- Main font: [Hepta Slab - Copyright 2018 The Hepta Slab Project Authors](https://fonts.google.com/specimen/Hepta+Slab)
 
-Search bar icon
-(https://www.flaticon.com/free-icons/search-bar)
-Search bar icons created by Bharat Icons - Flaticon
+#### Search bar icon
+- [Bharat Icons - Flaticon](https://www.flaticon.com/free-icons/search-bar)
 
-Home page photos:
-1. (https://unsplash.com/photos/brown-boat-on-snow-covered-ground-near-green-trees-and-snow-covered-mountains-during-daytime-Vc_goI6kwT0)
-Alain Gehri - Unsplash 
-
-
-2. (https://unsplash.com/photos/a-car-is-parked-in-a-field-with-mountains-in-the-background-veikogWYk14)
-Spenser Sembrat - Unsplash
-
-
-3. (https://unsplash.com/photos/a-car-driving-down-a-road-with-a-mountain-in-the-background-s6Xi05cto-o)
-Erwi - Unsplash
-
-Fonts
-Main font: (https://fonts.google.com/specimen/Lora/license)
-Lora - Copyright 2011 The Lora Project Authors
-Extra font: (https://fonts.google.com/specimen/Playwrite+DK+Loopet?query=Playwrite)
-Playwright - Copyright 2023 The Playwrite Project Authors
-
+#### Photos and images used:
+- [Lion - Unsplash](https://www.flaticon.com/free-icon/lion_490125) 
+- [Plant - Unsplash](https://www.flaticon.com/free-icon/succulent_3968246) 
+- [Plant2 - Unsplash](https://www.flaticon.com/free-icon/alocasia_6670600)
+- [Books - Unsplash](https://www.flaticon.com/free-icon/book-stack_3389066)
+- [Blobs – Muhammad Abdullah – Freepik](https://www.freepik.com/free-vector/colorful-abstract-fluid-handdrawn-organic-creative-blob-shapes-element_381357218.htm#fromView=keyword&page=1&position=19&uuid=6d9b47bf-4bde-4289-a23c-c517641187c5&query=Blob) 
 
 ## Authors
 - [Heli Savila](https://gitea.kood.tech/helisavila) Frontend Development, UI/UX Design
-- [Ibrahim Sen](https://gitea.kood.tech/ibrahimsen) Backend Development, Architecture
+- [Ibrahim Sen](https://gitea.kood.tech/ibrahimsen) Backend Development, Architecture, Docker Implementation
 
