@@ -66,19 +66,19 @@ literary-lions/
 │   ├── session_repository.go
 │   └── user_repository.go
 ├── web/    
-    └── templates/                # HTML templates
-    │   ├── error404.html           # 404 error page
-    │   ├── error500.html           # 500 error page
-    │   ├── footer.html             # Site footer component
-    │   ├── forum.html              # Main forum page
-    │   ├── header.html             # Guest user header
-    │   ├── home.html               # Landing page
-    │   ├── login.html              # User login page
-    │   ├── postview.html           # Individual post view
-    │   ├── register.html           # User registration page
-    │   ├── user_header.html        # Logged-in user header
-    │   ├── user_newpost.html       # New post creation
-    │   └── user_profile.html       # User profile page
+│   └── templates/                # HTML templates
+│   │   ├── error404.html           # 404 error page
+│   │   ├── error500.html           # 500 error page
+│   │   ├── footer.html             # Site footer component
+│   │   ├── forum.html              # Main forum page
+│   │   ├── header.html             # Guest user header
+│   │   ├── home.html               # Landing page
+│   │   ├── login.html              # User login page
+│   │   ├── postview.html           # Individual post view
+│   │   ├── register.html           # User registration page
+│   │   ├── user_header.html        # Logged-in user header
+│   │   ├── user_newpost.html       # New post creation
+│   │   └── user_profile.html       # User profile page
 │   └── static/                    # CSS stylesheets
 │       ├── error.css           # Error page styles
 │       ├── footer.css          # Footer styles
@@ -94,7 +94,7 @@ literary-lions/
 │       └── reset.css           # CSS reset
 ├── media/                    
 │   │   ├── books/ 
-    └── images...               # Logo, lion, error pages etc
+│   └── images...               # Logo, lion, error pages etc
 ├── utils/                      # Utility functions
 │   ├── password.go             # Password encryption utilities
 │   └── session.go              # Session management utilities
