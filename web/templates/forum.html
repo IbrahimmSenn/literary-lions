@@ -110,7 +110,7 @@
                             <form method="POST" action="/vote" style="display: inline;" onclick="event.stopPropagation();">
                                 <input type="hidden" name="post_id" value="{{.ID}}">
                                 <input type="hidden" name="action" value="like">
-                                <input type="hidden" name="redirect" value="/forum">
+                                <input type="hidden" name="redirect" value="/forum{{if ne $.SelectedCategory "all"}}?category={{$.SelectedCategory}}{{end}}{{if ne $.SelectedSort "recent"}}{{if ne $.SelectedCategory "all"}}&{{else}}?{{end}}sort={{$.SelectedSort}}{{end}}{{if $.SearchQuery}}{{if or (ne $.SelectedCategory "all") (ne $.SelectedSort "recent")}}&{{else}}?{{end}}search={{$.SearchQuery}}{{end}}">
                                 <button type="submit"
                                     style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: transform 0.1s ease;">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="#27ae60" stroke="#27ae60"
@@ -128,7 +128,7 @@
                             <form method="POST" action="/vote" style="display: inline;" onclick="event.stopPropagation();">
                                 <input type="hidden" name="post_id" value="{{.ID}}">
                                 <input type="hidden" name="action" value="dislike">
-                                <input type="hidden" name="redirect" value="/forum">
+                                <input type="hidden" name="redirect" value="/forum{{if ne $.SelectedCategory "all"}}?category={{$.SelectedCategory}}{{end}}{{if ne $.SelectedSort "recent"}}{{if ne $.SelectedCategory "all"}}&{{else}}?{{end}}sort={{$.SelectedSort}}{{end}}{{if $.SearchQuery}}{{if or (ne $.SelectedCategory "all") (ne $.SelectedSort "recent")}}&{{else}}?{{end}}search={{$.SearchQuery}}{{end}}">
                                 <button type="submit"
                                     style="background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: transform 0.1s ease;">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="#e74c3c" stroke="#e74c3c"
@@ -144,7 +144,7 @@
                         <!-- Read-only display for non-logged-in users -->
                         <!-- Thumbs Up Display (Like) -->
                         <div class="stat-item like-count">
-                            <div style="display: flex; align-items: center; gap: 5px; cursor: default;" onclick="event.stopPropagation();">
+                            <div style="display: flex; align-items: center; gap: 5px; cursor: default;">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="#27ae60" stroke="#27ae60"
                                     stroke-width="1.5">
                                     <path
@@ -156,7 +156,7 @@
 
                         <!-- Thumbs Down Display (Dislike) -->
                         <div class="stat-item dislike-count">
-                            <div style="display: flex; align-items: center; gap: 5px; cursor: default;" onclick="event.stopPropagation();">
+                            <div style="display: flex; align-items: center; gap: 5px; cursor: default;">
                                 <svg width="18" height="18" viewBox="0 0 24 24" fill="#e74c3c" stroke="#e74c3c"
                                     stroke-width="1.5">
                                     <path
