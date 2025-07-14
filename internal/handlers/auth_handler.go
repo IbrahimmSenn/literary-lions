@@ -157,7 +157,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		// Simple debug to see if i can actually register PLEASE REMEMBER TO DELETE IT!!!!!!!
-		log.Printf("✅ User successfully registered: ID=%d, Username=%s, Email=%s", newUser.ID, newUser.Username, newUser.Email)
+		//log.Printf("✅ User successfully registered: ID=%d, Username=%s, Email=%s", newUser.ID, newUser.Username, newUser.Email)
 
 		// Registration successful - redirect to login
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
@@ -363,7 +363,7 @@ func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
 		Result:      "",
 		Status:      "200",
 		CurrentUser: currentUser,
-		DarkMode: GetDarkModePreference(r),
+		DarkMode:    GetDarkModePreference(r),
 	}
 
 	err := Templates.ExecuteTemplate(w, "forgot_password.html", data)

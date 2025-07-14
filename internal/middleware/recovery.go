@@ -12,7 +12,7 @@ func RecoveryMiddleware(next http.Handler) http.Handler {
 			if err := recover(); err != nil {
 				log.Printf("🚨 Panic recovered: %v", err)
 
-				// Render your custom 500 error page
+				// Render custom 500 error page
 				handlers.InternalServerErrorHandler(w, r)
 			}
 		}()

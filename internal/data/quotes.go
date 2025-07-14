@@ -1,6 +1,6 @@
 package data
 
-// LiteratureQuotes contains all the iconic book quotes
+// LiteratureQuotes contains all the  book quotes
 var LiteratureQuotes = []struct {
 	Text      string
 	Author    string

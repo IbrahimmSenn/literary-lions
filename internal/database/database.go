@@ -22,7 +22,7 @@ func ConnectDB() (*sql.DB, error) {
 		return nil, err
 	}
 
-	log.Println("Successfully connected to database!")
+	//log.Println("Successfully connected to database!") <No more needed>
 	return db, nil
 }
 
@@ -138,8 +138,6 @@ func CreateLikesTable(db *sql.DB) error {
 	log.Println("✅ Likes table created successfully!")
 	return nil
 }
-
-// Add these functions to your internal/database/database.go file
 
 // CreateCategoriesTable creates the Categories table
 func CreateCategoriesTable(db *sql.DB) error {
