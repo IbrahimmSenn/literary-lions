@@ -23,87 +23,101 @@ Literary Lions Forum addresses these needs by providing a comprehensive digital 
 ```
 literary-lions/
 ├── cmd/
-│   └── main.go                   # Application entry point
+│   └── main.go                          # Application entry point
 ├── internal/
-│   ├── data/                     # Data initialization
-│   │   ├── books.go             # Book data setup
-│   │   └── quotes.go            # Quote data setup
+│   ├── data/
+│   │   ├── books.go                     # Book data structures
+│   │   └── quotes.go                    # Quote data structures
 │   ├── database/
-│   │   └── database.go          # Database connection and setup
-│   └── handlers/                # HTTP request handlers
-│       ├── auth_handler.go      # Authentication handlers
-│       ├── comment_handler.go   # Comment management
-│       ├── error_handler.go     # Error page handlers
-│       ├── page_handler.go      # Main page handlers
-│       ├── post_handler.go      # Post management
-│       ├── user_handler.go      # User profile handlers
-│       └── vote_handler.go      # Like/dislike functionality
-├── models/                      # Data models
-│   ├── books.go                # Book model
-│   ├── category.go             # Category model
-│   ├── comment.go              # Comment model
-│   ├── like.go                 # Like/dislike model
-│   ├── post.go                 # Post model
-│   ├── quote.go                # Quote model
-│   ├── session.go              # Session model
-│   └── user.go                 # User model
-├── repository/                  # Data access layer
-│   ├── sqlite/                 # SQLite implementations
-│   │   ├── books_repository.go
-│   │   ├── category_repository.go
-│   │   ├── comment_repository.go
-│   │   ├── like_repository.go
-│   │   ├── post_repository.go
-│   │   ├── quote_repository.go
-│   │   ├── session_repository.go
-│   │   └── user_repository.go
-│   ├── books_repository.go
-│   ├── category_repository.go
-│   ├── comment_repository.go
-│   ├── like_repository.go
-│   ├── post_repository.go
-│   ├── quote_repository.go
-│   ├── session_repository.go
-│   └── user_repository.go
-├── web/    
-│   └── templates/                # HTML templates
-│   │   ├── error404.html           # 404 error page
-│   │   ├── error500.html           # 500 error page
-│   │   ├── footer.html             # Site footer component
-│   │   ├── forum.html              # Main forum page
-│   │   ├── header.html             # Guest user header
-│   │   ├── home.html               # Landing page
-│   │   ├── login.html              # User login page
-│   │   ├── postview.html           # Individual post view
-│   │   ├── register.html           # User registration page
-│   │   ├── user_header.html        # Logged-in user header
-│   │   ├── user_newpost.html       # New post creation
-│   │   └── user_profile.html       # User profile page
-│   └── static/                    # CSS stylesheets
-│       ├── error.css           # Error page styles
-│       ├── footer.css          # Footer styles
-│       ├── forum.css           # Forum page styles
-│       ├── header.css          # Header styles
-│       ├── home.css            # Home page styles
-│       ├── login.css           # Login page styles
-│       ├── mainstyle.css       # Global styles
-│       ├── newpost.css         # New post form styles
-│       ├── postview.css        # Post view styles
-│       ├── profile.css         # Profile page styles
-│       ├── register.css        # Registration page styles
-│       └── reset.css           # CSS reset
-├── media/                    
-│   │   ├── books/ 
-│   └── images...               # Logo, lion, error pages etc
-├── utils/                      # Utility functions
-│   ├── password.go             # Password encryption utilities
-│   └── session.go              # Session management utilities
-├── database_erd.md             # Entity Relationship Diagram
-├── Dockerfile                  # Docker configuration
-├── forum.db                    # SQLite database file
-├── go.mod                      # Go module dependencies
-├── go.sum                      # Go module checksums
-└── README.md                   # Project documentation
+│   │   └── database.go                  # Database connection & setup
+│   ├── handlers/
+│   │   ├── auth_handler.go              # Login, register, logout handlers
+│   │   ├── comment_handler.go           # Comment creation & management
+│   │   ├── darkmode_handler.go          # Dark mode toggle functionality
+│   │   ├── error_handler.go             # 404 & 500 error pages
+│   │   ├── page_handler.go              # Home page & basic pages
+│   │   ├── post_handler.go              # Forum, posts, & new post creation
+│   │   ├── user_handler.go              # User profile management
+│   │   └── vote_handler.go              # Like/dislike voting system
+│   ├── middleware/
+│   │   └── recovery.go                  # Error recovery middleware
+│   ├── models/
+│   │   ├── books.go                     # Book model definitions
+│   │   ├── category.go                  # Category model definitions
+│   │   ├── comment.go                   # Comment model definitions
+│   │   ├── like.go                      # Like/vote model definitions
+│   │   ├── post.go                      # Post model definitions
+│   │   ├── quote.go                     # Quote model definitions
+│   │   ├── session.go                   # Session model definitions
+│   │   └── user.go                      # User model definitions
+│   ├── repository/
+│   │   └── sqlite/
+│   │       ├── books_repository.go      # Book database operations
+│   │       ├── category_repository.go   # Category database operations
+│   │       ├── comment_repository.go    # Comment database operations
+│   │       ├── like_repository.go       # Like/vote database operations
+│   │       ├── post_repository.go       # Post database operations
+│   │       ├── quote_repository.go      # Quote database operations
+│   │       ├── session_repository.go    # Session database operations
+│   │       └── user_repository.go       # User database operations
+│   │   ├── books_repository.go          # Book repository interface
+│   │   └── category_repository          # Category repository interface
+│   └── utils/
+│       ├── password.go                  # Password hashing utilities
+│       └── session.go                   # Session management utilities
+├── media/
+│   ├── books/                           # Book cover images
+│   ├── blob.png                         # UI decoration images
+│   ├── blob2.png
+│   ├── blob3.png
+│   ├── blob7.png
+│   ├── error.png                        # Error page graphics
+│   ├── favicon.png                      # Website favicon
+│   ├── logo.png                         # Brand logos
+│   ├── logo2.png
+│   ├── logo2_darkmode.png              # Dark mode logo variants
+│   ├── logo_simple.png
+│   ├── profile_avatar.png              # Default user avatars
+│   ├── user_logo.png                   # User-specific logos
+│   ├── user_logo2.png
+│   └── user_logo2_darkmode.png         # Dark mode user logos
+├── templates/
+│   ├── error404.html                   # 404 error page
+│   ├── error500.html                   # 500 error page
+│   ├── footer.html                     # Site footer template
+│   ├── forgot_password.html            # Password recovery page
+│   ├── forum.html                      # Main forum listing
+│   ├── header.html                     # Guest header template
+│   ├── home.html                       # Homepage template
+│   ├── login.html                      # User login page
+│   ├── postview.html                   # Individual post view
+│   ├── register.html                   # User registration page
+│   ├── user_header.html                # Logged-in user header
+│   ├── user_newpost.html               # New post creation form
+│   └── user_profile.html               # User profile page
+├── web/
+│   └── static/
+│       ├── darkmode.css                # Dark/light mode styling
+│       ├── error.css                   # Error page styles
+│       ├── footer.css                  # Footer styling
+│       ├── forum.css                   # Forum page styles
+│       ├── header.css                  # Header styling
+│       ├── home.css                    # Homepage styles
+│       ├── login.css                   # Login/register page styles
+│       ├── mainstyle.css               # Global styles
+│       ├── newpost.css                 # New post form styles
+│       ├── postview.css                # Post detail page styles
+│       ├── profile.css                 # User profile styles
+│       ├── register.css                # Registration form styles
+│       └── reset.css                   # CSS reset styles
+├── .gitignore                          # Git ignore rules
+├── database_erd.md                     # Database schema documentation
+├── Dockerfile                          # Docker container configuration
+├── forum.db                            # SQLite database file
+├── go.mod                              # Go module dependencies
+├── go.sum                              # Go module checksums
+├── README.md                           # Project documentation
+└── test_404.sh                         # Testing script
 ```
 
 ## 3. Installation
@@ -141,6 +155,7 @@ Open your browser and navigate to http://localhost:8080
 - User Profiles: personal dashboards showing user activity
 - Search tab
 - Sorting feature: sort posts by recent, most liked, most disliked
+- Dark/Light Mode: Complete theme switching with persistent user preferences (cookie-based storage)
 - Responsive Design: optimized for desktop and mobile devices
 
 ## 6. Technical Stack
@@ -151,7 +166,11 @@ Open your browser and navigate to http://localhost:8080
 - Session Management: Cookie-based with UUID tokens
 - Security: bcrypt password hashing
 
-## 7. Credits & Attributions
+## 7. Database Schema
+
+![Database Schema](docs/database-schema.png)
+
+## 8. Credits & Attributions
 #### Fonts
 - Logo font: [Barriecito - Copyright 2018 The Barriecito Project Authors](https://fonts.google.com/specimen/Barriecito)
 - Main font: [Hepta Slab - Copyright 2018 The Hepta Slab Project Authors](https://fonts.google.com/specimen/Hepta+Slab)

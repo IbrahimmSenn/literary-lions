@@ -363,6 +363,7 @@ func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
 		Result:      "",
 		Status:      "200",
 		CurrentUser: currentUser,
+		DarkMode: GetDarkModePreference(r),
 	}
 
 	err := Templates.ExecuteTemplate(w, "forgot_password.html", data)
