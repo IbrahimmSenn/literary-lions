@@ -168,7 +168,7 @@ Open your browser and navigate to http://localhost:8080
 
 ## 7. Database Schema
 
-![Database Schema](docs/database-schema.png)
+![Database Schema](media/database-schema.png)
 
 ## 8. Credits & Attributions
 #### Fonts
