@@ -1,0 +1,44 @@
+/* ===== ROOT VARIABLES ===== */
+:root {
+  /* Light mode colors (default) */
+  --bg-primary: #FBF2E7;
+  --bg-boxes: #FBF2E7;
+  --text-primary: #561509;
+  --border-color: #561509;
+  --navhover: #94AE6D;
+
+  /* Logo images - light mode default */
+  --guest-logo: url('/media/logo2.png');
+  --user-logo: url('/media/user_logo2.png');
+}
+
+/* ===== DARK MODE OVERRIDES ===== */
+
+/* Primary method: When dark mode toggle is checked anywhere on the page */
+body.dark-mode {
+  --bg-primary: #160502 !important;
+  --text-primary: #E2D6C8 !important;
+  --bg-boxes: #E2D6C8 !important;
+  --navhover: #EEE045;
+  --guest-logo: url('/media/logo2_darkmode.png') !important;
+  --user-logo: url('/media/user_logo2_darkmode.png') !important;
+}
+
+/* ===== FALLBACK: CSS-only toggle (for browsers with :has() support) ===== */
+html:has(.input:checked) {
+  --bg-primary: #160502 !important;
+  --text-primary: #E2D6C8 !important;
+  --bg-boxes: #E2D6C8 !important;
+  --navhover: #EEE045;
+  --guest-logo: url('/media/logo2_darkmode.png') !important;
+  --user-logo: url('/media/user_logo2_darkmode.png') !important;
+}
+
+/* ===== SMOOTH TRANSITIONS ===== */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.guest-logo, .user-logo {
+  transition: background-image 0.3s ease;
+}

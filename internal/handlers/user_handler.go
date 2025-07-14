@@ -126,6 +126,7 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 		LikedPosts:          likedPosts,
 		LikedPostCategories: likedPostCategories,
 		LikedPostVoteCounts: likedPostVoteCounts,
+		DarkMode:            GetDarkModePreference(r),
 
 	}
 

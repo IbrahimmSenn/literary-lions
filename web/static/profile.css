@@ -24,7 +24,7 @@
 }
 
 .profile-username {
-  color: #561509;
+  color: var(--text-primary);;
   font-size: clamp(1.5rem, 4vw, 2.2rem);
   font-weight: 600;
   margin: 0;
@@ -32,14 +32,14 @@
 }
 
 .profile-email {
-  color: #561509;
+  color: var(--text-primary);;
   font-size: clamp(1rem, 2.5vw, 1.2rem);
   margin: 0;
   opacity: 0.8;
 }
 
 .profile-joined {
-  color: #561509;
+  color: var(--text-primary);;
   font-size: 12px;
   margin: 0;
   font-weight: normal;
@@ -62,14 +62,14 @@
 }
 
 .stat-number {
-  color: #561509;
+  color: var(--text-primary);
   font-size: clamp(1.5rem, 4vw, 2rem);
   font-weight: 600;
   font-family: 'Hepta Slab', serif;
 }
 
 .stat-label {
-  color: #561509;
+  color: var(--text-primary);
   font-size: 12px;
   font-weight: 500;
   font-family: 'Hepta Slab', serif;
@@ -127,6 +127,24 @@
   margin-bottom: 0px;
 }
 
+.button {
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  justify-content: center;
+  cursor: pointer;
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #C4B408;
+  text-align: center;
+  color: #561509;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  font-family: 'Hepta Slab', serif;
+  text-decoration: none;
+}
+
 .logout-btn {
   background-color: #F08C2D !important;
   color: #561509 !important;
@@ -177,7 +195,7 @@
 }
 
 .section-title {
-  color: #561509;
+  color: (--text-primary);
   font-size: clamp(1.2rem, 3vw, 1.5rem);
   font-weight: 600;
   text-align: center;
@@ -217,7 +235,7 @@
 .post-bar {
   width: clamp(320px, 85vw, 800px);
   height: 40px;
-  background: #FBF2E7;
+  background: var(--bg-boxes);
   border-radius: 0.375rem;
   border: 1px solid #561509;
   margin-bottom: 12px;

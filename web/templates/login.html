@@ -8,6 +8,7 @@
     <title>Bookies Book Forum</title>
     <link rel="stylesheet" href="/static/reset.css">
     <link rel="stylesheet" href="/static/header.css">
+    <link rel="stylesheet" href="/static/darkmode.css">
     <link rel="stylesheet" href="/static/login.css">
     <link rel="stylesheet" href="/static/mainstyle.css">
     <link rel="stylesheet" href="/static/footer.css">
@@ -18,7 +19,7 @@
     <link rel="icon" type="image/x-icon" href="/media/favicon.png" />
 </head>
 
-<body>
+<body {{if .DarkMode}}class="dark-mode"{{end}}></body>
     {{if .CurrentUser}}
     {{ template "user_header.html" . }}
     {{else}}
