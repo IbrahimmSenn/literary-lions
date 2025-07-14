@@ -50,7 +50,6 @@ func createTables(db *sql.DB) error {
 		database.CreateSessionsTable,
 		database.CreateLikesTable,
 	}
-
 	for _, createTable := range tables {
 		if err := createTable(db); err != nil {
 			return err

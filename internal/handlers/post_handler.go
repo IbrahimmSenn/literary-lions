@@ -269,6 +269,7 @@ func PostDetailHandler(w http.ResponseWriter, r *http.Request) {
 		NotFoundHandler(w, r)
 		return
 	}
+
 	// Get the username of the post author
 	userRepo := sqlite.NewUserRepository(db)
 	postAuthor, err := userRepo.GetUserByID(post.UserID)
@@ -304,17 +305,33 @@ func PostDetailHandler(w http.ResponseWriter, r *http.Request) {
 		commentVoteCounts[comment.ID] = commentVoteCount
 	}
 
+	// GET THE POST CATEGORY - ADD THIS PART
+	categoryRepo := sqlite.NewCategoryRepository(db)
+	categories, err := categoryRepo.GetCategoriesForPost(postID)
+	var postCategory *models.Category
+	if err != nil || len(categories) == 0 {
+		// Default category if none found
+		postCategory = &models.Category{
+			ID:   0,
+			Name: "General",
+			Slug: "general",
+		}
+	} else {
+		postCategory = categories[0] // Use first category
+	}
+
 	currentUser, _ := utils.GetCurrentUser(r)
 
 	data := PageData{
 		Result:            "",
 		Status:            "200",
 		Post:              post,
-		PostAuthor:        postAuthor, // Pass the author properly
+		PostAuthor:        postAuthor,
 		VoteCount:         voteCount,
 		Comments:          comments,
 		CurrentUser:       currentUser,
 		CommentVoteCounts: commentVoteCounts,
+		PostCategory:      postCategory, // ADD THIS LINE
 		DarkMode:          GetDarkModePreference(r),
 	}
 

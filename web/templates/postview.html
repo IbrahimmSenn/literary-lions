@@ -31,7 +31,7 @@
             <!------------------------------ Post Header ------------------------------>
             <div class="post-header">
                 <div class="post-meta">
-                    <span class="category-tag">General</span>
+                    <span class="category-tag">{{.PostCategory.Name}}</span>
                     <span class="post-author">By {{if .PostAuthor}}{{.PostAuthor.Username}}{{else}}Unknown
                         User{{end}}</span>
                     <span class="post-date">{{.Post.CreatedAt.Format "02.01.2006"}}</span>

@@ -40,6 +40,7 @@ type PageData struct {
 	SelectedSort        string
 	SearchQuery         string
 	DarkMode            bool
+	PostCategory        *models.Category
 }
 
 type UserStats struct {
