@@ -50,6 +50,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 		CurrentUser: currentUser,
 		Quote:       todaysQuote,
 		Book:        todaysBook,
+		DarkMode:    GetDarkModePreference(r),
 	}
 
 	// Render the home template
@@ -68,6 +69,7 @@ func ErrorHandler(w http.ResponseWriter, r *http.Request) {
 	data := PageData{
 		Result: "",
 		Status: "200",
+		DarkMode: GetDarkModePreference(r),
 	}
 
 	err := Templates.ExecuteTemplate(w, "error.html", data)

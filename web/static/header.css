@@ -1,8 +1,23 @@
+/* ===== CSS VARIABLES (should match darkmode.css) ===== */
+:root {
+  /* Light mode colors (default) */
+  --bg-primary: #FBF2E7;
+  --text-primary: #561509;
+  --border-color: #561509;
+  --post-bg: #FBF2E7;
+
+  /* Logo images - light mode default */
+  --guest-logo: url('/media/logo2.png');
+  --user-logo: url('/media/user_logo2.png');
+}
+
+/* ===== HEADER STYLES ===== */
 .container-logo {
     width: 100%;
-    background: #FBF2E7;
+    background-color: var(--bg-primary);
     margin: 0;
     padding-top: 40px;
+    transition: background-color 0.3s ease;
 }
 
 .logo img {
@@ -13,10 +28,34 @@
     cursor: pointer;
 }
 
+/* Guest and User logos shared styling */
+.guest-logo, .user-logo {
+    display: block;
+    margin: 0 auto;
+    width: clamp(350px, 30vw, 500px);
+    height: 100px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    transition: background-image 0.3s ease;
+}
+
+/* Guest logo */
+.guest-logo {
+    background-image: var(--guest-logo);
+}
+
+/* User logo */
+.user-logo {
+    background-image: var(--user-logo);
+}
+
 .nav {
-    background-color: #FBF2E7;
+    background-color: var(--bg-primary);
     padding: clamp(10px, 3vw, 25px) 0; 
     text-align: center;
+    transition: background-color 0.3s ease;
 }
 
 .nav ul {
@@ -38,10 +77,11 @@
     font-size: clamp(0.9rem, 2.5vw, 1.1rem);
     padding: 8px 12px;
     white-space: nowrap;
+    transition: color 0.3s ease;
 }
 
 .nav a:hover {
-    color: #94AE6D;
+    color: var(--navhover);
 }
 
 /************************************* Avatar **************************************/
@@ -49,4 +89,3 @@
 .username {
     text-transform: capitalize;
 }
-

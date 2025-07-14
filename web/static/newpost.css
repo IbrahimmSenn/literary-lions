@@ -19,7 +19,7 @@
 }
 
 .title {
-  color: #561509;
+  color: var(--text-primary);
   text-align: center;
   font-weight: normal;
   font-size: clamp(2rem, 5vw, 2.9rem);
@@ -39,7 +39,7 @@
 
 .input-group label {
   display: block;
-  color: #561509;
+  color: var(--text-primary);
   margin-bottom: 4px;
   margin-top: 15px;
 }
@@ -47,9 +47,9 @@
 .input-group input, .content-textarea {
   width: 100%;
   border-radius: 0.375rem;
-  border: 1px solid #561509;
+  border: 1px solid var(--text-primary);
   outline: 0;
-  background-color: #FBF2E7;
+  background-color: var(--bg-boxes);
   padding: 0.65rem 0.85rem;
   color: #561509;
   font-family: 'Hepta Slab', serif;

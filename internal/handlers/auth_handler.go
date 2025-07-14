@@ -39,6 +39,7 @@ type PageData struct {
 	SelectedCategory    string
 	SelectedSort        string
 	SearchQuery         string
+	DarkMode            bool
 }
 
 type UserStats struct {
@@ -61,6 +62,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		data := PageData{
 			Result: "",
 			Status: "200",
+			DarkMode: GetDarkModePreference(r),
 		}
 
 		err := Templates.ExecuteTemplate(w, "register.html", data)
@@ -88,6 +90,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 			data := PageData{
 				Error:  "All fields are required",
 				Status: "400",
+				DarkMode: GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "register.html", data)
 			return
@@ -109,6 +112,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 			data := PageData{
 				Error:  "Email already taken",
 				Status: "400",
+				DarkMode: GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "register.html", data)
 			return
@@ -119,6 +123,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 			data := PageData{
 				Error:  "Oops! This username is already taken. Try another one!",
 				Status: "400",
+				DarkMode: GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "register.html", data)
 			return
@@ -145,6 +150,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 			data := PageData{
 				Error:  "Registration failed. Username or email might already exist.",
 				Status: "500",
+				DarkMode: GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "register.html", data)
 			return
@@ -173,6 +179,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		data := PageData{
 			Result: "",
 			Status: "200",
+			DarkMode: GetDarkModePreference(r),
 		}
 
 		err := Templates.ExecuteTemplate(w, "login.html", data)
@@ -200,6 +207,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 			data := PageData{
 				Error:  "Email and password are required",
 				Status: "400",
+				DarkMode: GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "login.html", data)
 			return
@@ -223,6 +231,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 			data := PageData{
 				Error:  "Invalid email or password",
 				Status: "400",
+				DarkMode: GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "login.html", data)
 			return
@@ -233,6 +242,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 			data := PageData{
 				Error:  "Invalid email or password",
 				Status: "400",
+				DarkMode: GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "login.html", data)
 			return

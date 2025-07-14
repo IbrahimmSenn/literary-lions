@@ -90,6 +90,9 @@ func setupRoutes() {
 
 	// Comment routes
 	http.HandleFunc("/comment", handlers.CommentHandler)
+
+	// Light & Dark Mode
+	http.HandleFunc("/toggle-dark-mode", handlers.ToggleDarkModeHandler)
 }
 
 // Static Configuration

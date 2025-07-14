@@ -107,6 +107,7 @@ func ForumHandler(w http.ResponseWriter, r *http.Request) {
 		SelectedCategory: selectedCategory,
 		SelectedSort:     selectedSort,
 		SearchQuery:      searchQuery,
+		DarkMode:         GetDarkModePreference(r),
 	}
 
 	err = Templates.ExecuteTemplate(w, "forum.html", data)
@@ -160,6 +161,7 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 			Status:      "200",
 			Categories:  categories,
 			CurrentUser: currentUser, // IMPORTANT: Pass current user to template
+			DarkMode:    GetDarkModePreference(r),
 		}
 
 		err := Templates.ExecuteTemplate(w, "user_newpost.html", data)
@@ -188,6 +190,7 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 				Status:      "400",
 				Categories:  categories,
 				CurrentUser: currentUser, // IMPORTANT: Pass current user for error rendering
+				DarkMode:    GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "user_newpost.html", data) // Use correct template
 			return
@@ -312,6 +315,7 @@ func PostDetailHandler(w http.ResponseWriter, r *http.Request) {
 		Comments:          comments,
 		CurrentUser:       currentUser,
 		CommentVoteCounts: commentVoteCounts,
+		DarkMode:          GetDarkModePreference(r),
 	}
 
 	err = Templates.ExecuteTemplate(w, "postview.html", data)

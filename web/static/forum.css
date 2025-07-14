@@ -22,15 +22,15 @@
     font-family: 'Hepta Slab', serif;
     width: 100%;
     border: none;
-    border-bottom: 1px solid #561509;
+    border-bottom: 1px solid var(--text-primary);;
     padding: 8px 40px 8px 0;
     background-color: transparent;
     outline: none;
-    color: #561509;
+    color: var(--text-primary);
 }
 
 .input-container-main input[type="text"]::placeholder {
-    color: #561509;
+    color: var(--text-primary);
 }
 
 .search-icon {
@@ -39,7 +39,7 @@
     top: 8px;
     background: none;
     border: none;
-    color: #561509;
+    color: var(--text-primary);
     cursor: pointer;
     padding: 0;
     display: flex;
@@ -50,15 +50,15 @@
 /* Search results styling */
 .clear-search {
     display: inline-block;
-    color: #561509;
+    color: var(--text-primary);
     text-decoration: none;
-    border-bottom: 1px solid #561509;
+    border-bottom: 1px solid var(--text-primary);
     transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .clear-search:hover {
-    color: #561509;
-    border-color: #561509;
+    color: var(--text-primary);
+    border-color: var(--text-primary);
 }
 
 /************************************** Filter **************************************/
@@ -228,7 +228,7 @@
     cursor: default;
     font-family: 'Hepta Slab', serif;
     font-size: 12px;
-    color: #561509;
+    color: var(--text-primary);
     text-decoration: none;
     padding: 5px 10px;
     border-radius: 10px;
@@ -251,7 +251,7 @@
 }
 
 .clear-text {
-    color: #561509;
+    color: (--text-primary);
 }
 
 /******************************** Sorting ********************************/
@@ -289,7 +289,7 @@
 .post-bar {
     width: clamp(320px, 85vw, 800px);
     height: 40px;
-    background: #FBF2E7;
+    background: var(--bg-boxes);
     border-radius: 0.375rem;
     border: 1px solid #561509;
     margin-bottom: 12px;
