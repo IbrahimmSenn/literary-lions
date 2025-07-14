@@ -116,8 +116,7 @@ literary-lions/
 ├── forum.db                            # SQLite database file
 ├── go.mod                              # Go module dependencies
 ├── go.sum                              # Go module checksums
-├── README.md                           # Project documentation
-└── test_404.sh                         # Testing script
+└── README.md                           # Project documentation
 ```
 
 ## 3. Installation
@@ -130,7 +129,7 @@ git clone <https://gitea.kood.tech/helisavila/literary-lions>
 cd literary-lions
 ```
 
-### Build and run with Docker (Recommended) 
+### Build and run with Docker
 If you don't have Docker installed, download and install it from:
 - [Windows: Docker Desktop for Windows](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe)
 - [Mac: Docker Desktop for Mac](https://desktop.docker.com/mac/main/amd64/Docker.dmg)
@@ -140,6 +139,10 @@ If you don't have Docker installed, download and install it from:
 docker build -t literary-lions .  
 docker run -v $(pwd):/host -p 8080:8080 literary-lions
 ```
+### Note
+This application is designed to run in a containerized environment.
+For local development, use the Docker commands above. 
+
 ### Access the application
 Open your browser and navigate to http://localhost:8080
 
@@ -153,10 +156,13 @@ Open your browser and navigate to http://localhost:8080
 
 ## 5. Bonus features (for review)
 - User Profiles: personal dashboards showing user activity
+- Daily rotating quotes
 - Search tab
 - Sorting feature: sort posts by recent, most liked, most disliked
 - Dark/Light Mode: Complete theme switching with persistent user preferences (cookie-based storage)
 - Responsive Design: optimized for desktop and mobile devices
+- Log out option
+- Seperate home and forum pages
 
 ## 6. Technical Stack
 - Backend: Go (Golang) with net/http
