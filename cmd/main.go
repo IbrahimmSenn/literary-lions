@@ -4,11 +4,11 @@ import (
 	"database/sql"
 	"fmt"
 	"html/template"
-	"log"
-	"net/http"
-
 	"literary-lions-forum/internal/database"
 	"literary-lions-forum/internal/handlers"
+	"literary-lions-forum/internal/middleware"
+	"log"
+	"net/http"
 )
 
 func init() {
@@ -62,8 +62,11 @@ func createTables(db *sql.DB) error {
 
 // Configuration
 func setupRoutes() {
+	// Create a new ServeMux
+	mux := http.NewServeMux()
+
 	// Page routes
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		// Handle home page specifically
 		if r.URL.Path == "/" {
 			handlers.HomeHandler(w, r)
@@ -73,26 +76,31 @@ func setupRoutes() {
 		handlers.NotFoundHandler(w, r)
 	})
 
-	http.HandleFunc("/error", handlers.ErrorHandler)
-	http.HandleFunc("/profile", handlers.ProfileHandler)
+	mux.HandleFunc("/error", handlers.ErrorHandler)
+	mux.HandleFunc("/profile", handlers.ProfileHandler)
 
 	// Authentication routes
-	http.HandleFunc("/login", handlers.LoginHandler)
-	http.HandleFunc("/register", handlers.RegisterHandler)
-	http.HandleFunc("/logout", handlers.LogoutHandler)
+	mux.HandleFunc("/login", handlers.LoginHandler)
+	mux.HandleFunc("/register", handlers.RegisterHandler)
+	mux.HandleFunc("/logout", handlers.LogoutHandler)
+	mux.HandleFunc("/forgot-password", handlers.ForgotPasswordHandler)
 
 	// Forum routes
-	http.HandleFunc("/forum", handlers.ForumHandler)
-	http.HandleFunc("/newpost", handlers.NewPostHandler)
-	http.HandleFunc("/post/", handlers.PostDetailHandler)
+	mux.HandleFunc("/forum", handlers.ForumHandler)
+	mux.HandleFunc("/newpost", handlers.NewPostHandler)
+	mux.HandleFunc("/post/", handlers.PostDetailHandler)
 
-	http.HandleFunc("/vote", handlers.VoteHandler)
+	mux.HandleFunc("/vote", handlers.VoteHandler)
 
 	// Comment routes
-	http.HandleFunc("/comment", handlers.CommentHandler)
+	mux.HandleFunc("/comment", handlers.CommentHandler)
 
 	// Light & Dark Mode
-	http.HandleFunc("/toggle-dark-mode", handlers.ToggleDarkModeHandler)
+	mux.HandleFunc("/toggle-dark-mode", handlers.ToggleDarkModeHandler)
+
+	// Wrap with recovery middleware and set as default handler
+	handler := middleware.RecoveryMiddleware(mux)
+	http.Handle("/", handler)
 }
 
 // Static Configuration

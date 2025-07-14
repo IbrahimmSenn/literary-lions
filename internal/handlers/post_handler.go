@@ -237,7 +237,7 @@ func PostDetailHandler(w http.ResponseWriter, r *http.Request) {
 	postIDStr := r.URL.Path[len("/post/"):]
 	postID, err := strconv.Atoi(postIDStr)
 	if err != nil {
-		http.NotFound(w, r)
+		NotFoundHandler(w, r)
 		return
 	}
 
@@ -254,8 +254,8 @@ func PostDetailHandler(w http.ResponseWriter, r *http.Request) {
 	post, err := postRepo.GetPostByID(postID)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			// Post doesn't exist - return 404
-			http.Error(w, "Post not found", http.StatusNotFound)
+			// Post doesn't exist - return custom 404
+			NotFoundHandler(w, r)
 			return
 		}
 		// Other database error - return 500
@@ -265,8 +265,8 @@ func PostDetailHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if post == nil {
-		// Post doesn't exist - return 404
-		http.Error(w, "Post not found", http.StatusNotFound)
+		// Post doesn't exist - return custom 404
+		NotFoundHandler(w, r)
 		return
 	}
 	// Get the username of the post author

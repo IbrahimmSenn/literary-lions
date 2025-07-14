@@ -60,8 +60,8 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == http.MethodGet {
 		data := PageData{
-			Result: "",
-			Status: "200",
+			Result:   "",
+			Status:   "200",
 			DarkMode: GetDarkModePreference(r),
 		}
 
@@ -88,8 +88,8 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 		if username == "" || email == "" || password == "" {
 			data := PageData{
-				Error:  "All fields are required",
-				Status: "400",
+				Error:    "All fields are required",
+				Status:   "400",
 				DarkMode: GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "register.html", data)
@@ -110,8 +110,8 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		existingUser, _ := userRepo.GetUserByEmail(email)
 		if existingUser != nil {
 			data := PageData{
-				Error:  "Email already taken",
-				Status: "400",
+				Error:    "Email already taken",
+				Status:   "400",
 				DarkMode: GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "register.html", data)
@@ -121,8 +121,8 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		existingUserByUsername, _ := userRepo.GetUserByUsername(username)
 		if existingUserByUsername != nil {
 			data := PageData{
-				Error:  "Oops! This username is already taken. Try another one!",
-				Status: "400",
+				Error:    "Oops! This username is already taken. Try another one!",
+				Status:   "400",
 				DarkMode: GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "register.html", data)
@@ -148,8 +148,8 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Printf("Error creating user: %v", err)
 			data := PageData{
-				Error:  "Registration failed. Username or email might already exist.",
-				Status: "500",
+				Error:    "Registration failed. Username or email might already exist.",
+				Status:   "500",
 				DarkMode: GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "register.html", data)
@@ -177,8 +177,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	// Handle GET request - show login form
 	if r.Method == http.MethodGet {
 		data := PageData{
-			Result: "",
-			Status: "200",
+			Result:   "",
+			Status:   "200",
 			DarkMode: GetDarkModePreference(r),
 		}
 
@@ -205,8 +205,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		// Basic validation
 		if usernameOrEmail == "" || password == "" {
 			data := PageData{
-				Error:  "Email and password are required",
-				Status: "400",
+				Error:    "Email and password are required",
+				Status:   "400",
 				DarkMode: GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "login.html", data)
@@ -229,8 +229,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		user, err := userRepo.GetUserByEmail(usernameOrEmail)
 		if err != nil {
 			data := PageData{
-				Error:  "Invalid email or password",
-				Status: "400",
+				Error:    "Invalid email or password",
+				Status:   "400",
 				DarkMode: GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "login.html", data)
@@ -240,8 +240,8 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 		// Check password
 		if !utils.CheckPassword(password, user.Password) {
 			data := PageData{
-				Error:  "Invalid email or password",
-				Status: "400",
+				Error:    "Invalid email or password",
+				Status:   "400",
 				DarkMode: GetDarkModePreference(r),
 			}
 			Templates.ExecuteTemplate(w, "login.html", data)
@@ -342,4 +342,31 @@ func clearSessionCookie(w http.ResponseWriter) {
 		MaxAge:   -1, // Negative MaxAge means delete cookie immediately
 	}
 	http.SetCookie(w, cookie)
+}
+
+func ForgotPasswordHandler(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/forgot-password" {
+		http.NotFound(w, r)
+		return
+	}
+
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	// Get current user for header
+	currentUser, _ := utils.GetCurrentUser(r)
+
+	data := PageData{
+		Result:      "",
+		Status:      "200",
+		CurrentUser: currentUser,
+	}
+
+	err := Templates.ExecuteTemplate(w, "forgot_password.html", data)
+	if err != nil {
+		http.Error(w, "Error rendering template", http.StatusInternalServerError)
+		log.Printf("Template error: %v", err)
+	}
 }
