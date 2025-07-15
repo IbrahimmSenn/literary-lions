@@ -70,21 +70,31 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 		LikesReceived: likesReceived,
 	}
 
-	// Get categories for user posts
+	// Get categories for user posts - ALWAYS add something to the map
 	postCategories := make(map[int]*models.Category)
 	for _, post := range userPosts {
 		categories, err := categoryRepo.GetCategoriesForPost(post.ID)
 		if err == nil && len(categories) > 0 {
 			postCategories[post.ID] = categories[0]
+		} else {
+			// Add default category if none found
+			postCategories[post.ID] = &models.Category{
+				ID:   0,
+				Name: "General",
+				Slug: "general",
+			}
 		}
 	}
 
-	// Get vote counts for user posts
+	// Get vote counts for user posts - ALWAYS add something to the map
 	voteCounts := make(map[int]*models.VoteCount)
 	for _, post := range userPosts {
 		voteCount, err := likeRepo.GetPostVoteCount(post.ID)
 		if err == nil {
 			voteCounts[post.ID] = voteCount
+		} else {
+			// IMPORTANT: Add default vote count if none found
+			voteCounts[post.ID] = &models.VoteCount{Likes: 0, Dislikes: 0}
 		}
 	}
 
@@ -95,24 +105,33 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 		likedPosts = []*models.Post{}
 	}
 
-	// Get categories for liked posts
+	// Get categories for liked posts - ALWAYS add something to the map
 	likedPostCategories := make(map[int]*models.Category)
 	for _, post := range likedPosts {
 		categories, err := categoryRepo.GetCategoriesForPost(post.ID)
 		if err == nil && len(categories) > 0 {
 			likedPostCategories[post.ID] = categories[0]
+		} else {
+			// IMPORTANT: Add default category if none found
+			likedPostCategories[post.ID] = &models.Category{
+				ID:   0,
+				Name: "General",
+				Slug: "general",
+			}
 		}
 	}
 
-	// Get vote counts for liked posts
+	// Get vote counts for liked posts - ALWAYS add something to the map
 	likedPostVoteCounts := make(map[int]*models.VoteCount)
 	for _, post := range likedPosts {
 		voteCount, err := likeRepo.GetPostVoteCount(post.ID)
 		if err == nil {
 			likedPostVoteCounts[post.ID] = voteCount
+		} else {
+			// IMPORTANT: Add default vote count if none found
+			likedPostVoteCounts[post.ID] = &models.VoteCount{Likes: 0, Dislikes: 0}
 		}
 	}
-
 
 	data := PageData{
 		Result:              "",
@@ -127,7 +146,6 @@ func ProfileHandler(w http.ResponseWriter, r *http.Request) {
 		LikedPostCategories: likedPostCategories,
 		LikedPostVoteCounts: likedPostVoteCounts,
 		DarkMode:            GetDarkModePreference(r),
-
 	}
 
 	err = Templates.ExecuteTemplate(w, "user_profile.html", data)

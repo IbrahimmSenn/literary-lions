@@ -182,7 +182,6 @@ func NewPostHandler(w http.ResponseWriter, r *http.Request) {
 		title := r.FormValue("title")
 		content := r.FormValue("content")
 		categoryIDStr := r.FormValue("category")
-		log.Printf("🔍 DEBUG: Received category ID: '%s'", categoryIDStr)
 
 		if title == "" || content == "" {
 			data := PageData{
